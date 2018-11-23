@@ -1,0 +1,155 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script src="/webjars/vue/2.5.17/dist/vue.min.js"></script>
+    <script src="/webjars/vue-resource/1.5.1/dist/vue-resource.js"></script>
+    <script src="/webjars/element-ui/2.4.8/lib/index.js"></script>
+
+    <title>Code-X-让程序员喝茶</title>
+
+    <link rel="stylesheet" href="/webjars/element-ui/2.4.8/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/commmon.css"/>
+
+</head>
+<body>
+<div id="codex" class="container"><br/>
+    <div class="alert alert-success">
+        <div>
+            公告：{{ message }}
+        </div>
+    </div>
+
+
+    <template>
+        <el-tabs v-model="activeName">
+            <el-tab-pane label="代码生成" name="first">
+
+                <el-row>
+                    <el-col :span="14">
+                        <div class="grid-content bg-purple" style="padding: 0 10px;">
+                            <template>
+                                <el-table border
+                                          :data="tableList"
+                                          style="width: 100%">
+                                    <el-table-column
+                                            prop="tableName"
+                                            label="表名">
+                                    </el-table-column>
+                                    <el-table-column
+                                            prop="tableComment"
+                                            label="注释">
+                                    </el-table-column>
+                                    <el-table-column
+                                            label="操作"
+                                            width="100">
+
+                                        <template slot-scope="scope">
+                                            <el-button type="primary"
+                                                       size="mini"
+                                                       @click="code(scope.row)">生成代码
+                                            </el-button>
+                                        </template>
+
+                                    </el-table-column>
+                                </el-table>
+                            </template>
+                        </div>
+                    </el-col>
+                    <el-col :span="10" v-if="package">
+                        <div class="grid-content bg-purple-light" style="padding: 0 10px;">
+                            <el-card class="box-card" shadow="never">
+                                <div slot="header" class="clearfix">
+                                    <span style="color: #909399">包信息</span>
+                                </div>
+                                <div>
+                                    <div style="margin-top: 15px;">
+                                        <el-input readonly :value="package.entityPath">
+                                            <template slot="prepend" style="width: 100px;">
+                                                <div style="width: 70px;">
+                                                    entity
+                                                </div>
+                                            </template>
+                                        </el-input>
+                                    </div>
+                                    <div style="margin-top: 15px;">
+                                        <el-input readonly :value="package.servicePath">
+                                            <template slot="prepend">
+                                                <div style="width: 70px;">
+                                                    service
+                                                </div>
+                                            </template>
+                                        </el-input>
+                                    </div>
+                                    <div style="margin-top: 15px;">
+                                        <el-input readonly :value="package.serviceImplPath">
+                                            <template slot="prepend">
+                                                <div style="width: 70px;">
+                                                    serviceImpl
+                                                </div>
+                                            </template>
+                                        </el-input>
+                                    </div>
+                                    <div style="margin-top: 15px;">
+                                        <el-input readonly :value="package.mapperPath">
+                                            <template slot="prepend">
+                                                <div style="width: 70px;">
+                                                    mapper
+                                                </div>
+                                            </template>
+                                        </el-input>
+                                    </div>
+                                    <div style="margin-top: 15px;">
+                                        <el-input readonly :value="package.mapperXMLPath">
+                                            <template slot="prepend">
+                                                <div style="width: 70px;">
+                                                    mapperXML
+                                                </div>
+                                            </template>
+                                        </el-input>
+                                    </div>
+                                </div>
+                            </el-card>
+                        </div>
+
+                    </el-col>
+                </el-row>
+            </el-tab-pane>
+            <el-tab-pane label="正则工具" name="second">正则工具</el-tab-pane>
+            <el-tab-pane label="Api-x" name="third">Api-x</el-tab-pane>
+            <el-tab-pane label="作者信息" name="fourth">著作信息</el-tab-pane>
+        </el-tabs>
+    </template>
+
+
+    <el-dialog title="准备生成CRUD" :visible.sync="crudDialog" width="700">
+
+        <div>
+            <el-form  :model="ruleForm" ref="ruleForm" :rules="rules" label-width="200px"  size="medium" >
+                <el-form-item label="您选择的表名：">
+                    <span style="font-size: 16px" v-if="row">{{row.tableName}}</span>
+                </el-form-item>
+                <el-form-item label="您选择的表注释：">
+                    <span style="font-size: 16px" v-if="row">{{row.tableComment}}</span>
+                </el-form-item>
+                <el-form-item label="请选择忽略的前缀" required prop="tablePrefix">
+                    <el-radio-group v-model="ruleForm.tablePrefix" size="medium" prpo="tablePrefix">
+                        <el-radio v-for="prefix in prefixList" :label="prefix" border>{{prefix}}</el-radio>
+                    </el-radio-group>
+                </el-form-item>
+            </el-form>
+
+        </div>
+
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="crudDialog = false">取 消</el-button>
+            <el-button type="primary" @click="crudDialogCode('ruleForm')">确 定</el-button>
+          </span>
+    </el-dialog>
+
+</div>
+</body>
+</html>
+
+
+<script src="js/codex.js"></script>

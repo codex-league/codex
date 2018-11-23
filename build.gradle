@@ -1,0 +1,97 @@
+def codexVersion = 'v1.0.0'
+def codexGroup = 'org.codex'
+def vJavaLang = '1.8'
+
+def javaProjects = [project(':codex-core'), project(':codex-common-db'), project(':codex-common')]
+def bootProjects = [project(':codex-core')]
+def nexusProjects = [project(':codex-core-ui')]
+
+
+
+allprojects(){
+
+    apply plugin: 'java'
+
+    group = codexVersion
+    version = codexGroup
+
+    targetCompatibility = vJavaLang
+    sourceCompatibility = vJavaLang
+
+    repositories {
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+    }
+
+}
+
+configure(javaProjects) {
+
+    apply plugin: 'idea'
+    apply plugin: "io.spring.dependency-management"
+
+    dependencyManagement {
+        imports {
+            mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
+        }
+    }
+}
+
+configure(bootProjects) {
+
+    apply plugin: 'org.springframework.boot'
+}
+
+configure(nexusProjects){
+
+    apply plugin: "maven-publish"
+
+    //源码打包
+    task sourceJar(type: Jar) {
+        from sourceSets.main.allJava
+    }
+
+    //必加，设置对应私服信息
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                groupId project.group
+                artifactId project.name
+                version project.version
+                from components.java
+
+                //配置上传源码
+                artifact sourceJar {
+                    classifier "sources"
+                }
+
+            }
+        }
+        repositories {
+            maven {
+                //指定要上传的maven私服仓库
+                url = System.getenv("PUBLISH_URL") // 在环境变量配置 PUBLISH_URL 变量可以上传JAR包
+                //认证用户和密码
+                credentials {
+                    username 'admin'
+                    password 'admin123'
+                }
+            }
+        }
+    }
+}
+
+
+buildscript {
+    ext {
+        springBootVersion = '2.0.4.RELEASE'
+    }
+    repositories {
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+
+

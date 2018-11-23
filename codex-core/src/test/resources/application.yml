@@ -1,0 +1,25 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/test
+    username: root
+    password: 5034241849
+    driver-class-name: com.mysql.jdbc.Driver
+
+
+
+
+codex:
+  jdbc:
+    url: jdbc:mysql://localhost:3306/test
+    username: root
+    password: 5034241849
+    driverClassName: com.mysql.jdbc.Driver
+  package:
+    entity-path: werwer1
+    mapper-path: werwer2
+    mapperXML-path: werwer3
+    service-path: werwer4
+    serviceImpl-path: werwer5
+  prefix: cz_,czl,xxxxxxx

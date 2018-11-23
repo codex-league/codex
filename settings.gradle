@@ -1,0 +1,6 @@
+rootProject.name = 'codex'
+include 'codex-core'
+include 'codex-common-db'
+include 'codex-common'
+include 'codex-core-ui'
+
