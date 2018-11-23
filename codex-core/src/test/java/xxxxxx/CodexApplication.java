@@ -1,4 +1,4 @@
-package org.codex.test;
+package xxxxxx;
 
 import org.codex.core.EnableCodex;
 import org.springframework.boot.SpringApplication;
