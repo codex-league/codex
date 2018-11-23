@@ -17,28 +17,22 @@ public class PrintingCodexInfo implements ApplicationListener<ContextRefreshedEv
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        if (event.getApplicationContext().getParent() == null) {
-            //需要执行的逻辑代码，当spring容器初始化完成后就会执行该方法。
-            Environment env = event.getApplicationContext().getEnvironment();
-            try {
-                log.info("\n----------------------------------------------------------\n\t" +
-                                "欢迎使用Code-x\n\t" +
-                                "Github:【codex-league/codex】\n\t" +
-                                "Local: \t\thttp://localhost:{}/codex.html\n\t" +
-                                "External: \thttp://{}:{}/codex.html\n----------------------------------------------------------",
-                        env.getProperty("server.port"),
-                        InetAddress.getLocalHost().getHostAddress(),
-                        env.getProperty("server.port"));
-            } catch (UnknownHostException e) {
-                log.error("无法获取本地IP");
-            }
-
+        //需要执行的逻辑代码，当spring容器初始化完成后就会执行该方法。
+        Environment env = event.getApplicationContext().getEnvironment();
+        try {
+            log.info("\n----------------------------------------------------------\n\t" +
+                            "\t\t欢迎使用Code-x\n\t" +
+                            "关注官方网站:【http://www.codex.pub】\n\t" +
+                            "关注Github:【https://github.com/codex-league/codex】\n\t\n\t" +
+                            "本地访问Code-x: \thttp://localhost:{}/codex.html (重要)\n\t" +
+                            "外网访问Code-x: \thttp://{}:{}/codex.html\n----------------------------------------------------------",
+                    env.getProperty("server.port"),
+                    InetAddress.getLocalHost().getHostAddress(),
+                    env.getProperty("server.port"));
+        } catch (UnknownHostException e) {
+            log.error("无法获取本地IP");
         }
 
-        //或者下面这种方式
-        if (event.getApplicationContext().getDisplayName().equals("Root WebApplicationContext")) {
-            System.out.println("\n\n\n_________\n\n加载一次的 \n\n ________\n\n\n\n");
-        }
 
     }
 

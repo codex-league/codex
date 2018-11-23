@@ -5,8 +5,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
-@EnableCodex
 @SpringBootApplication
+@EnableCodex
 public class CodexApplication {
 
     public static void main(String[] args) {

@@ -2,6 +2,7 @@ package org.codex.core;
 
 import org.codex.core.model.PackageInfo;
 import org.codex.core.provider.ConfigProvider;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -12,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ComponentScan("org.codex.**")
+@ConditionalOnProperty(value = "codex.enable")
 public class CodexAutoConfigProvider {
 
     /**
