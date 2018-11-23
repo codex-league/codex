@@ -35,7 +35,7 @@ var codex = new Vue({
             this.$refs[formName].validate(function(valid){
                 if(valid){
                     _this.crudDialog = false;
-                    window.location.href = "/code/" + _this.row.tableName + "?tablePrefix=" + _this.ruleForm.tablePrefix;
+                    window.location.href = "/codex/code/" + _this.row.tableName + "?tablePrefix=" + _this.ruleForm.tablePrefix;
                     _this.$message({
                         type: 'success',
                         message: '正在下载!'
