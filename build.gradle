@@ -1,10 +1,10 @@
-def codexVersion = 'v1.0.0'
+def codexVersion = '2.0.0'
 def codexGroup = 'org.codex'
 def vJavaLang = '1.8'
 
 def javaProjects = [project(':codex-core'), project(':codex-common-db'), project(':codex-common')]
-def bootProjects = [project(':codex-core')]
-def nexusProjects = [project(':codex-core-ui')]
+def bootProjects = []
+def nexusProjects = [project(':codex-core')]
 
 
 
@@ -12,8 +12,8 @@ allprojects(){
 
     apply plugin: 'java'
 
-    group = codexVersion
-    version = codexGroup
+    group = codexGroup
+    version = codexVersion
 
     targetCompatibility = vJavaLang
     sourceCompatibility = vJavaLang
