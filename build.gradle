@@ -1,14 +1,14 @@
-def codexVersion = '2.0.5'
+def codexVersion = '2.1.0'
 def codexGroup = 'org.codex'
 def vJavaLang = '1.8'
 
-def javaProjects = [project(':codex-core'), project(':codex-common-db'), project(':codex-common')]
+def javaProjects = [project(':codex-core'), project(':codex-common-db'), project(':codex-common'), project(':codex-apix'),project(':codex-index')]
 def bootProjects = []
-def nexusProjects = [project(':codex-core'), project(':codex-common-db'), project(':codex-common'),project(':codex-core-ui')]
+def nexusProjects = [project(':codex-core'), project(':codex-apix'), project(':codex-common-db'), project(':codex-common'), project(':codex-core-ui'),project(':codex-apix-ui')]
 
 
 
-allprojects(){
+allprojects() {
 
     apply plugin: 'java'
 
@@ -41,7 +41,7 @@ configure(bootProjects) {
     apply plugin: 'org.springframework.boot'
 }
 
-configure(nexusProjects){
+configure(nexusProjects) {
 
     apply plugin: "maven-publish"
 

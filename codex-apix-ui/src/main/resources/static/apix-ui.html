@@ -1,0 +1,139 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+    <script src="/webjars/vue/2.5.17/dist/vue.min.js"></script>
+    <script src="/webjars/vue-resource/1.5.1/dist/vue-resource.js"></script>
+    <script src="/webjars/element-ui/2.4.8/lib/index.js"></script>
+
+
+    <title>Apix-自动化文档工具</title>
+
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/webjars/element-ui/2.4.8/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="css/commmon.css"/>
+    <link rel="stylesheet" href="css/apix-ui.css"/>
+
+</head>
+<body>
+<div id="apix" class="container"><br/>
+    <div class="alert alert-success">
+        <div>
+            公告：{{ message }}
+        </div>
+    </div>
+
+
+    <el-container style="min-height: 500px; border: 1px solid #eee">
+        <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
+            <el-menu>
+                <el-submenu v-for="(item, index) in apis.controller" :index="countIndex(index)">
+                    <template slot="title"><i class="el-icon-menu"></i>{{item.name}}</template>
+                    <el-menu-item :index="countIndex(index, index1)" v-for="(api, index1) in item.apis"
+                                  @click="showApi(api)">
+                        {{api.operations[0].summary}}
+                    </el-menu-item>
+                </el-submenu>
+            </el-menu>
+        </el-aside>
+
+        <el-container>
+            <div style="width: 100%; margin: 20px">
+
+                <div v-if="isNotice" class="alert alert-success">
+                    <div class="alert-success">
+                        公告：{{ message }}
+                    </div>
+                </div>
+
+                <div v-if="!isNotice">
+
+                    <div class="alert alert-info">
+                        <div class="alert-info">
+                            {{api.operations[0].summary}}
+                        </div>
+                    </div>
+
+                    <el-card style="margin: 20px 0" class="box-card" v-for="operation in api.operations">
+
+                        <div class="demo-input-suffix">
+                            <el-input v-model="protocol+ '//' +host+api.path" readonly>
+                                <template slot="prepend">{{operation.method}}</template>
+                            </el-input>
+                        </div>
+
+
+                        <el-collapse v-model="active"
+                                v-if="(operation.params && operation.params.length != 0 ) || ( operation.paramsBody && operation.paramsBody.fields)"
+                                 @change="handleChange">
+                            <el-collapse-item v-if="operation.params && operation.params.length != 0 " title="URI参数" name="1">
+                                <template>
+                                    <el-table
+                                            :data="operation.params"
+                                            style="width: 100%">
+                                        <el-table-column
+                                                label="字段"
+                                                prop="field">
+                                        </el-table-column>
+                                        <el-table-column
+                                                label="描述"
+                                                prop="describe">
+                                        </el-table-column>
+                                        <el-table-column
+                                                label="类型"
+                                                prop="type">
+                                        </el-table-column>
+                                        <el-table-column
+                                                label="是否必填"
+                                                prop="required"
+                                                :formatter="formatRequired">
+                                        </el-table-column>
+                                    </el-table>
+                                </template>
+                            </el-collapse-item>
+                            <el-collapse-item v-if="operation.paramsBody && operation.paramsBody.fields"
+                                              title="Request Body参数" name="2">
+                                <template>
+                                    <el-table
+                                            :data="operation.paramsBody.fields"
+                                            style="width: 100%">
+                                        <el-table-column
+                                                label="字段"
+                                                prop="field">
+                                        </el-table-column>
+                                        <el-table-column
+                                                label="描述"
+                                                prop="describe">
+                                        </el-table-column>
+                                        <el-table-column
+                                                label="类型"
+                                                prop="type">
+                                        </el-table-column>
+                                        <el-table-column
+                                                label="是否必填"
+                                                prop="required"
+                                                :formatter="formatRequired">
+                                        </el-table-column>
+                                        <el-table-column
+                                                align="right">
+                                            <template slot-scope="scope">
+                                                <el-button size="mini" @click="">查看子对象</el-button>
+                                            </template>
+                                        </el-table-column>
+                                    </el-table>
+                                </template>
+                            </el-collapse-item>
+                        </el-collapse>
+                    </el-card>
+                </div>
+            </div>
+        </el-container>
+    </el-container>
+
+</div>
+</body>
+</html>
+
+
+<script src="js/apix-ui.js"></script>

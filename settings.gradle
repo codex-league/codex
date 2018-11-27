@@ -3,4 +3,7 @@ include 'codex-core'
 include 'codex-common-db'
 include 'codex-common'
 include 'codex-core-ui'
+include 'codex-apix'
+include 'codex-index'
+include 'codex-apix-ui'
 

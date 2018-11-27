@@ -1,0 +1,59 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+    <script src="/webjars/vue/2.5.17/dist/vue.min.js"></script>
+    <script src="/webjars/vue-resource/1.5.1/dist/vue-resource.js"></script>
+    <script src="/webjars/element-ui/2.4.8/lib/index.js"></script>
+
+    <title>Code-X-让程序员喝茶</title>
+
+    <link rel="stylesheet" href="/webjars/element-ui/2.4.8/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/commmon.css"/>
+    <link rel="stylesheet" href="css/apix.css"/>
+
+</head>
+<body>
+<div id="codex" class="container"><br/>
+    <div class="alert alert-success">
+        <div>
+            公告：{{ message }}
+        </div>
+    </div>
+
+
+    <template>
+        <el-tabs v-model="activeName">
+            <el-tab-pane label="代码生成" name="first">
+                <iframe src="codex-core.html" scrolling="no"></iframe>
+            </el-tab-pane>
+
+
+            <el-tab-pane label="Api-x" name="second">
+
+            </el-tab-pane>
+
+
+            <el-tab-pane label="正则工具" name="third">
+
+
+            </el-tab-pane>
+            <el-tab-pane label="json校验工具" name="fourth">
+
+
+            </el-tab-pane>
+            <el-tab-pane label="作者信息" name="fifth">
+
+
+            </el-tab-pane>
+        </el-tabs>
+    </template>
+
+</div>
+</body>
+</html>
+
+
+<script src="js/codex.js"></script>

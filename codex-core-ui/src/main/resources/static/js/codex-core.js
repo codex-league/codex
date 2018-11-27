@@ -2,6 +2,17 @@ var codex = new Vue({
     el: '#codex',
     data: {
         message: 'Code-X 让程序员喝茶的朋友',
+
+        active: ["1", "2"],
+        apis: {},
+        api: {},
+        isNotice: true,
+        paramsTableData: null,
+        bodyTableData: null,
+        activeNames: null,
+        host: window.location.host,
+        protocol: window.location.protocol,
+
         activeName: 'first',
         tablePrefix: null,
         prefixList: null,
@@ -9,13 +20,14 @@ var codex = new Vue({
         crudDialog: false,
         row: null,
         package: {},
-        ruleForm:{
+        ruleForm: {
             tablePrefix: null
         },
         rules: {
             tablePrefix: [
-                { required: true, message: '请选择一个你需要忽略的表名前缀'},
-            ]}
+                {required: true, message: '请选择一个你需要忽略的表名前缀'},
+            ]
+        }
     },
     methods: {
         code(row) {
@@ -32,8 +44,8 @@ var codex = new Vue({
         crudDialogCode(formName) {
             var _this = this;
             console.log(this.$refs[formName]);
-            this.$refs[formName].validate(function(valid){
-                if(valid){
+            this.$refs[formName].validate(function (valid) {
+                if (valid) {
                     _this.crudDialog = false;
                     window.location.href = "/codex/code/" + _this.row.tableName + "?tablePrefix=" + _this.ruleForm.tablePrefix;
                     _this.$message({
@@ -63,6 +75,38 @@ var codex = new Vue({
                     message: '操作已取消'
                 })
             })
+        },
+        handleChange(val) {
+            console.log(val);
+        },
+        countIndex: function (index, index1, index2) { // 计算索引组合
+
+
+            var i = "";
+            if (index != null) {
+                i = i + index
+            }
+
+            if (index1 != null) {
+                i = i + '-' + index1;
+            }
+
+            if (index2 != null) {
+                i = i + '-' + index2;
+            }
+            return i;
+        },
+        showApi: function (api) {
+
+            this.api = api;
+
+            this.isNotice = false;
+        },
+        showNotice: function () {
+            this.isNotice = true;
+        },
+        formatRequired: function (row, column) {
+            return !!row.required ? '*必填' : '选填';
         }
     }
     ,
@@ -80,6 +124,18 @@ var codex = new Vue({
                 }
             }, function () {
                 alert('获取数据库表信息错误');
+            })
+        })();
+        (function () {
+            Vue.http.get('/apix/doc').then(function (response) {
+                console.log(response);
+                if (response.ok) {
+                    _this.apis = response.body;
+                } else {
+                    alert('获取文档信息错误');
+                }
+            }, function () {
+                alert('获取文档信息错误');
             })
         })();
 

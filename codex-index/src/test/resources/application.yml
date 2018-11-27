@@ -2,9 +2,10 @@ server:
   port: 8080
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/test
+    url: jdbc:mysql://localhost:3306/mitest
     username: root
-    password: 5034241849
+#    password: 5034241849
+    password: 123456
     driver-class-name: com.mysql.jdbc.Driver
 
 
@@ -13,9 +14,10 @@ spring:
 codex:
   enable: true
   jdbc:
-    url: jdbc:mysql://localhost:3306/test
+    url: jdbc:mysql://localhost:3306/mitest
     username: root
-    password: 5034241849
+#    password: 5034241849
+    password: 123456
     driverClassName: com.mysql.jdbc.Driver
   package:
     entity-path: werwer1
