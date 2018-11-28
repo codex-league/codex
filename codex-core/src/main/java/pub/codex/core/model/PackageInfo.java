@@ -1,8 +1,11 @@
 package pub.codex.core.model;
 
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
 /**
  * 包信息
  */
+@ConfigurationProperties("codex.package")
 public class PackageInfo {
 
     /**

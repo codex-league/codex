@@ -2,7 +2,6 @@ server:
   port: 8080
 
 codex:
-  enable: true
   jdbc:
     url: jdbc:mysql://10.240.4.27:3306/longmarch
     username: root
@@ -16,4 +15,4 @@ codex:
     serviceImpl-path: werwer5
   prefix: cz_,czl,xxxxxxx
 apix:
-  controllerPackage: pub.codex.controller
+  controllerPackage: text.codex.controller

@@ -1,19 +1,20 @@
 package pub.codex.core;
 
-import pub.codex.core.model.PackageInfo;
-import pub.codex.core.provider.ConfigProvider;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
+import pub.codex.core.model.PackageInfo;
+import pub.codex.core.provider.ConfigProvider;
 
 /**
  * Codex自动配置
  */
 @Configuration
-@ComponentScan("pub.codex.**")
-@ConditionalOnProperty(value = "codex.enable")
+@ComponentScan({"pub.codex.core", "pub.codex.common.db"})
+@EnableConfigurationProperties(PackageInfo.class)
+@Conditional(CodexCondition.class)
 public class CodexAutoConfigProvider {
 
     /**
@@ -26,12 +27,6 @@ public class CodexAutoConfigProvider {
     public ConfigProvider configProvider(PackageInfo packageInfo) {
 
         return new ConfigProvider(packageInfo);
-    }
-
-    @Bean
-    @ConfigurationProperties("codex.package")
-    public PackageInfo packageInfo() {
-        return PackageInfo.build();
     }
 
 }

@@ -1,0 +1,15 @@
+package ${servicePackagePath}.impl;
+
+import org.springframework.stereotype.Service;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+
+import ${mapperPackagePath}.${className}Mapper;
+import ${entityPackagePath}.${className}Entity;
+import ${servicePackagePath}.${className}Service;
+
+
+@Service("${classname}Service")
+public class ${className}ServiceImpl extends ServiceImpl<${className}Mapper, ${className}Entity> implements ${className}Service {
+
+
+}
