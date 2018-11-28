@@ -4,7 +4,7 @@ import com.google.common.base.Optional;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.codex.apix.build.OperationBuilder;
+import org.codex.apix.builder.OperationBuilder;
 
 import java.lang.annotation.Annotation;
 import java.util.List;

@@ -3,7 +3,7 @@ package org.codex.apix;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.SmartLifecycle;
 import org.springframework.stereotype.Component;
-import org.codex.apix.build.DocumentationContextBuild;
+import org.codex.apix.builder.DocumentationContextBuild;
 import org.codex.apix.context.DocumentationContext;
 import org.codex.apix.context.RequestHandler;
 import org.codex.apix.provider.RequestHandlersProvider;
