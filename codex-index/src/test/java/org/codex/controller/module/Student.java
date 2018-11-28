@@ -1,4 +1,4 @@
-package org.codex.apix.controller.module;
+package org.codex.controller.module;
 
 public class Student {
 

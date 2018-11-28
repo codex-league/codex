@@ -1,5 +1,5 @@
 dependencies {
-    compile project(':codex-core-ui')
+    compile project(':codex-apix-ui')
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('javax.validation:validation-api:2.0.1.Final')
 

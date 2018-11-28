@@ -1,14 +1,14 @@
-package org.codex.apix.controller;
+package org.codex.controller;
 
+import org.codex.apix.annotations.Api;
+import org.codex.apix.annotations.ApiOperation;
+import org.codex.apix.annotations.ApiParam;
+import org.codex.controller.module.Person;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.codex.apix.annotations.Api;
-import org.codex.apix.annotations.ApiOperation;
-import org.codex.apix.annotations.ApiParam;
-import org.codex.apix.controller.module.Person;
 
 @Api("演示API管理接口")  // 只描述Controller 信息
 @RestController
