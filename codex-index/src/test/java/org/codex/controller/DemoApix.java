@@ -1,9 +1,9 @@
-package org.codex.controller;
+package pub.codex.controller;
 
-import org.codex.apix.annotations.Api;
-import org.codex.apix.annotations.ApiOperation;
-import org.codex.apix.annotations.ApiParam;
-import org.codex.controller.module.Person;
+import pub.codex.apix.annotations.Api;
+import pub.codex.apix.annotations.ApiOperation;
+import pub.codex.apix.annotations.ApiParam;
+import pub.codex.controller.module.Person;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

@@ -1,6 +1,6 @@
-package org.codex;
+package pub.codex;
 
-import org.codex.apix.Docket;
+import pub.codex.apix.Docket;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -10,7 +10,7 @@ public class ApixConfig {
 
     @Bean
     public Docket docket(){
-        return new Docket("org.codex.controller");
+        return new Docket("pub.codex.controller");
     }
 
 }

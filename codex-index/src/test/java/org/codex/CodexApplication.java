@@ -1,6 +1,6 @@
-package org.codex;
+package pub.codex;
 
-import org.codex.index.EnableCodexLeague;
+import pub.codex.index.EnableCodexLeague;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

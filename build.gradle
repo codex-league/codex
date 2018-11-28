@@ -1,5 +1,5 @@
 def codexVersion = '2.1.0'
-def codexGroup = 'org.codex'
+def codexGroup = 'pub.codex'
 def vJavaLang = '1.8'
 
 def javaProjects = [project(':codex-core'), project(':codex-common-db'), project(':codex-common'), project(':codex-apix'),project(':codex-index')]

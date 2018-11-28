@@ -1,6 +1,6 @@
-package org.codex.controller.module;
+package pub.codex.controller.module;
 
-import org.codex.apix.annotations.ApiModelProperty;
+import pub.codex.apix.annotations.ApiModelProperty;
 
 import javax.validation.constraints.NotBlank;
 

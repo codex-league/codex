@@ -1,4 +1,4 @@
-package org.codex.controller.module;
+package pub.codex.controller.module;
 
 public class Student {
 
