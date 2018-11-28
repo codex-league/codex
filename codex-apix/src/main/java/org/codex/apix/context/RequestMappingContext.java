@@ -4,7 +4,7 @@ import com.google.common.base.Optional;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.condition.PatternsRequestCondition;
-import org.codex.apix.builder.ApiDescriptionBuilder;
+import org.codex.apix.build.ApiDescriptionBuilder;
 
 import java.lang.annotation.Annotation;
 import java.util.List;

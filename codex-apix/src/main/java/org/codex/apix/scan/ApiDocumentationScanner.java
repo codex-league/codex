@@ -3,7 +3,7 @@ package org.codex.apix.scan;
 import com.google.common.collect.Multimap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.codex.apix.builder.DocumentationBuilder;
+import org.codex.apix.build.DocumentationBuilder;
 import org.codex.apix.context.DocumentationContext;
 import org.codex.apix.context.RequestMappingContext;
 import org.codex.apix.module.ResourceGroup;

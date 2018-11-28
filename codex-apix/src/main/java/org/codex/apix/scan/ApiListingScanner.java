@@ -4,7 +4,7 @@ import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.codex.apix.builder.ApiListingBuilder;
+import org.codex.apix.build.ApiListingBuilder;
 import org.codex.apix.context.RequestMappingContext;
 import org.codex.apix.module.ResourceGroup;
 import org.codex.apix.schema.ApiDescription;
