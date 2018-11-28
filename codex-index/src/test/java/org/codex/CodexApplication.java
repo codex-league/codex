@@ -1,14 +1,14 @@
 package org.codex;
 
-import org.codex.apix.EnableApix;
-import org.codex.core.EnableCodex;
+import org.codex.index.EnableCodexLeague;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-@EnableCodex
-@EnableApix
+//@EnableCodex
+//@EnableApix
+@EnableCodexLeague
 public class CodexApplication {
 
     public static void main(String[] args) {
