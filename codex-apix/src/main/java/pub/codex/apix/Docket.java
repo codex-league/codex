@@ -5,13 +5,14 @@ package pub.codex.apix;
  */
 public class Docket {
 
-    private String BasePackage;
+    private String controllerPackage;
 
-    public Docket(String basePackage) {
-        BasePackage = basePackage;
+
+    public void setControllerPackage(String controllerPackage) {
+        this.controllerPackage = controllerPackage;
     }
 
-    public String getBasePackage() {
-        return BasePackage;
+    public String getControllerPackage() {
+        return controllerPackage;
     }
 }

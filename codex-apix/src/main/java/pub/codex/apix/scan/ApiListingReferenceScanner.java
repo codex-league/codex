@@ -58,7 +58,7 @@ public class ApiListingReferenceScanner {
      */
     public Predicate<RequestHandler> getRequestHandlerSelector() {
 
-        return and(getRequestHandlerSelectorByIgnore(), withBasePackage(docket.getBasePackage())); // todo 暂时忽略
+        return and(getRequestHandlerSelectorByIgnore(), withBasePackage(docket.getControllerPackage()));
     }
 
 

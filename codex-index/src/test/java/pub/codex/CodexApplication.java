@@ -6,8 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-//@EnableCodex
-//@EnableApix
 @EnableCodexLeague
 public class CodexApplication {
 
