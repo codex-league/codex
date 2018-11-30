@@ -54,41 +54,93 @@ configure(bootProjects) {
 configure(nexusProjects) {
 
     apply plugin: "maven-publish"
+    apply plugin: 'maven'
+    apply plugin: 'signing'
 
-    //源码打包
-    task sourceJar(type: Jar) {
+
+    // 后面的都是打包的配置
+    task sourcesJar(type: Jar) {
+        classifier = 'sources'
         from sourceSets.main.allJava
     }
+    // 生成 javadoc jar
+        task javadocJar(type: Jar) {
+            classifier = 'javadoc'
+            from javadoc.destinationDir
+        }
 
-    //必加，设置对应私服信息
+
     publishing {
+
         publications {
-            maven(MavenPublication) {
+
+            mavenJava(MavenPublication) {
                 groupId project.group
                 artifactId project.name
                 version project.version
                 from components.java
+                artifact sourcesJar
+                artifact javadocJar
 
-                //配置上传源码
-                artifact sourceJar {
-                    classifier "sources"
+                pom {
+                    name = "Code-x"
+                    description = "Code-X 让程序狗喝茶"
+                    url = "https://github.com/codex-league/codex"
+                    licenses {
+                        license {
+                            name = "The Apache License, Version 2.0"
+                            url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = "codex"
+                            name = "codex"
+                            email = "codex_team@163.com"
+                        }
+                    }
+                    scm {
+                        connection = "scm:git:https://github.com/codex-league/codex.git"
+                        developerConnection = "scm:git:https://github.com/codex-league/codex.git"
+                        url = "https://github.com/codex-league/codex"
+                    }
+
+
                 }
-
             }
         }
         repositories {
             maven {
-                //指定要上传的maven私服仓库
-                url = System.getenv("PUBLISH_URL") // 在环境变量配置 PUBLISH_URL 变量可以上传JAR包
-                //认证用户和密码
+                name 'sonatypeRepository'
+                url 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
+
                 credentials {
-                    username 'admin'
-                    password 'admin123'
+                    username = System.getenv("NEXUS_USERNAME")
+                    password = System.getenv("NEXUS_PASSWORD")
                 }
             }
+
+            maven {
+                name = 'sonatypeSnapshotRepository'
+                url = 'https://oss.sonatype.org/content/repositories/snapshots'
+                credentials {
+                    username = System.getenv("NEXUS_USERNAME")
+                    password = System.getenv("NEXUS_PASSWORD")
+                }
+            }
+
         }
     }
+
+    signing {
+        sign publishing.publications.mavenJava
+    }
+
+
+
+    
 }
+
 
 
 buildscript {
