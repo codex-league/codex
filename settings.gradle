@@ -6,4 +6,6 @@ include 'codex-core-ui'
 include 'codex-apix'
 include 'codex-index'
 include 'codex-apix-ui'
+include 'codex-core-template-mybatis-plus'
+include 'codex-core-template-stream'
 

@@ -26,14 +26,21 @@
 
 > gradle：
 ```Groovy
-    compile 'pub.codex:codex-index:2.1.1'
+    compile 'pub.codex:codex-index:2.2.0'
+    compile 'pub.codex:codex-core-template-mybatis-plus:2.2.0'
 ```
 > maven:
 ```xml
 <dependency>
   <groupId>pub.codex</groupId>
   <artifactId>codex-index</artifactId>
-  <version>2.1.1</version>
+  <version>2.2.0</version>
+</dependency>
+
+<dependency>
+  <groupId>pub.codex</groupId>
+  <artifactId>codex-core-template-mybatis-plus</artifactId>
+  <version>2.2.0</version>
 </dependency>
      
 ```
@@ -145,7 +152,7 @@ apix:
   controllerPackage: pub.codex.controller
 ```
 
->如果你只是单独配置了apix，你可以访问http://localhost:8080/codex-apix.html
+>如果你只是单独配置了Apix，你可以访问http://localhost:8080/codex-apix.html
 
 
 ### 5.1 原理
@@ -170,7 +177,7 @@ public class DemoApix {
 
 ```
 
->上面是一个简单接口描述信息，`Apix`会根据 `@RequestBody`和 `@RequestParam `来确参数的详细内容
+>上面是一个简单接口描述信息，`Apix`会根据 `@RequestBody`和 `@RequestParam `来确定参数的详细内容
 
 >如果你想为你的api文档丰富起来,你可以使用更多的注解
 
@@ -216,7 +223,7 @@ public class DemoApix {
 
 ### 5.2 注解
 
-#### 5.2.1 @RequestParam 和 @RequestParam
+#### 5.2.1 @ApiParam 和 @RequestParam
 
 
 

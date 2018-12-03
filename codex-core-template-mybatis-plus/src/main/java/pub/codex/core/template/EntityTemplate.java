@@ -1,11 +1,11 @@
-package pub.codex.core.stream.template;
+package pub.codex.core.template;
 
-import pub.codex.common.DateUtil;
-import pub.codex.common.db.entity.ColumnEntity;
-import pub.codex.core.provider.ConfigProvider;
-import pub.codex.core.stream.TableCodexTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import pub.codex.common.DateUtil;
+import pub.codex.common.db.entity.ColumnEntity;
+import pub.codex.core.template.stream.BaseTemplateConfigProvider;
+import pub.codex.core.template.stream.template.TableCodexTemplate;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,14 +21,14 @@ public class EntityTemplate extends TableCodexTemplate {
 
 
     @Autowired
-    private ConfigProvider configProvider;
+    private BaseTemplateConfigProvider baseTemplateConfigProvider;
+
 
     @Override
     public void coding() {
 
-
         //表名转换成Java类名
-        String entityPackagePath = configProvider.getPackageInfo().getEntityPath();
+        String entityPackagePath = baseTemplateConfigProvider.getEntityPath();
         String datetime = DateUtil.getDateTime();
         String comments = tableEntity.getComments();
         String tableName = tableEntity.getTableName();

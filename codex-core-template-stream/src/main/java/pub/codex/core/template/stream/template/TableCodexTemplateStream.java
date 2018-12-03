@@ -1,4 +1,4 @@
-package pub.codex.core.stream;
+package pub.codex.core.template.stream.template;
 
 import org.apache.commons.io.IOUtils;
 import pub.codex.common.db.jdbc.TableDao;
@@ -40,8 +40,7 @@ public class TableCodexTemplateStream {
 
         //遍历
         tableCodexTemplateList.stream().forEach(tableCodexTemplate -> {
-            tableCodexTemplate.setComponent(table, columns, tablePrefix, zip);
-            tableCodexTemplate.coding();
+            tableCodexTemplate.buildTemplate(table, columns, tablePrefix, zip);
         });
 
         IOUtils.closeQuietly(zip);

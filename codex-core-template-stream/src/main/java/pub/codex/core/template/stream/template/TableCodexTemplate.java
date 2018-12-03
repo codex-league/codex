@@ -1,12 +1,12 @@
-package pub.codex.core.stream;
+package pub.codex.core.template.stream.template;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
+import org.springframework.util.StringUtils;
 import pub.codex.common.CodexException;
 import pub.codex.common.db.entity.ColumnEntity;
 import pub.codex.common.db.entity.TableEntity;
-import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -24,7 +24,7 @@ import java.util.zip.ZipOutputStream;
  */
 
 
-public abstract class TableCodexTemplate extends BaseTableCodexTemplate implements CodexTemplate {
+public abstract class TableCodexTemplate extends BaseTableCodexTemplate {
 
     /**
      * 表信息
@@ -38,19 +38,24 @@ public abstract class TableCodexTemplate extends BaseTableCodexTemplate implemen
 
 
     /**
+     * coding 的主要逻辑在这里实现
+     */
+    public abstract void coding();
+
+    /**
      * 设置 组建信息
      *
      * @param table
      * @param columns
      * @param zip
      */
-    public void setComponent(Map<String, String> table, List<Map<String, String>> columns, String tablePrefix, ZipOutputStream zip) {
+    public void buildTemplate(Map<String, String> table, List<Map<String, String>> columns, String tablePrefix, ZipOutputStream zip) {
 
         // 表信息
         tableEntity.setTableName(table.get("tableName"));
         tableEntity.setComments(table.get("tableComment"));
 
-        String className = tableToJava(tableEntity.getTableName(), tablePrefix); // todo 表名前缀忽略
+        String className = tableToJava(tableEntity.getTableName(), tablePrefix);
         tableEntity.setClassName(className);
         tableEntity.setClassname(StringUtils.uncapitalize(className));
 
@@ -84,6 +89,8 @@ public abstract class TableCodexTemplate extends BaseTableCodexTemplate implemen
 
         // zip
         this.zip = zip;
+
+        coding();
 
     }
 

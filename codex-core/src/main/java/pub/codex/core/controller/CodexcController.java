@@ -2,15 +2,15 @@ package pub.codex.core.controller;
 
 
 import org.apache.commons.io.IOUtils;
-import pub.codex.common.db.jdbc.TableDao;
-import pub.codex.common.models.CodexResult;
-import pub.codex.core.provider.ConfigProvider;
-import pub.codex.core.stream.TableCodexTemplateStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import pub.codex.common.db.jdbc.TableDao;
+import pub.codex.common.models.CodexResult;
+import pub.codex.core.provider.ConfigProvider;
+import pub.codex.core.template.stream.template.TableCodexTemplateStream;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

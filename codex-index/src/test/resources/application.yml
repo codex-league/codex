@@ -1,26 +1,10 @@
 server:
   port: 8080
 
-spring:
-  datasource:
-    url: jdbc:mysql://localhost:3306/mitest
-    username: root
-    #    password: 5034241849
-    password: 123456
-    driver-class-name: com.mysql.jdbc.Driver
-
-
-
-
-
 codex:
   jdbc:
     url: jdbc:mysql://localhost:3306/longmarch
     username: root
-
-    #    password: 5034241849
-    #    password: 123456
-
     password: admin
     driverClassName: com.mysql.jdbc.Driver
   package:

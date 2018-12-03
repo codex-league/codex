@@ -1,4 +1,4 @@
-def codexVersion = '2.1.1'
+def codexVersion = '2.2.0'
 def codexGroup = 'pub.codex'
 def vJavaLang = '1.8'
 
@@ -6,7 +6,9 @@ def javaProjects = [project(':codex-core'),
                     project(':codex-common-db'),
                     project(':codex-common'),
                     project(':codex-apix'),
-                    project(':codex-index')]
+                    project(':codex-index'),
+                    project(':codex-core-template-stream'),
+                    project(':codex-core-template-mybatis-plus')]
 def bootProjects = []
 def nexusProjects = [project(':codex-core'),
                      project(':codex-apix'),
@@ -14,11 +16,13 @@ def nexusProjects = [project(':codex-core'),
                      project(':codex-common'),
                      project(':codex-core-ui'),
                      project(':codex-apix-ui'),
-                     project(':codex-index')]
+                     project(':codex-index'),
+                     project(':codex-core-template-stream'),
+                     project(':codex-core-template-mybatis-plus')]
 
 
 
-allprojects() {
+subprojects() {
 
     apply plugin: 'java'
 

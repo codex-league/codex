@@ -12,7 +12,7 @@ import pub.codex.core.provider.ConfigProvider;
  * Codex自动配置
  */
 @Configuration
-@ComponentScan({"pub.codex.core", "pub.codex.common.db"})
+@ComponentScan({"pub.codex.core", "pub.codex.common.db", "pub.codex.core.template", "pub.codex.core.template.stream"})
 @EnableConfigurationProperties(PackageInfo.class)
 @Conditional(CodexCondition.class)
 public class CodexAutoConfigProvider {

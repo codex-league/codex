@@ -1,32 +1,34 @@
-package pub.codex.core.stream.template;
+package pub.codex.core.template;
 
-import pub.codex.common.DateUtil;
-import pub.codex.core.provider.ConfigProvider;
-import pub.codex.core.stream.TableCodexTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import pub.codex.common.DateUtil;
+import pub.codex.core.template.stream.BaseTemplateConfigProvider;
+import pub.codex.core.template.stream.template.TableCodexTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Mapper类coding 模板
+ * Service类coding 模板
  */
 @Component
-public class MapperTemplate extends TableCodexTemplate {
+public class ServiceTemplate extends TableCodexTemplate {
 
 
-    private final String TEMPLATE_NAME = "Mapper.java";
+    private final String TEMPLATE_NAME = "Service.java";
+
 
     @Autowired
-    private ConfigProvider configProvider;
+    private BaseTemplateConfigProvider baseTemplateConfigProvider;
+
 
     @Override
     public void coding() {
 
         //表名转换成Java类名
-        String mapperPackagePath = configProvider.getPackageInfo().getMapperPath();
-        String entityPackagePath = configProvider.getPackageInfo().getEntityPath();
+        String servicePackagePath = baseTemplateConfigProvider.getServicePath();
+        String entityPackagePath = baseTemplateConfigProvider.getEntityPath();
         String datetime = DateUtil.getDateTime();
         String comments = tableEntity.getComments();
         String className = tableEntity.getClassName();
@@ -34,7 +36,7 @@ public class MapperTemplate extends TableCodexTemplate {
 
         //封装模板数据
         Map<String, Object> map = new HashMap<>();
-        map.put("mapperPackagePath", mapperPackagePath);
+        map.put("servicePackagePath", servicePackagePath);
         map.put("entityPackagePath", entityPackagePath);
 //        map.put("author", author);
 //        map.put("email", email);
@@ -42,6 +44,6 @@ public class MapperTemplate extends TableCodexTemplate {
         map.put("comments", comments);
         map.put("className", className);
         buildTemplate(TEMPLATE_NAME, map, buildFilePath(TEMPLATE_NAME, className,
-                mapperPackagePath, false));
+                servicePackagePath, false));
     }
 }

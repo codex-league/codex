@@ -26,9 +26,9 @@ public class PrintingCodexInfo implements ApplicationListener<ContextRefreshedEv
                             "关注Github:【https://github.com/codex-league/codex】\n\t\n\t" +
                             "本地访问Code-x: \thttp://localhost:{}/codex.html (重要)\n\t" +
                             "外网访问Code-x: \thttp://{}:{}/codex.html\n----------------------------------------------------------",
-                    env.getProperty("server.port"),
+                    env.getProperty("server.port") != null? env.getProperty("server.port"):"8080",
                     InetAddress.getLocalHost().getHostAddress(),
-                    env.getProperty("server.port"));
+                    env.getProperty("server.port") != null? env.getProperty("server.port"):"8080");
         } catch (UnknownHostException e) {
             log.error("无法获取本地IP");
         }

@@ -1,4 +1,4 @@
-package pub.codex.core.stream;
+package pub.codex.core.template.stream.template;
 
 
 import org.apache.commons.configuration.Configuration;
@@ -43,7 +43,7 @@ public class BaseTableCodexTemplate {
     /**
      * 表名转换成Java类名
      */
-    public static String tableToJava(String tableName, String tablePrefix) {
+    public String tableToJava(String tableName, String tablePrefix) {
         if (StringUtils.isNotBlank(tablePrefix)) {
             tableName = tableName.replace(tablePrefix, "");
         }
@@ -53,14 +53,14 @@ public class BaseTableCodexTemplate {
     /**
      * 列名转换成Java属性名
      */
-    public static String columnToJava(String columnName) {
+    public String columnToJava(String columnName) {
         return WordUtils.capitalizeFully(columnName, new char[]{'_'}).replace("_", "");
     }
 
     /**
      * 获取配置信息
      */
-    public static Configuration getConfig() {
+    public Configuration getConfig() {
         try {
             return new PropertiesConfiguration("generator.properties");
         } catch (ConfigurationException e) {
@@ -71,7 +71,7 @@ public class BaseTableCodexTemplate {
     /**
      * 编译文件名
      */
-    protected static String buildFilePath(String templateName, String className, String packagePath, boolean isResources) {
+    protected String buildFilePath(String templateName, String className, String packagePath, boolean isResources) {
 
         String headPackagePath;
 
