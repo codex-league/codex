@@ -100,6 +100,9 @@ var codex = new Vue({
 
         },
         crudOperationCode(formName) {
+            var _this = this;
+            window.location.href = "/codex/info/" + _this.row.tableName;
+
             this.crudOperation = true;
 
         },
