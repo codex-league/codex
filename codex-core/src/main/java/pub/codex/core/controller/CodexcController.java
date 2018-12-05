@@ -34,9 +34,6 @@ public class CodexcController {
     @Autowired
     private TableCodexTemplateStream tableCodexTemplateStream;
 
-    @Autowired
-    BaseTableCodexTemplate baseTableCodexTemplate;
-
     /**
      * codex基础信息查询
      *
@@ -82,12 +79,12 @@ public class CodexcController {
             columnEntity.setExtra(column.get("extra"));
 
             //列名转换成Java属性名
-            String attrName = baseTableCodexTemplate.columnToJava(columnEntity.getColumnName());
+            String attrName = new BaseTableCodexTemplate().columnToJava(columnEntity.getColumnName());
             columnEntity.setAttrName(attrName);
             columnEntity.setAttrname(StringUtils.uncapitalize(attrName));
 
             //列的数据类型，转换成Java类型
-            String attrType = baseTableCodexTemplate.getConfig().getString(columnEntity.getDataType(), "unknowType");
+            String attrType = new BaseTableCodexTemplate().getConfig().getString(columnEntity.getDataType(), "unknowType");
             columnEntity.setAttrType(attrType);
 
             //是否主键
