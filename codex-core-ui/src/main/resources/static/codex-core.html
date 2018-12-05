@@ -12,11 +12,10 @@
     <link rel="stylesheet" href="/webjars/element-ui/2.4.8/lib/theme-chalk/index.css">
     <link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="css/commmon.css"/>
-    <link rel="stylesheet" href="css/apix.css"/>
 
 </head>
 <body>
-<div id="codex" ><br/>
+<div id="codex"><br/>
     <el-row>
         <el-col :span="14">
             <div class="grid-content bg-purple" style="padding: 0 10px;">
@@ -107,7 +106,7 @@
         </el-col>
     </el-row>
 
-
+    <!--是否生成controller弹窗-->
     <el-dialog title="准备生成CRUD" :visible.sync="crudDialog" width="700">
 
         <div>
@@ -118,19 +117,124 @@
                 <el-form-item label="您选择的表注释：">
                     <span style="font-size: 16px" v-if="row">{{row.tableComment}}</span>
                 </el-form-item>
-                <el-form-item label="请选择忽略的前缀" required prop="tablePrefix">
+                <el-form-item v-if="!!prefixList && prefixList.length > 0" label="请选择忽略的前缀" required prop="tablePrefix">
                     <el-radio-group v-model="ruleForm.tablePrefix" size="medium" prpo="tablePrefix">
                         <el-radio v-for="prefix in prefixList" :label="prefix" border>{{prefix}}</el-radio>
                     </el-radio-group>
                 </el-form-item>
+                <el-form-item label="请选择是否生成Controller" required prop="controller">
+                    <el-radio-group v-model="ruleForm.controller" size="medium" prpo="controller">
+                        <el-radio label="1" border>是</el-radio>
+                        <el-radio label="2" border>否</el-radio>
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item v-if="ruleForm.controller === '1'" label="请选择Controller的类型" required
+                              prop="controllertype">
+                    <el-checkbox-group v-model="ruleForm.controllertype" size="medium" prpo="controllertype">
+                        <el-checkbox label="1">增加</el-checkbox>
+                        <el-checkbox label="2">删除</el-checkbox>
+                        <el-checkbox label="3">修改</el-checkbox>
+                        <el-checkbox label="4">详情</el-checkbox>
+                        <el-checkbox label="5">列表</el-checkbox>
+                    </el-checkbox-group>
+                </el-form-item>
             </el-form>
-
         </div>
 
         <span slot="footer" class="dialog-footer">
             <el-button @click="crudDialog = false">取 消</el-button>
-            <el-button type="primary" @click="crudDialogCode('ruleForm')">确 定</el-button>
+            <el-button v-if="ruleForm.controller === '2'" type="primary"
+                       @click="crudDialogCode('ruleForm')">确 定</el-button>
+            <el-button
+                    v-if="ruleForm.controller === '1'&& !!ruleForm.controllertype && ruleForm.controllertype.length > 0"
+                    type="primary" @click="crudOperationCode('ruleForm')">确 定</el-button>
           </span>
+
+    </el-dialog>
+
+
+    <!--增删改查选择进度条弹窗-->
+
+    <el-dialog title="选择操作" :visible.sync="crudOperation" width="700">
+
+        <div>
+
+            <el-steps :active="step" finish-status="success">
+                <el-step v-for="type in ruleForm.controllertype ">
+                    <!--<span v-if="type=='1'">增加</span>-->
+                    <!--<span v-if="type=='2'">删除</span>-->
+                    <!--<span v-if="type=='3'">修改</span>-->
+                    <!--<span v-if="type=='4'">详情</span>-->
+                    <!--<span v-if="type=='5'">列表</span>-->
+
+
+                </el-step>
+
+            </el-steps>
+
+            <el-form :model="operationForm" ref="operationForm" :rules="rules" label-width="200px" size="medium">
+                <!--增-->
+                <div v-show="step==0">
+                    <template>
+                        <el-table :data="tableData" style="width: 100%">
+                            <el-table-column prop="name" label="字段名称" width="100"></el-table-column>
+                            <el-table-column prop="type" label="类型" width="70"></el-table-column>
+                            <el-table-column prop="outh" label="权限操作"></el-table-column>
+                        </el-table>
+                    </template>
+                </div>
+                <!--删-->
+                <div v-show="step==1">
+                    <template>
+                        <el-table :data="tableData" style="width: 100%">
+                            <el-table-column prop="name" label="字段名称" width="100"></el-table-column>
+                            <el-table-column prop="type" label="类型" width="70"></el-table-column>
+                            <el-table-column prop="outh" label="权限操作"></el-table-column>
+                        </el-table>
+                    </template>
+                </div>
+                <!--改-->
+                <div v-show="step==2">
+                    <template>
+                        <el-table :data="tableData" style="width: 100%">
+                            <el-table-column prop="name" label="字段名称" width="100"></el-table-column>
+                            <el-table-column prop="type" label="类型" width="70"></el-table-column>
+                            <el-table-column prop="outh" label="权限操作"></el-table-column>
+                        </el-table>
+                    </template>
+                </div>
+                <!--查-->
+                <div v-show="step==3">
+                    <template>
+                        <el-table :data="tableData" style="width: 100%">
+                            <el-table-column prop="name" label="字段名称" width="100"></el-table-column>
+                            <el-table-column prop="type" label="类型" width="70"></el-table-column>
+                            <el-table-column prop="outh" label="权限操作"></el-table-column>
+                        </el-table>
+                    </template>
+                </div>
+                <!--列表-->
+                <div v-show="step==4">
+                    <template>
+                        <el-table :data="tableData" style="width: 100%">
+                            <el-table-column prop="name" label="字段名称" width="100"></el-table-column>
+                            <el-table-column prop="type" label="类型" width="70"></el-table-column>
+                            <el-table-column prop="outh" label="权限操作"></el-table-column>
+                        </el-table>
+                    </template>
+                </div>
+
+            </el-form>
+
+        </div>
+
+        <div slot="footer">
+
+            <el-button v-if="step>0" @click="previousStep" style="margin-top: 12px;" type="primary">上一步</el-button>
+            <el-button @click="nextStep" style="margin-top: 12px;" type="primary">下一步</el-button>
+            <el-button style="margin-top: 12px;" @click="submitAdd('operationForm')" type="primary">提交</el-button>
+            <el-button @click="crudOperation = false" type="primary">取消</el-button>
+        </div>
     </el-dialog>
 
 </div>

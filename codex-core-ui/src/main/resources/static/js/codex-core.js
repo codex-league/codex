@@ -13,37 +13,80 @@ var codex = new Vue({
         host: window.location.host,
         protocol: window.location.protocol,
 
+
         activeName: 'first',
         tablePrefix: null,
         prefixList: null,
         tableList: null,
         crudDialog: false,
+        crudOperation: false,
+
+        step: 0,
+
         row: null,
         package: {},
         ruleForm: {
-            tablePrefix: null
+            tablePrefix: null,
+            controller: '1',
+            controllertype: [],
         },
+
+        operationForm: {
+            addName: '',
+            aType: '',
+            aOuth: '',
+            deleteName: '',
+            dType: '',
+            dOuth: '',
+            createName: '',
+            cType: '',
+            cOuth: '',
+            updateName: '',
+            uType: '',
+            uOuth: '',
+            listName: '',
+            lType: '',
+            lOuth: '',
+
+        },
+        tableData: [{
+            type: 'string',
+            name: 'name',
+            outh: '@NotNull'
+        }, {
+            type: 'int',
+            name: 'age',
+            outh: '@NotNull'
+        }, {
+            type: 'string',
+            name: 'phone',
+            outh: '@NotNull'
+        }, {
+            type: 'string',
+            name: 'email',
+            outh: '@NotNull'
+        }],
+
+
         rules: {
             tablePrefix: [
                 {required: true, message: '请选择一个你需要忽略的表名前缀'},
+            ],
+            controllertype: [
+                {required: true, message: '请选择至少一个你需要的Controller'},
             ]
-        }
+        },
+
     },
     methods: {
         code(row) {
-            if (this.prefixList && this.prefixList.length > 1) { // 大于一以上，需要选择
-                this.crudDialog = true;
-                this.row = row
-            } else {
-                if (this.prefixList && this.prefixList.length === 1) {
-                    this.tablePrefix = this.prefixList[0]
-                }
-                this.generatorCode(row);
-            }
+            this.crudDialog = true;
+            this.row = row
         },
         crudDialogCode(formName) {
             var _this = this;
             console.log(this.$refs[formName]);
+
             this.$refs[formName].validate(function (valid) {
                 if (valid) {
                     _this.crudDialog = false;
@@ -54,28 +97,26 @@ var codex = new Vue({
                     })
                 }
             });
-        },
-        generatorCode(row) {
-            var _this = this;
 
-            this.$confirm('确定要生成CRUD代码吗？, 是否继续?', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-            }).then(function () {
-                window.location.href = "/codex/code/" + row.tableName + "?tablePrefix=" + _this.tablePrefix;
-                _this.$message({
-                    type: 'success',
-                    message: '正在下载!'
-                })
-
-            }).catch(function () {
-                _this.$message({
-                    type: 'info',
-                    message: '操作已取消'
-                })
-            })
         },
+        crudOperationCode(formName) {
+            this.crudOperation = true;
+
+        },
+
+        //上一步
+        previousStep() {
+            this.step--;
+        },
+        //下一步
+        nextStep() {
+
+        },
+        //提交
+        submitAdd(formName) {
+
+        },
+
         handleChange(val) {
             console.log(val);
         },

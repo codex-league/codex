@@ -3,7 +3,7 @@ server:
 
 codex:
   jdbc:
-    url: jdbc:mysql://localhost:3306/longmarch
+    url: jdbc:mysql://10.240.4.27:3306/longmarch
     username: root
     password: admin
     driverClassName: com.mysql.jdbc.Driver
@@ -13,6 +13,6 @@ codex:
     mapperXML-path: werwer3
     service-path: werwer4
     serviceImpl-path: werwer5
-  prefix: cz_,czl,xxxxxxx
+#  prefix: cz_,czl,xxxxxxx
 apix:
   controllerPackage: text.codex.controller

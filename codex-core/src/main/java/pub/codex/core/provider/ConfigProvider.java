@@ -7,7 +7,7 @@ public class ConfigProvider {
 
     private PackageInfo packageInfo;
 
-    @Value("${codex.prefix}")
+    @Value(value = "${codex.prefix:}")
     private String prefix;
 
     public ConfigProvider(PackageInfo packageInfo) {
