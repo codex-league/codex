@@ -40,7 +40,7 @@ public class TableCodexTemplateStream {
 
         //遍历
         tableCodexTemplateList.stream().forEach(tableCodexTemplate -> {
-            tableCodexTemplate.buildTemplate(table, columns, tablePrefix, zip);
+            tableCodexTemplate.buildTemplateEntity(table, columns, tablePrefix, zip);
         });
 
         IOUtils.closeQuietly(zip);

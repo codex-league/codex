@@ -49,7 +49,7 @@ public abstract class TableCodexTemplate extends BaseTableCodexTemplate {
      * @param columns
      * @param zip
      */
-    public void buildTemplate(Map<String, String> table, List<Map<String, String>> columns, String tablePrefix, ZipOutputStream zip) {
+    public void buildTemplateEntity(Map<String, String> table, List<Map<String, String>> columns, String tablePrefix, ZipOutputStream zip) {
 
         // 表信息
         tableEntity.setTableName(table.get("tableName"));

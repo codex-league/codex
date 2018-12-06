@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pub.codex.common.db.jdbc.TableDao;
 import pub.codex.common.models.CodexResult;
+import pub.codex.core.column.InfoColumn;
 import pub.codex.core.provider.ConfigProvider;
 import pub.codex.core.template.stream.template.BaseTableCodexTemplate;
 import pub.codex.core.template.stream.template.TableCodexTemplateStream;
@@ -70,30 +71,26 @@ public class CodexcController {
     @GetMapping("/codex/info/{tableName}")
     public CodexResult infoResponse(@PathVariable String tableName){
         List<Map<String, String>> columns = (List<Map<String, String>>) tableDao.queryColumns(tableName);
-        List<ColumnEntity> columsList = new ArrayList<>();
+        List<InfoColumn> infoList = new ArrayList<>();
         for (Map<String, String> column : columns) {
-            ColumnEntity columnEntity = new ColumnEntity();
-            columnEntity.setColumnName(column.get("columnName"));
-            columnEntity.setDataType(column.get("dataType"));
-            columnEntity.setComments(column.get("columnComment"));
-            columnEntity.setExtra(column.get("extra"));
+            InfoColumn infoColumn = new InfoColumn();
+            infoColumn.setComments(column.get("columnComment"));
 
             //列名转换成Java属性名
-            String attrName = new BaseTableCodexTemplate().columnToJava(columnEntity.getColumnName());
-            columnEntity.setAttrName(attrName);
-            columnEntity.setAttrname(StringUtils.uncapitalize(attrName));
+            String attrName = new BaseTableCodexTemplate().columnToJava(column.get("columnName"));
+            infoColumn.setAttrname(StringUtils.uncapitalize(attrName));
 
             //列的数据类型，转换成Java类型
-            String attrType = new BaseTableCodexTemplate().getConfig().getString(columnEntity.getDataType(), "unknowType");
-            columnEntity.setAttrType(attrType);
+            String attrType = new BaseTableCodexTemplate().getConfig().getString(column.get("dataType"), "unknowType");
+            infoColumn.setAttrType(attrType);
 
             //是否主键
             if ("PRI".equalsIgnoreCase(column.get("columnKey"))) {
-                columnEntity.setPrimary("primary");
+                infoColumn.setPrimary("primary");
             }
-            columsList.add(columnEntity);
+            infoList.add(infoColumn);
         }
-        return CodexResult.ok().put("info",columsList);
+        return CodexResult.ok().put("info",infoList);
     }
 
 //    @PostMapping("/codex/generate")

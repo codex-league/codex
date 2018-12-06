@@ -1,11 +1,9 @@
 package pub.codex.common.db.entity;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * 列的属性
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ColumnEntity {
     //列名
     private String columnName;
@@ -27,17 +25,6 @@ public class ColumnEntity {
 
     //auto_increment
     private String extra;
-
-    //主键标识
-    private String primary;
-
-    public String getPrimary() {
-        return primary;
-    }
-
-    public void setPrimary(String primary) {
-        this.primary = primary;
-    }
 
     public String getColumnName() {
         return columnName;
