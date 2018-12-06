@@ -130,12 +130,10 @@
                 </el-form-item>
                 <el-form-item v-if="ruleForm.controller === '1'" label="请选择Controller的类型" required
                               prop="controllertype">
+                    {{ruleForm.controllertype}}
                     <el-checkbox-group v-model="ruleForm.controllertype" size="medium" prpo="controllertype">
-                        <el-checkbox label="1增加"></el-checkbox>
-                        <el-checkbox label="2">删除</el-checkbox>
-                        <el-checkbox label="3">修改</el-checkbox>
-                        <el-checkbox label="4">详情</el-checkbox>
-                        <el-checkbox label="5">列表</el-checkbox>
+
+                        <el-checkbox v-for="(name, key) in interfaces" :label="key">{{name}}</el-checkbox>
                     </el-checkbox-group>
                 </el-form-item>
             </el-form>
@@ -146,7 +144,7 @@
             <el-button v-if="ruleForm.controller === '2'" type="primary"
                        @click="crudDialogCode('ruleForm')">确 定</el-button>
             <el-button
-                    v-if="ruleForm.controller === '1'&& !!ruleForm.controllertype && ruleForm.controllertype.length > 0"
+                    v-if="ruleForm.controller === '1' && !!ruleForm.controllertype && ruleForm.controllertype.length > 0"
                     type="primary" @click="crudOperationCode('ruleForm')">确 定</el-button>
           </span>
 
@@ -159,71 +157,31 @@
 
         <div>
 
-            <el-steps :active="step" finish-status="success">
-                <el-step v-for="type in ruleForm.controllertype ">
-                    <!--<span v-if="type=='1'">增加</span>-->
-                    <!--<span v-if="type=='2'">删除</span>-->
-                    <!--<span v-if="type=='3'">修改</span>-->
-                    <!--<span v-if="type=='4'">详情</span>-->
-                    <!--<span v-if="type=='5'">列表</span>-->
-
-
-                </el-step>
-
+            <el-steps :active="step" align-center finish-status="success">
+                <el-step :title="type.name"  v-for="type in modules"> </el-step>
             </el-steps>
 
             <el-form :model="operationForm" ref="operationForm" :rules="rules" label-width="200px" size="medium">
-                <!--增-->
-                <div v-show="step==0">
+                <div v-for="(obj, key,index) in modules" v-show="step == index" >
                     <template>
-                        <el-table :data="tableData" style="width: 100%">
-                            <el-table-column prop="name" label="字段名称" width="100"></el-table-column>
-                            <el-table-column prop="type" label="类型" width="70"></el-table-column>
-                            <el-table-column prop="outh" label="权限操作"></el-table-column>
+                        <el-table :data="obj.tableData" style="width: 100%">
+                            <el-table-column prop="attrname" label="字段名称" width="150"></el-table-column>
+                            <el-table-column prop="attrType" label="类型" width="70"></el-table-column>
+                            <el-table-column prop="attrType" label="注释" width="70"></el-table-column>
+                            <el-table-column label="注解">
+                                <template slot-scope="scope">
+                                    <el-select placeholder="请选择" v-model="scope.row.annotation">
+                                        <el-option
+                                                v-for="item in options"
+                                                :label="item.label"
+                                                :value="item.value">
+                                        </el-option>
+                                    </el-select>
+                                </template>
+                            </el-table-column>
                         </el-table>
                     </template>
                 </div>
-                <!--删-->
-                <div v-show="step==1">
-                    <template>
-                        <el-table :data="tableData" style="width: 100%">
-                            <el-table-column prop="name" label="字段名称" width="100"></el-table-column>
-                            <el-table-column prop="type" label="类型" width="70"></el-table-column>
-                            <el-table-column prop="outh" label="权限操作"></el-table-column>
-                        </el-table>
-                    </template>
-                </div>
-                <!--改-->
-                <div v-show="step==2">
-                    <template>
-                        <el-table :data="tableData" style="width: 100%">
-                            <el-table-column prop="name" label="字段名称" width="100"></el-table-column>
-                            <el-table-column prop="type" label="类型" width="70"></el-table-column>
-                            <el-table-column prop="outh" label="权限操作"></el-table-column>
-                        </el-table>
-                    </template>
-                </div>
-                <!--查-->
-                <div v-show="step==3">
-                    <template>
-                        <el-table :data="tableData" style="width: 100%">
-                            <el-table-column prop="name" label="字段名称" width="100"></el-table-column>
-                            <el-table-column prop="type" label="类型" width="70"></el-table-column>
-                            <el-table-column prop="outh" label="权限操作"></el-table-column>
-                        </el-table>
-                    </template>
-                </div>
-                <!--列表-->
-                <div v-show="step==4">
-                    <template>
-                        <el-table :data="tableData" style="width: 100%">
-                            <el-table-column prop="name" label="字段名称" width="100"></el-table-column>
-                            <el-table-column prop="type" label="类型" width="70"></el-table-column>
-                            <el-table-column prop="outh" label="权限操作"></el-table-column>
-                        </el-table>
-                    </template>
-                </div>
-
             </el-form>
 
         </div>
@@ -231,9 +189,9 @@
         <div slot="footer">
 
             <el-button v-if="step>0" @click="previousStep" style="margin-top: 12px;" type="primary">上一步</el-button>
-            <el-button @click="nextStep" style="margin-top: 12px;" type="primary">下一步</el-button>
-            <el-button style="margin-top: 12px;" @click="submitAdd('operationForm')" type="primary">提交</el-button>
-            <el-button @click="crudOperation = false" type="primary">取消</el-button>
+            <el-button v-if="ruleForm.controllertype.length - 1 > step" @click="nextStep" style="margin-top: 12px;" type="primary">下一步</el-button>
+            <el-button v-if="!(ruleForm.controllertype.length - 1 > step)" style="margin-top: 12px;" @click="submitAdd('operationForm') ;step = 0 " type="primary">提&nbsp;&nbsp;&nbsp;&nbsp;交</el-button>
+            <el-button @click="crudOperation = false;step = 0 " type="primary">取 消</el-button>
         </div>
     </el-dialog>
 

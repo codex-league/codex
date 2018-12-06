@@ -4,6 +4,13 @@ var codex = new Vue({
         message: 'Code-X 让程序员喝茶的朋友',
 
         active: ["1", "2"],
+        interfaces: {
+            add: "增加",
+            update: "修改",
+            del: "删除",
+            detail: "详情",
+            list: "列表"
+        },
         apis: {},
         api: {},
         isNotice: true,
@@ -12,7 +19,7 @@ var codex = new Vue({
         activeNames: null,
         host: window.location.host,
         protocol: window.location.protocol,
-
+        modules: {},
 
         activeName: 'first',
         tablePrefix: null,
@@ -31,40 +38,21 @@ var codex = new Vue({
             controllertype: [],
         },
 
-        operationForm: {
-            addName: '',
-            aType: '',
-            aOuth: '',
-            deleteName: '',
-            dType: '',
-            dOuth: '',
-            createName: '',
-            cType: '',
-            cOuth: '',
-            updateName: '',
-            uType: '',
-            uOuth: '',
-            listName: '',
-            lType: '',
-            lOuth: '',
-
-        },
+        operationForm: {},
         tableData: [{
-            type: 'string',
-            name: 'name',
-            outh: '@NotNull'
+            attrType: '',
+            attrname: '',
+        }],
+        value: '',
+        options: [{
+            value: '@NotNull',
+            label: '@NotNull'
         }, {
-            type: 'int',
-            name: 'age',
-            outh: '@NotNull'
+            value: '@NotBlank',
+            label: '@NotBlank'
         }, {
-            type: 'string',
-            name: 'phone',
-            outh: '@NotNull'
-        }, {
-            type: 'string',
-            name: 'email',
-            outh: '@NotNull'
+            value: '',
+            label: '（空） '
         }],
 
 
@@ -82,6 +70,17 @@ var codex = new Vue({
         code(row) {
             this.crudDialog = true;
             this.row = row
+
+            //这里异步获取
+            var _this = this;
+            (function () {
+                Vue.http.get('/codex/info/' + _this.row.tableName).then(function (response) {
+                    if (response.ok) {
+                        _this.info = response.body.info;
+
+                    }
+                })
+            })();
         },
         crudDialogCode(formName) {
             var _this = this;
@@ -99,11 +98,15 @@ var codex = new Vue({
             });
 
         },
-        crudOperationCode(formName) {
+        crudOperationCode: function (formName) {
             var _this = this;
-            window.location.href = "/codex/info/" + _this.row.tableName;
-
-            this.crudOperation = true;
+            for(var i in _this.ruleForm.controllertype){
+                _this.modules[_this.ruleForm.controllertype[i]] = {
+                    tableData:  JSON.parse(JSON.stringify(_this.info)),
+                    name: _this.interfaces[_this.ruleForm.controllertype[i]]
+                }
+            }
+            _this.crudOperation = true;
 
         },
 
@@ -113,7 +116,9 @@ var codex = new Vue({
         },
         //下一步
         nextStep() {
-
+            if (this.step++ > this.ruleForm.controllertype.length) {
+                this.step = 0;
+            }
         },
         //提交
         submitAdd(formName) {
@@ -124,8 +129,6 @@ var codex = new Vue({
             console.log(val);
         },
         countIndex: function (index, index1, index2) { // 计算索引组合
-
-
             var i = "";
             if (index != null) {
                 i = i + index
