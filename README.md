@@ -76,6 +76,7 @@ codex:
     mapperXML-path: mapper
     service-path: pub.codex.db.service
     serviceImpl-path: pub.codex.db.service.impl
+    controller-path: pub.codex.controller
   prefix: t_,tb_,test_
 apix:
   controllerPackage: pub.codex.controller
@@ -116,6 +117,7 @@ apix:
 - package.service-path: 设置你的service的位置
 - package.serviceImpl-path: 设置你的service实现的位置
 - package.mapperXML-path: 设置你的mapper.xml的位置
+- package.controller-path: 设置你的controller的位置
 - prefix: 忽略表的前缀(可添加多个 按逗号分割)
 
 ```yml
@@ -131,6 +133,7 @@ codex:
     mapperXML-path: mapper
     service-path: pub.codex.db.service
     serviceImpl-path: pub.codex.db.service.impl
+    controller-path: pub.codex.controller
   prefix: t_,tb_,test_
 
 ```
