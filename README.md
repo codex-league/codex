@@ -20,8 +20,7 @@
 ### 3.1 引入依赖
 
 > 已经发布至maven中央库，阿里云maven均可获取: https://search.maven.org/search?q=pub.codex
-当前版本最新 2.1.1  
-即将不久发布新版本2.2.0  
+当前版本最新 3.0.0.release  
 
 
 > gradle：
