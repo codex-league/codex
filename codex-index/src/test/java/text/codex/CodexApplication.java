@@ -1,14 +1,9 @@
 package text.codex;
 
 
-import pub.codex.index.EnableCodexLeague;
-
-import pub.codex.core.CodexAutoConfigProvider;
-import pub.codex.index.EnableCodexLeague;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Import;
+import pub.codex.index.EnableCodexLeague;
 
 
 @SpringBootApplication

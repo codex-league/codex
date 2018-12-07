@@ -1,14 +1,15 @@
-package pub.codex.core.column;
+package pub.codex.common.models;
 
-public class BaseColumn {
+
+public class InfoColumn {
     //字段名
     private String attrname;
     //字段类型
     private String attrType;
     //字段注释
     private String comments;
-    //注解
-    private String annotation;
+    //主键标识
+    private String primary;
 
     public String getAttrname() {
         return attrname;
@@ -34,11 +35,11 @@ public class BaseColumn {
         this.comments = comments;
     }
 
-    public String getAnnotation() {
-        return annotation;
+    public String getPrimary() {
+        return primary;
     }
 
-    public void setAnnotation(String annotation) {
-        this.annotation = annotation;
+    public void setPrimary(String primary) {
+        this.primary = primary;
     }
 }

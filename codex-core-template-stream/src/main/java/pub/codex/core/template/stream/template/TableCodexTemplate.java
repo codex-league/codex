@@ -8,9 +8,9 @@ import pub.codex.common.CodexException;
 import pub.codex.common.Constant;
 import pub.codex.common.db.entity.ColumnEntity;
 import pub.codex.common.db.entity.TableEntity;
-import pub.codex.core.column.BaseColumn;
-import pub.codex.core.column.ControllerColumn;
-import pub.codex.core.column.FieldColumn;
+import pub.codex.common.models.BaseColumn;
+import pub.codex.common.models.ControllerColumn;
+import pub.codex.common.models.FieldColumn;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -86,7 +86,7 @@ public abstract class TableCodexTemplate extends BaseTableCodexTemplate {
             columnEntity.setAttrType(attrType);
 
             if (controllerColumn != null) {
-                annotationList = combAnnotation(controllerColumn, columnEntity.getAttrname(),columnEntity.getComments());
+                annotationList = combAnnotation(controllerColumn, columnEntity.getAttrname(), columnEntity.getComments());
             }
             columnEntity.setAnnotationList(annotationList);
 
@@ -123,24 +123,24 @@ public abstract class TableCodexTemplate extends BaseTableCodexTemplate {
         findAnnotation(controllerColumn.getUpdate(), Constant.interfaceConstant.UPDATE.getValue(), column, map);
         findAnnotation(controllerColumn.getList(), Constant.interfaceConstant.LIST.getValue(), column, map);
         //todo 目前只处理@NotNull,@NotBlank,@NotEmpty,@Null,@Pattern和@ApiModelProperty
-        annotationFactory(annotation, map, Constant.annotationConatant.NOTNULL,null);
-        annotationFactory(annotation, map, Constant.annotationConatant.NOTBLANK,null);
-        annotationFactory(annotation, map, Constant.annotationConatant.NOTEMPTY,null);
-        annotationFactory(annotation, map, Constant.annotationConatant.NULL,null);
-        annotationFactory(annotation, map, Constant.annotationConatant.PATTERN,null);
-        annotationFactory(annotation, map, Constant.annotationConatant.APIMODELPROPERTY,comments);
+        annotationFactory(annotation, map, Constant.annotationConatant.NOTNULL, null);
+        annotationFactory(annotation, map, Constant.annotationConatant.NOTBLANK, null);
+        annotationFactory(annotation, map, Constant.annotationConatant.NOTEMPTY, null);
+        annotationFactory(annotation, map, Constant.annotationConatant.NULL, null);
+        annotationFactory(annotation, map, Constant.annotationConatant.PATTERN, null);
+        annotationFactory(annotation, map, Constant.annotationConatant.APIMODELPROPERTY, comments);
         return annotation;
     }
 
-    private void annotationFactory(List<String> annotation, Map<String, StringBuffer> map, Constant.annotationConatant annoEnum,String comments) {
-        if (map.get(annoEnum.getValue()) != null&&!annoEnum.getValue().equals(Constant.annotationConatant.APIMODELPROPERTY.getValue())) {
+    private void annotationFactory(List<String> annotation, Map<String, StringBuffer> map, Constant.annotationConatant annoEnum, String comments) {
+        if (map.get(annoEnum.getValue()) != null && !annoEnum.getValue().equals(Constant.annotationConatant.APIMODELPROPERTY.getValue())) {
             StringBuffer stringBuffer = map.get(annoEnum.getValue());
             annotation.add(annoEnum.getValue() + "(groups = {" + stringBuffer.deleteCharAt(stringBuffer.length() - 1) + "})");
         }
-        if(map.get(annoEnum.getValue())!=null&&annoEnum.getValue().equals(Constant.annotationConatant.APIMODELPROPERTY.getValue())){
+        if (map.get(annoEnum.getValue()) != null && annoEnum.getValue().equals(Constant.annotationConatant.APIMODELPROPERTY.getValue())) {
             StringBuffer groupAnno = map.get(annoEnum.getValue());
-            if(comments!=null&&!comments.equals("")){
-                annotation.add(Constant.annotationConatant.APIMODELPROPERTY.getValue() + "(\""+comments+"\",groups = {" + groupAnno.deleteCharAt(groupAnno.length() - 1) + "})");
+            if (comments != null && !comments.equals("")) {
+                annotation.add(Constant.annotationConatant.APIMODELPROPERTY.getValue() + "(\"" + comments + "\",groups = {" + groupAnno.deleteCharAt(groupAnno.length() - 1) + "})");
             }
         }
     }

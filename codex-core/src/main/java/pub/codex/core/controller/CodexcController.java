@@ -2,20 +2,17 @@ package pub.codex.core.controller;
 
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import pub.codex.common.db.jdbc.TableDao;
 import pub.codex.common.models.CodexResult;
-import pub.codex.core.column.BaseColumn;
-import pub.codex.core.column.ControllerColumn;
-import pub.codex.core.column.InfoColumn;
+import pub.codex.common.models.ControllerColumn;
+import pub.codex.common.models.InfoColumn;
 import pub.codex.core.provider.ConfigProvider;
 import pub.codex.core.template.stream.template.BaseTableCodexTemplate;
 import pub.codex.core.template.stream.template.TableCodexTemplateStream;
-import org.springframework.util.StringUtils;
-import pub.codex.common.db.entity.ColumnEntity;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -57,6 +54,7 @@ public class CodexcController {
 
     /**
      * 获取表项数据
+     *
      * @param tableName
      * @return
      */
@@ -96,7 +94,7 @@ public class CodexcController {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         ZipOutputStream zip = new ZipOutputStream(outputStream);
 
-        tableCodexTemplateStream.doTemplate(tableName, null,tablePrefix, zip);
+        tableCodexTemplateStream.doTemplate(tableName, null, tablePrefix, zip);
 
         IOUtils.closeQuietly(zip);
         byte[] data = outputStream.toByteArray();
@@ -111,24 +109,24 @@ public class CodexcController {
 
     /**
      * 生成代码（含controller）
+     *
      * @param response
      * @param tableName
      * @param tablePrefix
-
      * @throws IOException
      */
     @PostMapping("/codex/generate/{tableName}")
     public void createController(HttpServletRequest request, HttpServletResponse response, @PathVariable String tableName, @RequestParam(required = false) String tablePrefix
-                                 ) throws IOException {
+    ) throws IOException {
 
         String dataBody = (String) request.getParameter("data");
 
-        ControllerColumn controllerColumn = JSON.parseObject(dataBody,ControllerColumn.class);
+        ControllerColumn controllerColumn = JSON.parseObject(dataBody, ControllerColumn.class);
         // 压缩包
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         ZipOutputStream zip = new ZipOutputStream(outputStream);
 
-        tableCodexTemplateStream.doTemplate(tableName,controllerColumn, tablePrefix, zip);
+        tableCodexTemplateStream.doTemplate(tableName, controllerColumn, tablePrefix, zip);
 
         IOUtils.closeQuietly(zip);
         byte[] data = outputStream.toByteArray();

@@ -1,4 +1,4 @@
-package pub.codex.core.column;
+package pub.codex.common.models;
 
 public class ControllerColumn {
     private FieldColumn add;

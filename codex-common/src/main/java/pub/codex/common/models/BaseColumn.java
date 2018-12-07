@@ -1,17 +1,18 @@
-package pub.codex.core.column;
+package pub.codex.common.models;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+public class BaseColumn {
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class InfoColumn {
     //字段名
     private String attrname;
+
     //字段类型
     private String attrType;
+
     //字段注释
     private String comments;
-    //主键标识
-    private String primary;
+
+    //注解
+    private String annotation;
 
     public String getAttrname() {
         return attrname;
@@ -37,11 +38,11 @@ public class InfoColumn {
         this.comments = comments;
     }
 
-    public String getPrimary() {
-        return primary;
+    public String getAnnotation() {
+        return annotation;
     }
 
-    public void setPrimary(String primary) {
-        this.primary = primary;
+    public void setAnnotation(String annotation) {
+        this.annotation = annotation;
     }
 }

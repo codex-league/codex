@@ -1,12 +1,10 @@
 package pub.codex.core.template.stream.template;
 
-import org.apache.commons.io.IOUtils;
-import pub.codex.common.db.jdbc.TableDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pub.codex.core.column.ControllerColumn;
+import pub.codex.common.db.jdbc.TableDao;
+import pub.codex.common.models.ControllerColumn;
 
-import java.io.ByteArrayOutputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipOutputStream;
@@ -37,7 +35,7 @@ public class TableCodexTemplateStream {
 
         //遍历
         tableCodexTemplateList.stream().forEach(tableCodexTemplate -> {
-            tableCodexTemplate.buildTemplateEntity(table, columns,controllerColumn, tablePrefix, zip);
+            tableCodexTemplate.buildTemplateEntity(table, columns, controllerColumn, tablePrefix, zip);
         });
     }
 

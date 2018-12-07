@@ -10,4 +10,5 @@ dependencies {
     compile('org.webjars.npm:element-ui:2.4.8')
     testCompile('org.springframework.boot:spring-boot-starter-web')
     testCompile project(':codex-core-template-mybatis-plus')
+
 }
