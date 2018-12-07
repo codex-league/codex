@@ -49,3 +49,9 @@ li{
 input,img{
     border: none;
 }
+
+.dialog-body{
+    border-top: 1px solid rgb(238, 239, 255);
+    margin-top: -20px;
+    padding: 20px;
+}

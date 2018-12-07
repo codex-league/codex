@@ -11,7 +11,7 @@
 
     <link rel="stylesheet" href="/webjars/element-ui/2.4.8/lib/theme-chalk/index.css">
     <link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="css/commmon.css"/>
+    <link rel="stylesheet" href="css/codex-core.css"/>
 
 </head>
 <body>
@@ -107,10 +107,10 @@
     </el-row>
 
     <!--是否生成controller弹窗-->
-    <el-dialog title="准备生成CRUD" :visible.sync="crudDialog" width="700">
+    <el-dialog title="准备生成CRUD" :visible.sync="crudDialog" width="900">
 
-        <div>
-            <el-form :model="ruleForm" ref="ruleForm" :rules="rules" label-width="200px" size="medium">
+        <div class="dialog-body">
+            <el-form :model="ruleForm" ref="ruleForm" :rules="rules" label-width="200px" size="medium" border>
                 <el-form-item label="您选择的表名：">
                     <span style="font-size: 16px" v-if="row">{{row.tableName}}</span>
                 </el-form-item>
@@ -122,16 +122,16 @@
                         <el-radio v-for="prefix in prefixList" :label="prefix" border>{{prefix}}</el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item label="请选择是否生成Controller" required prop="controller">
+                <el-form-item label="请选择是否生成Controller:" required prop="controller">
                     <el-radio-group v-model="ruleForm.controller" size="medium" prpo="controller">
                         <el-radio label="1" border>是</el-radio>
                         <el-radio label="2" border>否</el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item v-if="ruleForm.controller === '1'" label="请选择Controller的类型" required
+                <el-form-item v-if="ruleForm.controller === '1'" label="请选择Controller的类型:" required
                               prop="controllertype">
-                    {{ruleForm.controllertype}}
-                    <el-checkbox-group v-model="ruleForm.controllertype" size="medium" prpo="controllertype">
+                    <el-checkbox-group style="padding-top: 8px;" v-model="ruleForm.controllertype" size="medium"
+                                       prpo="controllertype">
 
                         <el-checkbox v-for="(name, key) in interfaces" :label="key">{{name}}</el-checkbox>
                     </el-checkbox-group>
@@ -153,24 +153,22 @@
 
     <!--增删改查选择进度条弹窗-->
 
-    <el-dialog title="选择操作" :visible.sync="crudOperation" width="700">
+    <el-dialog title="接口预览" :visible.sync="crudOperation" width="900">
 
-        <div>
-
+        <div  class="dialog-body">
             <el-steps :active="step" align-center finish-status="success">
-                <el-step :title="type.name"  v-for="type in modules"> </el-step>
+                <el-step :title="type.name+'接口'" v-for="type in modules"></el-step>
             </el-steps>
-
             <el-form :model="operationForm" ref="operationForm" :rules="rules" label-width="200px" size="medium">
-                <div v-for="(obj, key,index) in modules" v-show="step == index" >
+                <div style="padding-top: 30px" v-for="(obj, key,index) in modules" v-show="step == index">
                     <template>
                         <el-table :data="obj.tableData" style="width: 100%">
-                            <el-table-column prop="attrname" label="字段名称" width="150"></el-table-column>
-                            <el-table-column prop="attrType" label="类型" width="70"></el-table-column>
-                            <el-table-column prop="attrType" label="注释" width="70"></el-table-column>
+                            <el-table-column prop="attrType" label="类型" width="120"></el-table-column>
+                            <el-table-column prop="attrname" align-center  label="字段名称" width="200"></el-table-column>
+                            <el-table-column prop="comments" label="注释" width="249"></el-table-column>
                             <el-table-column label="注解">
                                 <template slot-scope="scope">
-                                    <el-select placeholder="请选择" v-model="scope.row.annotation">
+                                    <el-select placeholder="不显示" v-model="scope.row.annotation">
                                         <el-option
                                                 v-for="item in options"
                                                 :label="item.label"
@@ -189,8 +187,13 @@
         <div slot="footer">
 
             <el-button v-if="step>0" @click="previousStep" style="margin-top: 12px;" type="primary">上一步</el-button>
-            <el-button v-if="ruleForm.controllertype.length - 1 > step" @click="nextStep" style="margin-top: 12px;" type="primary">下一步</el-button>
-            <el-button v-if="!(ruleForm.controllertype.length - 1 > step)" style="margin-top: 12px;" @click="submitAdd('operationForm') ;step = 0 " type="primary">提&nbsp;&nbsp;&nbsp;&nbsp;交</el-button>
+            <el-button v-if="ruleForm.controllertype.length - 1 > step" @click="nextStep" style="margin-top: 12px;"
+                       type="primary">下一步
+            </el-button>
+            <el-button v-if="!(ruleForm.controllertype.length - 1 > step)" style="margin-top: 12px;"
+                       @click="submitAdd('operationForm') ;crudOperation = false;crudDialog = false; step = 0 "
+                       type="primary">提&nbsp;&nbsp;&nbsp;&nbsp;交
+            </el-button>
             <el-button @click="crudOperation = false;step = 0 " type="primary">取 消</el-button>
         </div>
     </el-dialog>

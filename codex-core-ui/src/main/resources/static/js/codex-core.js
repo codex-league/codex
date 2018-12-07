@@ -42,18 +42,41 @@ var codex = new Vue({
         tableData: [{
             attrType: '',
             attrname: '',
+            comments: ''
         }],
         value: '',
-        options: [{
-            value: '@NotNull',
-            label: '@NotNull'
-        }, {
+        options: [{value: '@ApiModelProperty', label: '选填'}, {value: '@NotNull', label: '@NotNull'}, {
             value: '@NotBlank',
             label: '@NotBlank'
         }, {
-            value: '',
-            label: '（空） '
-        }],
+            value: '@NotEmpty',
+            label: '@NotEmpty'
+        }, {value: '@Null', label: '@Null'}, {value: '@Pattern', label: '@Pattern'}, {value: '@Max', label: '@Max'}, {
+            value: '@Min',
+            label: '@Min'
+        }, {value: '@Digits', label: '@Digits'}, {value: '@Email', label: '@Email'}, {
+            value: '@Future',
+            label: '@Future'
+        }, {
+            value: '@AssertFalse',
+            label: '@AssertFalse'
+        }, {value: '@AssertTrue', label: '@AssertTrue'}, {value: '@DecimalMax', label: '@DecimalMax'}, {
+            value: '@DecimalMin',
+            label: '@DecimalMin'
+        }, {value: '@Size', label: '@Size'}, {
+            value: '@FutureOrPresent',
+            label: '@FutureOrPresent'
+        }, {value: '@Negative', label: '@Negative'}, {
+            value: '@NegativeOrZero',
+            label: '@NegativeOrZero'
+        }, {
+            value: '@Past',
+            label: '@Past'
+        }, {value: '@PastOrPresent', label: '@PastOrPresent'}, {
+            value: '@Positive',
+            label: '@Positive'
+        }, {value: '@PositiveOrZero', label: '@PositiveOrZero'}
+        ],
 
 
         rules: {
@@ -99,10 +122,22 @@ var codex = new Vue({
 
         },
         crudOperationCode: function (formName) {
+
+            const loading = this.$loading({
+                lock: true,
+                text: 'Loading',
+                spinner: 'el-icon-loading',
+                background: 'rgba(0, 0, 0, 0.7)'
+            });
+            setTimeout(() => {
+                loading.close();
+            }, 2000);
+
             var _this = this;
-            for(var i in _this.ruleForm.controllertype){
+            _this.modules = {};
+            for (var i in _this.ruleForm.controllertype) {
                 _this.modules[_this.ruleForm.controllertype[i]] = {
-                    tableData:  JSON.parse(JSON.stringify(_this.info)),
+                    tableData: JSON.parse(JSON.stringify(_this.info)),
                     name: _this.interfaces[_this.ruleForm.controllertype[i]]
                 }
             }
