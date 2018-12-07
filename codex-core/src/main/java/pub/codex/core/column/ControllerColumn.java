@@ -1,55 +1,53 @@
 package pub.codex.core.column;
 
-import java.util.List;
-
 public class ControllerColumn {
-    List<BaseColumn> add;
+    private AddColumn add;
 
-    List<BaseColumn> del;
+    private DeleteColumn del;
 
-    List<BaseColumn> detail;
+    private DetailColumn detail;
 
-    List<BaseColumn> update;
+    private UpdateColumn update;
 
-    List<BaseColumn> list;
+    private ListColumn list;
 
-    public List<BaseColumn> getAdd() {
+    public AddColumn getAdd() {
         return add;
     }
 
-    public void setAdd(List<BaseColumn> add) {
+    public void setAdd(AddColumn add) {
         this.add = add;
     }
 
-    public List<BaseColumn> getDel() {
+    public DeleteColumn getDel() {
         return del;
     }
 
-    public void setDel(List<BaseColumn> del) {
+    public void setDel(DeleteColumn del) {
         this.del = del;
     }
 
-    public List<BaseColumn> getDetail() {
+    public DetailColumn getDetail() {
         return detail;
     }
 
-    public void setDetail(List<BaseColumn> detail) {
+    public void setDetail(DetailColumn detail) {
         this.detail = detail;
     }
 
-    public List<BaseColumn> getUpdate() {
+    public UpdateColumn getUpdate() {
         return update;
     }
 
-    public void setUpdate(List<BaseColumn> update) {
+    public void setUpdate(UpdateColumn update) {
         this.update = update;
     }
 
-    public List<BaseColumn> getList() {
+    public ListColumn getList() {
         return list;
     }
 
-    public void setList(List<BaseColumn> list) {
+    public void setList(ListColumn list) {
         this.list = list;
     }
 }
