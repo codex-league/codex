@@ -25,8 +25,8 @@ public class ${className}Entity implements Serializable {
 	#if($column.columnName == $pk.columnName)
 	@TableId
 	#end
-	#if($column.annotationList != null)
-	$column.annotationList
+	#if(!${column.annotationList})
+	${column.annotationList}
 	#end
 	private $column.attrType $column.attrname;
 #end
