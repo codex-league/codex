@@ -1,6 +1,8 @@
 package pub.codex.common.db.entity;
 
 
+import java.util.List;
+
 /**
  * 列的属性
  */
@@ -25,6 +27,8 @@ public class ColumnEntity {
 
     //auto_increment
     private String extra;
+
+    private StringBuffer annotationList;
 
     public String getColumnName() {
         return columnName;
@@ -80,5 +84,13 @@ public class ColumnEntity {
 
     public void setExtra(String extra) {
         this.extra = extra;
+    }
+
+    public StringBuffer getAnnotationList() {
+        return annotationList;
+    }
+
+    public void setAnnotationList(StringBuffer annotationList) {
+        this.annotationList = annotationList;
     }
 }

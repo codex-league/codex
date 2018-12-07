@@ -1,0 +1,52 @@
+package ${controllerPackagePath};
+
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import pub.codex.common.models.R;
+import pub.codex.apix.annotations.group.VG;
+import ${entityPackagePath}.${className}Entity;
+import ${servicePackagePath}.${className}Service;
+
+/**
+ * ${comments}
+ *
+ * @date ${datetime}
+ */
+@RestController
+public class ${className}Controller {
+
+    @Autowired
+    ${className}Service ${classname}Service;
+
+    @PostMapping("/"+${className}+"/add")
+    public R add(@RequestBody @Validated(VG.Add.class)${className}Entity ${classname}Entity) {
+
+    }
+
+    @PostMapping("/"+${className}+"/delete")
+    public R delete(@RequestBody @Validated(VG.Delete.class)${className}Entity ${classname}Entity) {
+
+
+    }
+
+    @PostMapping("/"+${className}+"/update")
+    public R update(@RequestBody @Validated(VG.Update.class)${className}Entity ${classname}Entity) {
+
+
+    }
+
+    @PostMapping("/"+${className}+"/detail")
+    public R detail(@RequestBody @Validated(VG.Get.class)${className}Entity ${classname}Entity) {
+
+
+    }
+
+    @PostMapping("/"+${className}+"/list")
+    public R list(@RequestBody @Validated(VG.List.class)${className}Entity ${classname}Entity) {
+
+
+    }
+}

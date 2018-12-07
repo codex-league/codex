@@ -35,4 +35,9 @@ public class TemplateConfigProvider implements BaseTemplateConfigProvider {
     public String getEntityPath() {
         return configProvider.getPackageInfo().getEntityPath();
     }
+
+    @Override
+    public String getControllerPath() {
+        return  configProvider.getPackageInfo().getControllerPath();
+    }
 }

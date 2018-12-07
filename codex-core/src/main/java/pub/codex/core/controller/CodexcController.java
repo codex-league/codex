@@ -3,12 +3,11 @@ package pub.codex.core.controller;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pub.codex.common.db.jdbc.TableDao;
 import pub.codex.common.models.CodexResult;
+import pub.codex.core.column.BaseColumn;
+import pub.codex.core.column.ControllerColumn;
 import pub.codex.core.column.InfoColumn;
 import pub.codex.core.provider.ConfigProvider;
 import pub.codex.core.template.stream.template.BaseTableCodexTemplate;
@@ -17,10 +16,12 @@ import org.springframework.util.StringUtils;
 import pub.codex.common.db.entity.ColumnEntity;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.ZipOutputStream;
 
 @RestController
 public class CodexcController {
@@ -52,24 +53,12 @@ public class CodexcController {
     }
 
     /**
-     * 生成代码
+     * 获取表项数据
+     * @param tableName
+     * @return
      */
-    @GetMapping("/codex/code/{tableName}")
-    public void code(HttpServletResponse response, @PathVariable String tableName,
-                     @RequestParam(required = false) String tablePrefix) throws IOException {
-
-        byte[] data = tableCodexTemplateStream.doTemplate(tableName, tablePrefix);
-
-        response.reset();
-        response.setHeader("Content-Disposition", "attachment; filename=\"" + tableName + ".zip\"");
-        response.addHeader("Content-Length", "" + data.length);
-        response.addHeader("Access-Control-Allow-Origin", "*");
-        response.setContentType("application/octet-stream; charset=UTF-8");
-        IOUtils.write(data, response.getOutputStream());
-    }
-
     @GetMapping("/codex/info/{tableName}")
-    public CodexResult infoResponse(@PathVariable String tableName){
+    public CodexResult infoResponse(@PathVariable String tableName) {
         List<Map<String, String>> columns = (List<Map<String, String>>) tableDao.queryColumns(tableName);
         List<InfoColumn> infoList = new ArrayList<>();
         for (Map<String, String> column : columns) {
@@ -90,11 +79,58 @@ public class CodexcController {
             }
             infoList.add(infoColumn);
         }
-        return CodexResult.ok().put("info",infoList);
+        return CodexResult.ok().put("info", infoList);
     }
 
-//    @PostMapping("/codex/generate")
-//    public CodexResult createController(@RequestBody ){
-//
-//    }
+    /**
+     * 生成代码（不含controller）
+     */
+    @GetMapping("/codex/code/{tableName}")
+    public void code(HttpServletResponse response, @PathVariable String tableName,
+                     @RequestParam(required = false) String tablePrefix) throws IOException {
+
+        // 压缩包
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        ZipOutputStream zip = new ZipOutputStream(outputStream);
+
+        tableCodexTemplateStream.doTemplate(tableName, null,tablePrefix, zip);
+
+        IOUtils.closeQuietly(zip);
+        byte[] data = outputStream.toByteArray();
+
+        response.reset();
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + tableName + ".zip\"");
+        response.addHeader("Content-Length", "" + data.length);
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        response.setContentType("application/octet-stream; charset=UTF-8");
+        IOUtils.write(data, response.getOutputStream());
+    }
+
+    /**
+     * 生成代码（含controller）
+     * @param response
+     * @param tableName
+     * @param tablePrefix
+     * @param controllerColumn
+     * @throws IOException
+     */
+    @PostMapping("/codex/generate/{tableName}")
+    public void createController(HttpServletResponse response, @PathVariable String tableName, @RequestParam(required = false) String tablePrefix,
+                                 @RequestBody ControllerColumn controllerColumn) throws IOException {
+        // 压缩包
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        ZipOutputStream zip = new ZipOutputStream(outputStream);
+
+        tableCodexTemplateStream.doTemplate(tableName,controllerColumn, tablePrefix, zip);
+
+        IOUtils.closeQuietly(zip);
+        byte[] data = outputStream.toByteArray();
+
+        response.reset();
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + tableName + ".zip\"");
+        response.addHeader("Content-Length", "" + data.length);
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        response.setContentType("application/octet-stream; charset=UTF-8");
+        IOUtils.write(data, response.getOutputStream());
+    }
 }

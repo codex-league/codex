@@ -3,6 +3,7 @@
 dependencies {
     compile project(':codex-common-db')
     compile project(':codex-common')
+    compile project(':codex-core')
     compile('org.springframework:spring-context')
     compile('org.apache.velocity:velocity-engine-core:2.0')
     compile ("org.apache.commons:commons-lang3:3.5")

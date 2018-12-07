@@ -33,6 +33,11 @@ public class PackageInfo {
      */
     private String entityPath;
 
+    /**
+     * controller包路径
+     */
+    private String controllerPath;
+
 
     public String getServicePath() {
         return servicePath;
@@ -78,8 +83,11 @@ public class PackageInfo {
         return this;
     }
 
+    public String getControllerPath() {
+        return controllerPath;
+    }
+
     public static PackageInfo build() {
         return new PackageInfo();
     }
-
 }

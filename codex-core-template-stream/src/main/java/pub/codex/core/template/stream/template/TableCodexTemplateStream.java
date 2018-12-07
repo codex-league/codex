@@ -4,6 +4,7 @@ import org.apache.commons.io.IOUtils;
 import pub.codex.common.db.jdbc.TableDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pub.codex.core.column.ControllerColumn;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
@@ -26,13 +27,9 @@ public class TableCodexTemplateStream {
      * foreach template
      *
      * @param tableName
+     * @param zip
      */
-    public byte[] doTemplate(String tableName, String tablePrefix) {
-
-        // 压缩包
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        ZipOutputStream zip = new ZipOutputStream(outputStream);
-
+    public void doTemplate(String tableName, ControllerColumn controllerColumn, String tablePrefix, ZipOutputStream zip) {
 
         // 表&列信息
         Map<String, String> table = getTable(tableName);
@@ -40,11 +37,8 @@ public class TableCodexTemplateStream {
 
         //遍历
         tableCodexTemplateList.stream().forEach(tableCodexTemplate -> {
-            tableCodexTemplate.buildTemplateEntity(table, columns, tablePrefix, zip);
+            tableCodexTemplate.buildTemplateEntity(table, columns,controllerColumn, tablePrefix, zip);
         });
-
-        IOUtils.closeQuietly(zip);
-        return outputStream.toByteArray();
     }
 
 
@@ -67,6 +61,5 @@ public class TableCodexTemplateStream {
     private List<Map<String, String>> getColumns(String tableName) {
         return (List<Map<String, String>>) tableDao.queryColumns(tableName);
     }
-
 
 }
