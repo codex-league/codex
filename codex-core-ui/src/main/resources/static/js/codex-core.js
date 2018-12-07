@@ -156,7 +156,24 @@ var codex = new Vue({
             }
         },
         //提交
-        submitAdd(formName) {
+        apply() {
+
+            var _this = this;
+            console.log("222222222222222", _this.modules);
+            (function (url, data) {
+                if (url && data) {
+                    var form = $('<form></form>');
+                    form.attr('action', url);
+                    form.attr('method', 'post');
+
+                    var input = $('<input type="text" />');
+                    input.attr('name', 'data');
+                    input.attr('value', JSON.stringify(data));
+                    form.append(input);
+
+                    form.appendTo('body').submit().remove();
+                }
+            })("/codex/generate/" + _this.row.tableName, _this.modules);
 
         },
 

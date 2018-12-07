@@ -191,7 +191,7 @@
                        type="primary">下一步
             </el-button>
             <el-button v-if="!(ruleForm.controllertype.length - 1 > step)" style="margin-top: 12px;"
-                       @click="submitAdd('operationForm') ;crudOperation = false;crudDialog = false; step = 0 "
+                       @click="apply() ;crudOperation = false;crudDialog = false; step = 0 "
                        type="primary">提&nbsp;&nbsp;&nbsp;&nbsp;交
             </el-button>
             <el-button @click="crudOperation = false;step = 0 " type="primary">取 消</el-button>
