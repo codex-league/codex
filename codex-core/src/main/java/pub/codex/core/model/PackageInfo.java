@@ -87,6 +87,10 @@ public class PackageInfo {
         return controllerPath;
     }
 
+    public void setControllerPath(String controllerPath) {
+        this.controllerPath = controllerPath;
+    }
+
     public static PackageInfo build() {
         return new PackageInfo();
     }

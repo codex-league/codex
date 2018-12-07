@@ -1,53 +1,53 @@
 package pub.codex.core.column;
 
 public class ControllerColumn {
-    private AddColumn add;
+    private FieldColumn add;
 
-    private DeleteColumn del;
+    private FieldColumn del;
 
-    private DetailColumn detail;
+    private FieldColumn detail;
 
-    private UpdateColumn update;
+    private FieldColumn update;
 
-    private ListColumn list;
+    private FieldColumn list;
 
-    public AddColumn getAdd() {
+    public FieldColumn getAdd() {
         return add;
     }
 
-    public void setAdd(AddColumn add) {
+    public void setAdd(FieldColumn add) {
         this.add = add;
     }
 
-    public DeleteColumn getDel() {
+    public FieldColumn getDel() {
         return del;
     }
 
-    public void setDel(DeleteColumn del) {
+    public void setDel(FieldColumn del) {
         this.del = del;
     }
 
-    public DetailColumn getDetail() {
+    public FieldColumn getDetail() {
         return detail;
     }
 
-    public void setDetail(DetailColumn detail) {
+    public void setDetail(FieldColumn detail) {
         this.detail = detail;
     }
 
-    public UpdateColumn getUpdate() {
+    public FieldColumn getUpdate() {
         return update;
     }
 
-    public void setUpdate(UpdateColumn update) {
+    public void setUpdate(FieldColumn update) {
         this.update = update;
     }
 
-    public ListColumn getList() {
+    public FieldColumn getList() {
         return list;
     }
 
-    public void setList(ListColumn list) {
+    public void setList(FieldColumn list) {
         this.list = list;
     }
 }

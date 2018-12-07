@@ -13,6 +13,7 @@ codex:
     mapperXML-path: werwer3
     service-path: werwer4
     serviceImpl-path: werwer5
+    controller-path: werwer6
   prefix: cz_,czl,xxxxxxx
 apix:
   controllerPackage: text.codex.controller

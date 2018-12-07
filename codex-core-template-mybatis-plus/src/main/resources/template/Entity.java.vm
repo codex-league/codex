@@ -2,6 +2,7 @@ package ${entityPackagePath};
 
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
+import pub.codex.apix.annotations.group.VG;
 import java.util.Date;
 
 #if(${hasBigDecimal})
@@ -25,10 +26,13 @@ public class ${className}Entity implements Serializable {
 	#if($column.columnName == $pk.columnName)
 	@TableId
 	#end
-	#if(!${column.annotationList})
-	${column.annotationList}
+	#if(${column.annotationList})
+	#foreach ($annotation in $column.annotationList)
+	${annotation}
+	#end
 	#end
 	private $column.attrType $column.attrname;
+
 #end
 
 #foreach ($column in $columns)

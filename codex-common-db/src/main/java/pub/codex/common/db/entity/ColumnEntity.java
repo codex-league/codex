@@ -28,7 +28,7 @@ public class ColumnEntity {
     //auto_increment
     private String extra;
 
-    private StringBuffer annotationList;
+    private List<String> annotationList;
 
     public String getColumnName() {
         return columnName;
@@ -86,11 +86,11 @@ public class ColumnEntity {
         this.extra = extra;
     }
 
-    public StringBuffer getAnnotationList() {
+    public List<String> getAnnotationList() {
         return annotationList;
     }
 
-    public void setAnnotationList(StringBuffer annotationList) {
+    public void setAnnotationList(List<String> annotationList) {
         this.annotationList = annotationList;
     }
 }

@@ -153,7 +153,7 @@ var codex = new Vue({
             (function (url, data) {
                 if (url && data) {
                     var form = $('<form></form>');
-                    form.attr('action', url);
+                    form.attr('action', url+"?tablePrefix=" + _this.ruleForm.tablePrefix);
                     form.attr('method', 'post');
 
                     var input = $('<input type="text" />');

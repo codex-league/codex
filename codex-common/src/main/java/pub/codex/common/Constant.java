@@ -27,7 +27,11 @@ public class Constant {
 
     public enum annotationConatant{
         NOTNULL("@NotNull","被注释的元素不能为null"),
-        NOTBLANK("@NotBlank","String不能为空");
+        NOTBLANK("@NotBlank","String不能为空"),
+        NOTEMPTY("@NotEmpty","被注释的元素不能为空"),
+        NULL("@Null","被注释的元素必须为空"),
+        PATTERN("@Pattern","正则表达式"),
+        APIMODELPROPERTY("@ApiModelProperty","Apix字段引用注释的注解");
 
         private String value;
         private String describe;

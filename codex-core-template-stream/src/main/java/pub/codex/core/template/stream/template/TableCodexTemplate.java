@@ -10,6 +10,7 @@ import pub.codex.common.db.entity.ColumnEntity;
 import pub.codex.common.db.entity.TableEntity;
 import pub.codex.core.column.BaseColumn;
 import pub.codex.core.column.ControllerColumn;
+import pub.codex.core.column.FieldColumn;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -68,7 +69,7 @@ public abstract class TableCodexTemplate extends BaseTableCodexTemplate {
         List<ColumnEntity> columsList = new ArrayList<>();
         for (Map<String, String> column : columns) {
             //字段注解集合
-            StringBuffer annotationList = new StringBuffer();
+            List<String> annotationList = new ArrayList<>();
             ColumnEntity columnEntity = new ColumnEntity();
             columnEntity.setColumnName(column.get("columnName"));
             columnEntity.setDataType(column.get("dataType"));
@@ -85,11 +86,9 @@ public abstract class TableCodexTemplate extends BaseTableCodexTemplate {
             columnEntity.setAttrType(attrType);
 
             if (controllerColumn != null) {
-                annotationList = combAnnotation(controllerColumn, columnEntity.getAttrname());
+                annotationList = combAnnotation(controllerColumn, columnEntity.getAttrname(),columnEntity.getComments());
             }
-            if (annotationList != null) {
-                columnEntity.setAnnotationList(annotationList);
-            }
+            columnEntity.setAnnotationList(annotationList);
 
             //是否主键
             if ("PRI".equalsIgnoreCase(column.get("columnKey")) && tableEntity.getPk() == null) {
@@ -109,38 +108,59 @@ public abstract class TableCodexTemplate extends BaseTableCodexTemplate {
 
     /**
      * 组装最终tableEntity的注解
+     *
      * @param controllerColumn
      * @param column
+     * @param comments
      * @return
      */
-    private StringBuffer combAnnotation(ControllerColumn controllerColumn, String column) {
-        StringBuffer annotation = new StringBuffer();
+    private List<String> combAnnotation(ControllerColumn controllerColumn, String column, String comments) {
+        List<String> annotation = new ArrayList<>();
         Map<String, StringBuffer> map = new HashMap<>();
-        findAnnotation(transformUtils(controllerColumn.getAdd().getTableData()), Constant.interfaceConstant.ADD.getValue(), column, map);
-        findAnnotation(transformUtils(controllerColumn.getDel().getTableData()), Constant.interfaceConstant.DELETE.getValue(), column, map);
-        findAnnotation(transformUtils(controllerColumn.getDetail().getTableData()), Constant.interfaceConstant.GET.getValue(), column, map);
-        findAnnotation(transformUtils(controllerColumn.getUpdate().getTableData()), Constant.interfaceConstant.UPDATE.getValue(), column, map);
-        findAnnotation(transformUtils(controllerColumn.getList().getTableData()), Constant.interfaceConstant.LIST.getValue(), column, map);
-        //todo 目前只处理@NotNull和@NotBlank
-        if (map.get(Constant.annotationConatant.NOTNULL) != null) {
-            StringBuffer stringBuffer = map.get(Constant.annotationConatant.NOTNULL);
-            annotation.append(Constant.annotationConatant.NOTNULL + "(" + stringBuffer.deleteCharAt(stringBuffer.length() - 1) + ")\n");
+        findAnnotation(controllerColumn.getAdd(), Constant.interfaceConstant.ADD.getValue(), column, map);
+        findAnnotation(controllerColumn.getDel(), Constant.interfaceConstant.DELETE.getValue(), column, map);
+        findAnnotation(controllerColumn.getDetail(), Constant.interfaceConstant.GET.getValue(), column, map);
+        findAnnotation(controllerColumn.getUpdate(), Constant.interfaceConstant.UPDATE.getValue(), column, map);
+        findAnnotation(controllerColumn.getList(), Constant.interfaceConstant.LIST.getValue(), column, map);
+        //todo 目前只处理@NotNull,@NotBlank,@NotEmpty,@Null,@Pattern和@ApiModelProperty
+        annotationFactory(annotation, map, Constant.annotationConatant.NOTNULL,null);
+        annotationFactory(annotation, map, Constant.annotationConatant.NOTBLANK,null);
+        annotationFactory(annotation, map, Constant.annotationConatant.NOTEMPTY,null);
+        annotationFactory(annotation, map, Constant.annotationConatant.NULL,null);
+        annotationFactory(annotation, map, Constant.annotationConatant.PATTERN,null);
+        annotationFactory(annotation, map, Constant.annotationConatant.APIMODELPROPERTY,comments);
+        return annotation;
+    }
+
+    private void annotationFactory(List<String> annotation, Map<String, StringBuffer> map, Constant.annotationConatant annoEnum,String comments) {
+        if (map.get(annoEnum.getValue()) != null&&!annoEnum.getValue().equals(Constant.annotationConatant.APIMODELPROPERTY.getValue())) {
+            StringBuffer stringBuffer = map.get(annoEnum.getValue());
+            annotation.add(annoEnum.getValue() + "(groups = {" + stringBuffer.deleteCharAt(stringBuffer.length() - 1) + "})");
         }
-        if (map.get(Constant.annotationConatant.NOTBLANK) != null) {
-            StringBuffer stringBuffer = map.get(Constant.annotationConatant.NOTBLANK);
-            annotation.append(Constant.annotationConatant.NOTBLANK + "(" + stringBuffer.deleteCharAt(stringBuffer.length() - 1) + ")\n");
+        if(map.get(annoEnum.getValue())!=null&&annoEnum.getValue().equals(Constant.annotationConatant.APIMODELPROPERTY.getValue())){
+            StringBuffer groupAnno = map.get(annoEnum.getValue());
+            if(comments!=null&&!comments.equals("")){
+                annotation.add(Constant.annotationConatant.APIMODELPROPERTY.getValue() + "(\""+comments+"\",groups = {" + groupAnno.deleteCharAt(groupAnno.length() - 1) + "})");
+            }
         }
-        return annotation.deleteCharAt(annotation.length()-1);
     }
 
     /**
      * 拼接不同注解的分组信息
-     * @param interfaceColumn
+     *
+     * @param fieldColumn
      * @param value
      * @param column
      * @param map
      */
-    private void findAnnotation(Map<String, BaseColumn> interfaceColumn, String value, String column, Map<String, StringBuffer> map) {
+    private void findAnnotation(FieldColumn fieldColumn, String value, String column, Map<String, StringBuffer> map) {
+
+        if (fieldColumn == null) {
+            return;
+        }
+
+        Map<String, BaseColumn> interfaceColumn = transformUtils(fieldColumn.getTableData());
+
         if (interfaceColumn != null) {
             BaseColumn baseColumn = interfaceColumn.get(column);
             if (map.get(baseColumn.getAnnotation()) != null) {
@@ -155,6 +175,7 @@ public abstract class TableCodexTemplate extends BaseTableCodexTemplate {
 
     /**
      * List<BaseColumn>转换成Map<String, BaseColumn>
+     *
      * @param interfaceColumn
      * @return
      */

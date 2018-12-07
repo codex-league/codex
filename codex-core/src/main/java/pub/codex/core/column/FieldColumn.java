@@ -2,7 +2,7 @@ package pub.codex.core.column;
 
 import java.util.List;
 
-public class ListColumn {
+public class FieldColumn {
     private String name;
     private List<BaseColumn> tableData;
 

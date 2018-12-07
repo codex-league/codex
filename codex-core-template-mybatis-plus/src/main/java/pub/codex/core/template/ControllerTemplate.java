@@ -1,6 +1,7 @@
 package pub.codex.core.template;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import pub.codex.common.DateUtil;
 import pub.codex.common.db.entity.ColumnEntity;
 import pub.codex.core.template.stream.BaseTemplateConfigProvider;
@@ -10,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Component
 public class ControllerTemplate extends TableCodexTemplate {
 
     private final String TEMPLATE_NAME = "Controller.java";

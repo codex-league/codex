@@ -1,6 +1,7 @@
 package pub.codex.core.controller;
 
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -121,9 +122,8 @@ public class CodexcController {
                                  ) throws IOException {
 
         String dataBody = (String) request.getParameter("data");
-        System.out.println(dataBody);
 
-        ControllerColumn controllerColumn = (ControllerColumn)JSONObject.parse(dataBody);
+        ControllerColumn controllerColumn = JSON.parseObject(dataBody,ControllerColumn.class);
         // 压缩包
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         ZipOutputStream zip = new ZipOutputStream(outputStream);
