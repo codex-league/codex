@@ -34,13 +34,13 @@
 <dependency>
   <groupId>pub.codex</groupId>
   <artifactId>codex-index</artifactId>
-  <version>2.2.0</version>
+  <version>3.0.0.release</version>
 </dependency>
 
 <dependency>
   <groupId>pub.codex</groupId>
   <artifactId>codex-core-template-mybatis-plus</artifactId>
-  <version>2.2.0</version>
+  <version>3.0.0.release</version>
 </dependency>
      
 ```
