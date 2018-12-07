@@ -116,11 +116,11 @@ public abstract class TableCodexTemplate extends BaseTableCodexTemplate {
     private StringBuffer combAnnotation(ControllerColumn controllerColumn, String column) {
         StringBuffer annotation = new StringBuffer();
         Map<String, StringBuffer> map = new HashMap<>();
-        findAnnotation(transformUtils(controllerColumn.getAdd()), Constant.interfaceConstant.ADD.getValue(), column, map);
-        findAnnotation(transformUtils(controllerColumn.getDel()), Constant.interfaceConstant.DELETE.getValue(), column, map);
-        findAnnotation(transformUtils(controllerColumn.getDetail()), Constant.interfaceConstant.GET.getValue(), column, map);
-        findAnnotation(transformUtils(controllerColumn.getUpdate()), Constant.interfaceConstant.UPDATE.getValue(), column, map);
-        findAnnotation(transformUtils(controllerColumn.getList()), Constant.interfaceConstant.LIST.getValue(), column, map);
+        findAnnotation(transformUtils(controllerColumn.getAdd().getTableData()), Constant.interfaceConstant.ADD.getValue(), column, map);
+        findAnnotation(transformUtils(controllerColumn.getDel().getTableData()), Constant.interfaceConstant.DELETE.getValue(), column, map);
+        findAnnotation(transformUtils(controllerColumn.getDetail().getTableData()), Constant.interfaceConstant.GET.getValue(), column, map);
+        findAnnotation(transformUtils(controllerColumn.getUpdate().getTableData()), Constant.interfaceConstant.UPDATE.getValue(), column, map);
+        findAnnotation(transformUtils(controllerColumn.getList().getTableData()), Constant.interfaceConstant.LIST.getValue(), column, map);
         //todo 目前只处理@NotNull和@NotBlank
         if (map.get(Constant.annotationConatant.NOTNULL) != null) {
             StringBuffer stringBuffer = map.get(Constant.annotationConatant.NOTNULL);
