@@ -21,29 +21,54 @@ public class ${className}Controller {
     @Autowired
     ${className}Service ${classname}Service;
 
+    /**
+    * 新增接口
+    * @param ${classname}Entity
+    * @return
+    */
     @PostMapping("/"+${className}+"/add")
     public R add(@RequestBody @Validated(VG.Add.class)${className}Entity ${classname}Entity) {
 
     }
 
+    /**
+     *删除接口
+     * @param ${classname}Entity
+     * @return
+     */
     @PostMapping("/"+${className}+"/delete")
     public R delete(@RequestBody @Validated(VG.Delete.class)${className}Entity ${classname}Entity) {
 
 
     }
 
+    /**
+     *更新接口
+     * @param ${classname}Entity
+     * @return
+     */
     @PostMapping("/"+${className}+"/update")
     public R update(@RequestBody @Validated(VG.Update.class)${className}Entity ${classname}Entity) {
 
 
     }
 
+    /**
+     *详情接口
+     * @param ${classname}Entity
+     * @return
+     */
     @PostMapping("/"+${className}+"/detail")
     public R detail(@RequestBody @Validated(VG.Get.class)${className}Entity ${classname}Entity) {
 
 
     }
 
+    /**
+     *列表接口
+     * @param ${classname}Entity
+     * @return
+     */
     @PostMapping("/"+${className}+"/list")
     public R list(@RequestBody @Validated(VG.List.class)${className}Entity ${classname}Entity) {
 
