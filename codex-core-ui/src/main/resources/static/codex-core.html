@@ -99,6 +99,15 @@
                                 </template>
                             </el-input>
                         </div>
+                        <div style="margin-top: 15px;">
+                            <el-input readonly :value="package.controllerPath">
+                                <template slot="prepend" style="width: 100px;">
+                                    <div style="width: 70px;">
+                                        controller
+                                    </div>
+                                </template>
+                            </el-input>
+                        </div>
                     </div>
                 </el-card>
             </div>

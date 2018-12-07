@@ -51,31 +51,32 @@ var codex = new Vue({
         }, {
             value: '@NotEmpty',
             label: '@NotEmpty'
-        }, {value: '@Null', label: '@Null'}, {value: '@Pattern', label: '@Pattern'}, {value: '@Max', label: '@Max'}, {
-            value: '@Min',
-            label: '@Min'
-        }, {value: '@Digits', label: '@Digits'}, {value: '@Email', label: '@Email'}, {
-            value: '@Future',
-            label: '@Future'
-        }, {
-            value: '@AssertFalse',
-            label: '@AssertFalse'
-        }, {value: '@AssertTrue', label: '@AssertTrue'}, {value: '@DecimalMax', label: '@DecimalMax'}, {
-            value: '@DecimalMin',
-            label: '@DecimalMin'
-        }, {value: '@Size', label: '@Size'}, {
-            value: '@FutureOrPresent',
-            label: '@FutureOrPresent'
-        }, {value: '@Negative', label: '@Negative'}, {
-            value: '@NegativeOrZero',
-            label: '@NegativeOrZero'
-        }, {
-            value: '@Past',
-            label: '@Past'
-        }, {value: '@PastOrPresent', label: '@PastOrPresent'}, {
-            value: '@Positive',
-            label: '@Positive'
-        }, {value: '@PositiveOrZero', label: '@PositiveOrZero'}
+        }, {value: '@Null', label: '@Null'}, {value: '@Pattern', label: '@Pattern'}
+            // {value: '@Max', label: '@Max'}, {
+            //     value: '@Min',
+            //     label: '@Min'
+            // }, {value: '@Digits', label: '@Digits'}, {value: '@Email', label: '@Email'}, {
+            //     value: '@Future',
+            //     label: '@Future'
+            // }, {
+            //     value: '@AssertFalse',
+            //     label: '@AssertFalse'
+            // }, {value: '@AssertTrue', label: '@AssertTrue'}, {value: '@DecimalMax', label: '@DecimalMax'}, {
+            //     value: '@DecimalMin',
+            //     label: '@DecimalMin'
+            // }, {value: '@Size', label: '@Size'}, {
+            //     value: '@FutureOrPresent',
+            //     label: '@FutureOrPresent'
+            // }, {value: '@Negative', label: '@Negative'}, {
+            //     value: '@NegativeOrZero',
+            //     label: '@NegativeOrZero'
+            // }, {
+            //     value: '@Past',
+            //     label: '@Past'
+            // }, {value: '@PastOrPresent', label: '@PastOrPresent'}, {
+            //     value: '@Positive',
+            //     label: '@Positive'
+            // }, {value: '@PositiveOrZero', label: '@PositiveOrZero'}
         ],
 
 
@@ -107,8 +108,6 @@ var codex = new Vue({
         },
         crudDialogCode(formName) {
             var _this = this;
-            console.log(this.$refs[formName]);
-
             this.$refs[formName].validate(function (valid) {
                 if (valid) {
                     _this.crudDialog = false;
@@ -122,16 +121,6 @@ var codex = new Vue({
 
         },
         crudOperationCode: function (formName) {
-
-            const loading = this.$loading({
-                lock: true,
-                text: 'Loading',
-                spinner: 'el-icon-loading',
-                background: 'rgba(0, 0, 0, 0.7)'
-            });
-            setTimeout(() => {
-                loading.close();
-            }, 2000);
 
             var _this = this;
             _this.modules = {};
@@ -149,17 +138,18 @@ var codex = new Vue({
         previousStep() {
             this.step--;
         },
+
         //下一步
         nextStep() {
             if (this.step++ > this.ruleForm.controllertype.length) {
                 this.step = 0;
             }
         },
+
         //提交
         apply() {
 
             var _this = this;
-            console.log("222222222222222", _this.modules);
             (function (url, data) {
                 if (url && data) {
                     var form = $('<form></form>');
@@ -178,7 +168,6 @@ var codex = new Vue({
         },
 
         handleChange(val) {
-            console.log(val);
         },
         countIndex: function (index, index1, index2) { // 计算索引组合
             var i = "";
