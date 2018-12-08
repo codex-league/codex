@@ -49,4 +49,25 @@ public class Constant {
             return describe;
         }
     }
+
+    public enum flag{
+        NULL_EXCEPTION(-1,"参数为空"),
+        EXTERNAL_ANNOTATION(0,"外部注解"),
+        APIMODELPROPERTY_ANNOTATION(1,"自有注解@ApiModelProperty");
+        private int value;
+        private String describe;
+
+        flag(int value, String describe) {
+            this.value = value;
+            this.describe = describe;
+        }
+
+        public int getValue() {
+            return value;
+        }
+
+        public String getDescribe() {
+            return describe;
+        }
+    }
 }
