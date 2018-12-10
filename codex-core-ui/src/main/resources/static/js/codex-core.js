@@ -38,6 +38,8 @@ var codex = new Vue({
         value: '',
         options: [
             {value: '@ApiModelProperty', label: '选填'},
+            {value: 'like', label: '模糊查询'},
+            {value: 'equal', label: '精确查询'},
             {value: '@NotNull', label: '@NotNull'},
             {value: '@NotBlank', label: '@NotBlank'},
             {value: '@NotEmpty', label: '@NotEmpty'},
