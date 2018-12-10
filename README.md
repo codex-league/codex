@@ -25,21 +25,21 @@
 
 > gradle：
 ```Groovy
-    compile 'pub.codex:codex-index:2.2.0'
-    compile 'pub.codex:codex-core-template-mybatis-plus:2.2.0'
+    compile 'pub.codex:codex-index:3.0.0'
+    compile 'pub.codex:codex-core-template-mybatis-plus:3.0.0'
 ```
 > maven:
 ```xml
 <dependency>
   <groupId>pub.codex</groupId>
   <artifactId>codex-index</artifactId>
-  <version>3.0.0.release</version>
+  <version>3.0.0</version>
 </dependency>
 
 <dependency>
   <groupId>pub.codex</groupId>
   <artifactId>codex-core-template-mybatis-plus</artifactId>
-  <version>3.0.0.release</version>
+  <version>3.0.0</version>
 </dependency>
      
 ```
