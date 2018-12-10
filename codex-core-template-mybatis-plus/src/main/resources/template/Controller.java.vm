@@ -1,5 +1,6 @@
 package ${controllerPackagePath};
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,7 +29,8 @@ public class ${className}Controller {
     */
     @PostMapping("/${classname}/add")
     public R add(@RequestBody @Validated(VG.Add.class)${className}Entity ${classname}Entity) {
-        return R.ok().data(${classname}Service.insert(${classname}Entity));
+        ${classname}Service.insert(${classname}Entity);
+        return R.ok();
     }
 
     /**
@@ -49,7 +51,7 @@ public class ${className}Controller {
      */
     @PostMapping("/${classname}/update")
     public R update(@RequestBody @Validated(VG.Update.class)${className}Entity ${classname}Entity) {
-        ${classname}Service.updateById(${classname}Entity));
+        ${classname}Service.updateById(${classname}Entity);
         return R.ok();
     }
 
