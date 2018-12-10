@@ -15,7 +15,7 @@ public class Person {
     @ApiModelProperty
     private String age;
 
-    @ApiModelProperty(groups = Person.class, describe = "心别")
+    @ApiModelProperty(groups = Person.class, value = "心别")
     String sex;
 
     Student student;

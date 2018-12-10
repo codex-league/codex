@@ -2,6 +2,7 @@ package pub.codex.apix.operation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
@@ -198,7 +199,7 @@ public class OperationRequestBodyReader implements OperationBuilderPlugin {
         map.put("describe", field.getName());
         map.put("required", required);
 
-        ApiModelProperty apiModelProperty = field.getAnnotation(ApiModelProperty.class);
+        ApiModelProperty apiModelProperty =  AnnotationUtils.findAnnotation(field, ApiModelProperty.class);
         if(apiModelProperty != null && !StringUtils.isEmpty(apiModelProperty.describe())){
             map.put("describe", apiModelProperty.describe());
         }
