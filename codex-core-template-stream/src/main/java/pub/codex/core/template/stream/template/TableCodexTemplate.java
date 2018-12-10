@@ -132,7 +132,7 @@ public abstract class TableCodexTemplate extends BaseTableCodexTemplate {
             return annotation;
         }
         if (comments != null && !comments.equals("" )) {
-            annotation.add(Constant.annotationConatant.APIMODELPROPERTY.getValue() + "(value = \"" + comments + "\")" );
+            annotation.add(Constant.annotationConatant.APIMODELPROPERTY.getValue() + "(\"" + comments + "\")" );
         }
         return annotation;
     }
@@ -144,7 +144,7 @@ public abstract class TableCodexTemplate extends BaseTableCodexTemplate {
         if (annoEnum.getValue().equals(Constant.annotationConatant.APIMODELPROPERTY.getValue())) {
             StringBuffer groups = map.get(annoEnum.getValue());
             if (comments != null && !comments.equals("" )) {
-                annotation.add(Constant.annotationConatant.APIMODELPROPERTY.getValue() + "(value = \"" + comments + "\",groups = {" + groups.deleteCharAt(groups.length() - 1) + "})" );
+                annotation.add(Constant.annotationConatant.APIMODELPROPERTY.getValue() + "(describe = \"" + comments + "\",groups = {" + groups.deleteCharAt(groups.length() - 1) + "})" );
             }
             return Constant.flag.APIMODELPROPERTY_ANNOTATION;
         }
