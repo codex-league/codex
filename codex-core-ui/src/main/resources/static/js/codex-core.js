@@ -45,38 +45,30 @@ var codex = new Vue({
             comments: ''
         }],
         value: '',
-        options: [{value: '@ApiModelProperty', label: '选填'}, {value: '@NotNull', label: '@NotNull'}, {
-            value: '@NotBlank',
-            label: '@NotBlank'
-        }, {
-            value: '@NotEmpty',
-            label: '@NotEmpty'
-        }, {value: '@Null', label: '@Null'}, {value: '@Pattern', label: '@Pattern'}
-            // {value: '@Max', label: '@Max'}, {
-            //     value: '@Min',
-            //     label: '@Min'
-            // }, {value: '@Digits', label: '@Digits'}, {value: '@Email', label: '@Email'}, {
-            //     value: '@Future',
-            //     label: '@Future'
-            // }, {
-            //     value: '@AssertFalse',
-            //     label: '@AssertFalse'
-            // }, {value: '@AssertTrue', label: '@AssertTrue'}, {value: '@DecimalMax', label: '@DecimalMax'}, {
-            //     value: '@DecimalMin',
-            //     label: '@DecimalMin'
-            // }, {value: '@Size', label: '@Size'}, {
-            //     value: '@FutureOrPresent',
-            //     label: '@FutureOrPresent'
-            // }, {value: '@Negative', label: '@Negative'}, {
-            //     value: '@NegativeOrZero',
-            //     label: '@NegativeOrZero'
-            // }, {
-            //     value: '@Past',
-            //     label: '@Past'
-            // }, {value: '@PastOrPresent', label: '@PastOrPresent'}, {
-            //     value: '@Positive',
-            //     label: '@Positive'
-            // }, {value: '@PositiveOrZero', label: '@PositiveOrZero'}
+        options: [
+            {value: '@ApiModelProperty', label: '选填'},
+            {value: '@NotNull', label: '@NotNull'},
+            {value: '@NotBlank', label: '@NotBlank'},
+            {value: '@NotEmpty', label: '@NotEmpty'},
+            {value: '@Null', label: '@Null'},
+            {value: '@Pattern', label: '@Pattern'}
+            // {value: '@Max', label: '@Max'},
+            // {value: '@Min', label: '@Min'},
+            // {value: '@Digits', label: '@Digits'},
+            // {value: '@Email', label: '@Email'},
+            // {value: '@Future', label: '@Future'},
+            // {value: '@AssertFalse', label: '@AssertFalse'},
+            // {value: '@AssertTrue', label: '@AssertTrue'},
+            // {value: '@DecimalMax', label: '@DecimalMax'},
+            // {value: '@DecimalMin', label: '@DecimalMin'},
+            // {value: '@Size', label: '@Size'},
+            // {value: '@FutureOrPresent', label: '@FutureOrPresent'},
+            // {value: '@Negative', label: '@Negative'},
+            // {value: '@NegativeOrZero', label: '@NegativeOrZero'},
+            // {value: '@Past', label: '@Past'},
+            // {value: '@PastOrPresent', label: '@PastOrPresent'},
+            // {value: '@Positive', label: '@Positive'},
+            // {value: '@PositiveOrZero', label: '@PositiveOrZero'}
         ],
 
 
@@ -153,7 +145,7 @@ var codex = new Vue({
             (function (url, data) {
                 if (url && data) {
                     var form = $('<form></form>');
-                    form.attr('action', url+"?tablePrefix=" + _this.ruleForm.tablePrefix);
+                    form.attr('action', url + "?tablePrefix=" + _this.ruleForm.tablePrefix);
                     form.attr('method', 'post');
 
                     var input = $('<input type="text" />');
