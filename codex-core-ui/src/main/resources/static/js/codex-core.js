@@ -3,7 +3,6 @@ var codex = new Vue({
     data: {
         message: 'Code-X 让程序员喝茶的朋友',
 
-        active: ["1", "2"],
         interfaces: {
             add: "增加",
             update: "修改",
@@ -11,14 +10,6 @@ var codex = new Vue({
             detail: "详情",
             list: "列表"
         },
-        apis: {},
-        api: {},
-        isNotice: true,
-        paramsTableData: null,
-        bodyTableData: null,
-        activeNames: null,
-        host: window.location.host,
-        protocol: window.location.protocol,
         modules: {},
 
         activeName: 'first',
@@ -45,38 +36,30 @@ var codex = new Vue({
             comments: ''
         }],
         value: '',
-        options: [{value: '@ApiModelProperty', label: '选填'}, {value: '@NotNull', label: '@NotNull'}, {
-            value: '@NotBlank',
-            label: '@NotBlank'
-        }, {
-            value: '@NotEmpty',
-            label: '@NotEmpty'
-        }, {value: '@Null', label: '@Null'}, {value: '@Pattern', label: '@Pattern'}
-            // {value: '@Max', label: '@Max'}, {
-            //     value: '@Min',
-            //     label: '@Min'
-            // }, {value: '@Digits', label: '@Digits'}, {value: '@Email', label: '@Email'}, {
-            //     value: '@Future',
-            //     label: '@Future'
-            // }, {
-            //     value: '@AssertFalse',
-            //     label: '@AssertFalse'
-            // }, {value: '@AssertTrue', label: '@AssertTrue'}, {value: '@DecimalMax', label: '@DecimalMax'}, {
-            //     value: '@DecimalMin',
-            //     label: '@DecimalMin'
-            // }, {value: '@Size', label: '@Size'}, {
-            //     value: '@FutureOrPresent',
-            //     label: '@FutureOrPresent'
-            // }, {value: '@Negative', label: '@Negative'}, {
-            //     value: '@NegativeOrZero',
-            //     label: '@NegativeOrZero'
-            // }, {
-            //     value: '@Past',
-            //     label: '@Past'
-            // }, {value: '@PastOrPresent', label: '@PastOrPresent'}, {
-            //     value: '@Positive',
-            //     label: '@Positive'
-            // }, {value: '@PositiveOrZero', label: '@PositiveOrZero'}
+        options: [
+            {value: '@ApiModelProperty', label: '选填'},
+            {value: '@NotNull', label: '@NotNull'},
+            {value: '@NotBlank', label: '@NotBlank'},
+            {value: '@NotEmpty', label: '@NotEmpty'},
+            {value: '@Null', label: '@Null'},
+            {value: '@Pattern', label: '@Pattern'}
+            // {value: '@Max', label: '@Max'},
+            // {value: '@Min', label: '@Min'},
+            // {value: '@Digits', label: '@Digits'},
+            // {value: '@Email', label: '@Email'},
+            // {value: '@Future', label: '@Future'},
+            // {value: '@AssertFalse', label: '@AssertFalse'},
+            // {value: '@AssertTrue', label: '@AssertTrue'},
+            // {value: '@DecimalMax', label: '@DecimalMax'},
+            // {value: '@DecimalMin', label: '@DecimalMin'},
+            // {value: '@Size', label: '@Size'},
+            // {value: '@FutureOrPresent', label: '@FutureOrPresent'},
+            // {value: '@Negative', label: '@Negative'},
+            // {value: '@NegativeOrZero', label: '@NegativeOrZero'},
+            // {value: '@Past', label: '@Past'},
+            // {value: '@PastOrPresent', label: '@PastOrPresent'},
+            // {value: '@Positive', label: '@Positive'},
+            // {value: '@PositiveOrZero', label: '@PositiveOrZero'}
         ],
 
 
@@ -153,7 +136,7 @@ var codex = new Vue({
             (function (url, data) {
                 if (url && data) {
                     var form = $('<form></form>');
-                    form.attr('action', url+"?tablePrefix=" + _this.ruleForm.tablePrefix);
+                    form.attr('action', url + "?tablePrefix=" + _this.ruleForm.tablePrefix);
                     form.attr('method', 'post');
 
                     var input = $('<input type="text" />');
@@ -166,36 +149,6 @@ var codex = new Vue({
             })("/codex/generate/" + _this.row.tableName, _this.modules);
 
         },
-
-        handleChange(val) {
-        },
-        countIndex: function (index, index1, index2) { // 计算索引组合
-            var i = "";
-            if (index != null) {
-                i = i + index
-            }
-
-            if (index1 != null) {
-                i = i + '-' + index1;
-            }
-
-            if (index2 != null) {
-                i = i + '-' + index2;
-            }
-            return i;
-        },
-        showApi: function (api) {
-
-            this.api = api;
-
-            this.isNotice = false;
-        },
-        showNotice: function () {
-            this.isNotice = true;
-        },
-        formatRequired: function (row, column) {
-            return !!row.required ? '*必填' : '选填';
-        }
     }
     ,
     created: function () {
@@ -214,19 +167,5 @@ var codex = new Vue({
                 alert('获取数据库表信息错误');
             })
         })();
-        (function () {
-            Vue.http.get('/apix/doc').then(function (response) {
-                console.log(response);
-                if (response.ok) {
-                    _this.apis = response.body;
-                } else {
-                    alert('获取文档信息错误');
-                }
-            }, function () {
-                alert('获取文档信息错误');
-            })
-        })();
-
-
     }
 });

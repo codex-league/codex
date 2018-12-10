@@ -128,21 +128,29 @@ public abstract class TableCodexTemplate extends BaseTableCodexTemplate {
         annotationFactory(annotation, map, Constant.annotationConatant.NOTEMPTY, null);
         annotationFactory(annotation, map, Constant.annotationConatant.NULL, null);
         annotationFactory(annotation, map, Constant.annotationConatant.PATTERN, null);
-        annotationFactory(annotation, map, Constant.annotationConatant.APIMODELPROPERTY, comments);
+        if (annotationFactory(annotation, map, Constant.annotationConatant.APIMODELPROPERTY, comments) == Constant.flag.APIMODELPROPERTY_ANNOTATION) {
+            return annotation;
+        }
+        if (comments != null && !comments.equals("")) {
+            annotation.add(Constant.annotationConatant.APIMODELPROPERTY.getValue() + "(\"" + comments + "\")");
+        }
         return annotation;
     }
 
-    private void annotationFactory(List<String> annotation, Map<String, StringBuffer> map, Constant.annotationConatant annoEnum, String comments) {
-        if (map.get(annoEnum.getValue()) != null && !annoEnum.getValue().equals(Constant.annotationConatant.APIMODELPROPERTY.getValue())) {
-            StringBuffer stringBuffer = map.get(annoEnum.getValue());
-            annotation.add(annoEnum.getValue() + "(groups = {" + stringBuffer.deleteCharAt(stringBuffer.length() - 1) + "})");
+    private Constant.flag annotationFactory(List<String> annotation, Map<String, StringBuffer> map, Constant.annotationConatant annoEnum, String comments) {
+        if (map.get(annoEnum.getValue()) == null) {
+            return Constant.flag.NULL_EXCEPTION;
         }
-        if (map.get(annoEnum.getValue()) != null && annoEnum.getValue().equals(Constant.annotationConatant.APIMODELPROPERTY.getValue())) {
-            StringBuffer groupAnno = map.get(annoEnum.getValue());
+        if (annoEnum.getValue().equals(Constant.annotationConatant.APIMODELPROPERTY.getValue())) {
+            StringBuffer groups = map.get(annoEnum.getValue());
             if (comments != null && !comments.equals("")) {
-                annotation.add(Constant.annotationConatant.APIMODELPROPERTY.getValue() + "(\"" + comments + "\",groups = {" + groupAnno.deleteCharAt(groupAnno.length() - 1) + "})");
+                annotation.add(Constant.annotationConatant.APIMODELPROPERTY.getValue() + "(\"" + comments + "\",groups = {" + groups.deleteCharAt(groups.length() - 1) + "})");
             }
+            return Constant.flag.APIMODELPROPERTY_ANNOTATION;
         }
+        StringBuffer groups = map.get(annoEnum.getValue());
+        annotation.add(annoEnum.getValue() + "(groups = {" + groups.deleteCharAt(groups.length() - 1) + "})");
+        return Constant.flag.EXTERNAL_ANNOTATION;
     }
 
     /**
@@ -154,23 +162,19 @@ public abstract class TableCodexTemplate extends BaseTableCodexTemplate {
      * @param map
      */
     private void findAnnotation(FieldColumn fieldColumn, String value, String column, Map<String, StringBuffer> map) {
-
-        if (fieldColumn == null) {
+        if (fieldColumn == null || fieldColumn.getTableData() == null) {
             return;
         }
-
         Map<String, BaseColumn> interfaceColumn = transformUtils(fieldColumn.getTableData());
-
-        if (interfaceColumn != null) {
-            BaseColumn baseColumn = interfaceColumn.get(column);
-            if (map.get(baseColumn.getAnnotation()) != null) {
-                StringBuffer stringBuffer = map.get(baseColumn.getAnnotation());
-                map.put(baseColumn.getAnnotation(), stringBuffer.append(value + ","));
-            } else {
-                StringBuffer stringBuffer = new StringBuffer();
-                map.put(baseColumn.getAnnotation(), stringBuffer.append(value + ","));
-            }
+        BaseColumn baseColumn = interfaceColumn.get(column);
+        if (map.get(baseColumn.getAnnotation()) != null) {
+            StringBuffer stringBuffer = map.get(baseColumn.getAnnotation());
+            map.put(baseColumn.getAnnotation(), stringBuffer.append(value + ","));
+        } else {
+            StringBuffer stringBuffer = new StringBuffer();
+            map.put(baseColumn.getAnnotation(), stringBuffer.append(value + ","));
         }
+
     }
 
     /**
@@ -180,14 +184,14 @@ public abstract class TableCodexTemplate extends BaseTableCodexTemplate {
      * @return
      */
     private Map<String, BaseColumn> transformUtils(List<BaseColumn> interfaceColumn) {
-        if (interfaceColumn != null) {
-            Map<String, BaseColumn> map = new HashMap<>();
-            for (BaseColumn baseColumn : interfaceColumn) {
-                map.put(baseColumn.getAttrname(), baseColumn);
-            }
-            return map;
+        if (interfaceColumn == null) {
+            return null;
         }
-        return null;
+        Map<String, BaseColumn> map = new HashMap<>();
+        for (BaseColumn baseColumn : interfaceColumn) {
+            map.put(baseColumn.getAttrname(), baseColumn);
+        }
+        return map;
     }
 
 
