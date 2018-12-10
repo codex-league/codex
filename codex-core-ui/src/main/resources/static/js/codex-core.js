@@ -130,6 +130,11 @@ var codex = new Vue({
                 this.step = 0;
             }
         },
+        // 获取可选注解
+        getOptions(row) {
+            console.log(row.attrType)
+            return this.options
+        },
 
         //提交
         apply() {

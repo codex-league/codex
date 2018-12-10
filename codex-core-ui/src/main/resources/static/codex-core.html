@@ -179,7 +179,7 @@
                                 <template slot-scope="scope">
                                     <el-select placeholder="不显示" v-model="scope.row.annotation">
                                         <el-option
-                                                v-for="item in options"
+                                                v-for="item in getOptions(scope.row)"
                                                 :label="item.label"
                                                 :value="item.value">
                                         </el-option>
