@@ -26,7 +26,7 @@ public class ${className}Controller {
     * @param ${classname}Entity
     * @return
     */
-    @PostMapping("/${className}/add")
+    @PostMapping("/${classname}/add")
     public R add(@RequestBody @Validated(VG.Add.class)${className}Entity ${classname}Entity) {
         return R.ok().data(${classname}Service.insert(${classname}Entity));
     }
@@ -36,7 +36,7 @@ public class ${className}Controller {
      * @param ${classname}Entity
      * @return
      */
-    @PostMapping("/${className}/delete")
+    @PostMapping("/${classname}/delete")
     public R delete(@RequestBody @Validated(VG.Delete.class)${className}Entity ${classname}Entity) {
         ${classname}Service.deleteById(${classname}Entity);
         return R.ok();
@@ -47,7 +47,7 @@ public class ${className}Controller {
      * @param ${classname}Entity
      * @return
      */
-    @PostMapping("/${className}/update")
+    @PostMapping("/${classname}/update")
     public R update(@RequestBody @Validated(VG.Update.class)${className}Entity ${classname}Entity) {
         ${classname}Service.updateById(${classname}Entity));
         return R.ok();
@@ -58,7 +58,7 @@ public class ${className}Controller {
      * @param ${classname}Entity
      * @return
      */
-    @PostMapping("/${className}/detail")
+    @PostMapping("/${classname}/detail")
     public R detail(@RequestBody @Validated(VG.Get.class)${className}Entity ${classname}Entity) {
         return R.ok().data(${classname}Service.selectById(${classname}Entity));
     }
@@ -68,7 +68,7 @@ public class ${className}Controller {
      * @param ${classname}Entity
      * @return
      */
-    @PostMapping("/"+${className}+"/list")
+    @PostMapping("/${classname}/list")
     public R list(@RequestBody @Validated(VG.List.class)${className}Entity ${classname}Entity) {
         return R.ok().data(${classname}Service.selectList(new EntityWrapper<>()));
     }
