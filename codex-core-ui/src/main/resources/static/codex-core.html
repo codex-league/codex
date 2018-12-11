@@ -126,7 +126,10 @@
                 <el-form-item label="表注释：">
                     <span style="font-size: 16px" v-if="row">{{row.tableComment}}</span>
                 </el-form-item>
-                <el-form-item v-if="!!prefixList && prefixList.length > 0" label="忽略的前缀" required prop="tablePrefix">
+
+                <el-form-item v-if="!!prefixList && prefixList.length > 0 " label="忽略的前缀" required
+                              prop="tablePrefix">
+
                     <el-radio-group v-model="ruleForm.tablePrefix" size="medium" prpo="tablePrefix">
                         <el-radio v-for="prefix in prefixList" :label="prefix" border>{{prefix}}</el-radio>
                     </el-radio-group>
@@ -150,11 +153,9 @@
 
         <span slot="footer" class="dialog-footer">
             <el-button @click="crudDialog = false">取 消</el-button>
-            <el-button v-if="ruleForm.controller === '2'" type="primary"
+            <el-button type="primary"
                        @click="crudDialogCode('ruleForm')">确 定</el-button>
-            <el-button
-                    v-if="ruleForm.controller === '1' && !!ruleForm.controllertype && ruleForm.controllertype.length > 0"
-                    type="primary" @click="crudOperationCode('ruleForm')">确 定</el-button>
+
           </span>
 
     </el-dialog>
@@ -164,7 +165,7 @@
 
     <el-dialog title="接口预览" :visible.sync="crudOperation" width="900">
 
-        <div  class="dialog-body">
+        <div class="dialog-body">
             <el-steps :active="step" align-center finish-status="success">
                 <el-step :title="type.name+'接口'" v-for="type in modules"></el-step>
             </el-steps>
@@ -173,7 +174,7 @@
                     <template>
                         <el-table :data="obj.tableData" style="width: 100%">
                             <el-table-column prop="attrType" label="类型" width="120"></el-table-column>
-                            <el-table-column prop="attrname" align-center  label="字段名称" width="200"></el-table-column>
+                            <el-table-column prop="attrname" align-center label="字段名称" width="200"></el-table-column>
                             <el-table-column prop="comments" label="注释" width="249"></el-table-column>
                             <el-table-column label="注解">
                                 <template slot-scope="scope">

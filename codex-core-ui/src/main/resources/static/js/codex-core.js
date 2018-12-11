@@ -93,30 +93,32 @@ var codex = new Vue({
         },
         crudDialogCode(formName) {
             var _this = this;
+            _this.modules = {};
             this.$refs[formName].validate(function (valid) {
-                if (valid) {
-                    _this.crudDialog = false;
-                    window.location.href = "/codex/code/" + _this.row.tableName + "?tablePrefix=" + _this.ruleForm.tablePrefix;
-                    _this.$message({
-                        type: 'success',
-                        message: '正在下载!'
-                    })
+
+                if (_this.ruleForm.controllertype === '1') {
+                    if (valid) {
+                        _this.crudDialog = false;
+                        window.location.href = "/codex/code/" + _this.row.tableName + "?tablePrefix=" + _this.ruleForm.tablePrefix;
+                        _this.$message({
+                            type: 'success',
+                            message: '正在下载!'
+                        })
+                    }
+                }
+
+                if (_this.ruleForm.controllertype === '2'){
+                    for (var i in _this.ruleForm.controllertype) {
+                        _this.modules[_this.ruleForm.controllertype[i]] = {
+                            tableData: JSON.parse(JSON.stringify(_this.info)),
+                            name: _this.interfaces[_this.ruleForm.controllertype[i]],
+                            kind: _this.ruleForm.controllertype[i]
+                        }
+                    }
+                    _this.crudOperation = true;
+
                 }
             });
-
-        },
-        crudOperationCode: function (formName) {
-
-            var _this = this;
-            _this.modules = {};
-            for (var i in _this.ruleForm.controllertype) {
-                _this.modules[_this.ruleForm.controllertype[i]] = {
-                    tableData: JSON.parse(JSON.stringify(_this.info)),
-                    name: _this.interfaces[_this.ruleForm.controllertype[i]],
-                    kind: _this.ruleForm.controllertype[i]
-                }
-            }
-            _this.crudOperation = true;
 
         },
 
