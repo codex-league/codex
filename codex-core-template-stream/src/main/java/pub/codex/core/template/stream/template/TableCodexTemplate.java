@@ -137,6 +137,14 @@ public abstract class TableCodexTemplate extends BaseTableCodexTemplate {
         return annotation;
     }
 
+    /**
+     * 注解的完整拼装
+     * @param annotation
+     * @param map
+     * @param annoEnum
+     * @param comments
+     * @return
+     */
     private Constant.flag annotationFactory(List<String> annotation, Map<String, StringBuffer> map, Constant.annotationConatant annoEnum, String comments) {
         if (map.get(annoEnum.getValue()) == null) {
             return Constant.flag.NULL_EXCEPTION;

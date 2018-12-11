@@ -24,6 +24,9 @@ public class TableEntity {
     //类名(第一个字母小写)，如：sys_user => sysUser
     private String classname;
 
+    //接口类型
+    private List<String> interfaceType;
+
     public String getTableName() {
         return tableName;
     }
@@ -70,5 +73,13 @@ public class TableEntity {
 
     public void setClassname(String classname) {
         this.classname = classname;
+    }
+
+    public List<String> getInterfaceType() {
+        return interfaceType;
+    }
+
+    public void setInterfaceType(List<String> interfaceType) {
+        this.interfaceType = interfaceType;
     }
 }

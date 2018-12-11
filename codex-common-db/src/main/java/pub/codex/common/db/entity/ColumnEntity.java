@@ -28,6 +28,7 @@ public class ColumnEntity {
     //auto_increment
     private String extra;
 
+    //注解信息
     private List<String> annotationList;
 
     public String getColumnName() {
