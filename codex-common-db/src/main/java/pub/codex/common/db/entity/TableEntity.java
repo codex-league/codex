@@ -27,6 +27,9 @@ public class TableEntity {
     //接口类型
     private List<String> interfaceType;
 
+    // 是否生成Controller
+    private boolean isController;
+
     public String getTableName() {
         return tableName;
     }
@@ -81,5 +84,13 @@ public class TableEntity {
 
     public void setInterfaceType(List<String> interfaceType) {
         this.interfaceType = interfaceType;
+    }
+
+    public boolean isController() {
+        return isController;
+    }
+
+    public void setController(boolean controller) {
+        isController = controller;
     }
 }

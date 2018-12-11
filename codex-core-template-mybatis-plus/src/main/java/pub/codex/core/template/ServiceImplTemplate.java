@@ -2,7 +2,7 @@ package pub.codex.core.template;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import pub.codex.common.DateUtil;
+import pub.codex.common.utils.DateUtil;
 import pub.codex.core.template.stream.BaseTemplateConfigProvider;
 import pub.codex.core.template.stream.template.TableCodexTemplate;
 

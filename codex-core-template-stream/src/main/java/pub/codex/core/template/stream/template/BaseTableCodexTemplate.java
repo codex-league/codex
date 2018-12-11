@@ -1,14 +1,7 @@
 package pub.codex.core.template.stream.template;
 
-
-import org.apache.commons.configuration.Configuration;
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.text.WordUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.app.Velocity;
-import pub.codex.common.CodexException;
 
 import java.io.File;
 import java.util.Properties;
@@ -19,7 +12,6 @@ import java.util.Properties;
  * @author xuxi
  */
 public class BaseTableCodexTemplate {
-
 
     /**
      * 根据名称获取模板
@@ -38,34 +30,6 @@ public class BaseTableCodexTemplate {
         Template template = Velocity.getTemplate(TEMPLATE_PATH, "UTF-8");
 
         return template;
-    }
-
-    /**
-     * 表名转换成Java类名
-     */
-    public String tableToJava(String tableName, String tablePrefix) {
-        if (StringUtils.isNotBlank(tablePrefix)) {
-            tableName = tableName.replace(tablePrefix, "");
-        }
-        return columnToJava(tableName);
-    }
-
-    /**
-     * 列名转换成Java属性名
-     */
-    public String columnToJava(String columnName) {
-        return WordUtils.capitalizeFully(columnName, new char[]{'_'}).replace("_", "");
-    }
-
-    /**
-     * 获取配置信息
-     */
-    public Configuration getConfig() {
-        try {
-            return new PropertiesConfiguration("generator.properties");
-        } catch (ConfigurationException e) {
-            throw new CodexException("获取配置文件失败，", e);
-        }
     }
 
     /**

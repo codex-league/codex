@@ -1,7 +1,7 @@
 /**
  *
  */
-package pub.codex.common;
+package pub.codex.common.utils;
 
 import java.sql.Timestamp;
 import java.text.ParseException;

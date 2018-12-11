@@ -1,7 +1,5 @@
 package pub.codex.core.template.stream;
 
-import org.springframework.stereotype.Service;
-
 /**
  * 项目模板基础信息
  */

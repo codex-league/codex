@@ -6,12 +6,13 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import pub.codex.common.column.ControllerColumn;
+import pub.codex.common.column.InfoColumn;
 import pub.codex.common.db.jdbc.TableDao;
 import pub.codex.common.models.CodexResult;
-import pub.codex.common.models.ControllerColumn;
-import pub.codex.common.models.InfoColumn;
+import pub.codex.common.utils.BaseUtil;
+import pub.codex.common.utils.TranslateUtil;
 import pub.codex.core.provider.ConfigProvider;
-import pub.codex.core.template.stream.template.BaseTableCodexTemplate;
 import pub.codex.core.template.stream.template.TableCodexTemplateStream;
 
 import javax.servlet.http.HttpServletRequest;
@@ -67,11 +68,11 @@ public class CodexcController {
             infoColumn.setComments(column.get("columnComment"));
 
             //列名转换成Java属性名
-            String attrName = new BaseTableCodexTemplate().columnToJava(column.get("columnName"));
+            String attrName = TranslateUtil.columnToJava(column.get("columnName"));
             infoColumn.setAttrname(StringUtils.uncapitalize(attrName));
 
             //列的数据类型，转换成Java类型
-            String attrType = new BaseTableCodexTemplate().getConfig().getString(column.get("dataType"), "unknowType");
+            String attrType = BaseUtil.getConfig().getString(column.get("dataType"), "unknowType");
             infoColumn.setAttrType(attrType);
 
             //是否主键

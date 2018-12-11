@@ -2,7 +2,7 @@ package pub.codex.core.template;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import pub.codex.common.DateUtil;
+import pub.codex.common.utils.DateUtil;
 import pub.codex.common.db.entity.ColumnEntity;
 import pub.codex.core.template.stream.BaseTemplateConfigProvider;
 import pub.codex.core.template.stream.template.TableCodexTemplate;
@@ -21,6 +21,12 @@ public class ControllerTemplate extends TableCodexTemplate {
 
     @Override
     public void coding() {
+
+        //判断是否生成controller
+        if(!tableEntity.isController()){
+            return ;
+        }
+
         //表名转换成Java类名
         String controllerPackagePath = baseTemplateConfigProvider.getControllerPath();
         String servicePackagePath = baseTemplateConfigProvider.getServicePath();
@@ -31,6 +37,7 @@ public class ControllerTemplate extends TableCodexTemplate {
         String className = tableEntity.getClassName();
         String classname = tableEntity.getClassname();
         List<ColumnEntity> columns = tableEntity.getColumns();
+        List<String> interfaceType = tableEntity.getInterfaceType();
 
 
         //封装模板数据
@@ -44,6 +51,7 @@ public class ControllerTemplate extends TableCodexTemplate {
         map.put("className", className);
         map.put("classname", classname);
         map.put("columns", columns);
+        map.put("interfaceType", interfaceType);
         buildTemplate(TEMPLATE_NAME, map, buildFilePath(TEMPLATE_NAME, className,
                 controllerPackagePath, false));
     }

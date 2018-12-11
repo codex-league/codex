@@ -1,4 +1,4 @@
-package pub.codex.common.models;
+package pub.codex.common.column;
 
 import java.util.List;
 

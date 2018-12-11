@@ -1,9 +1,11 @@
 package pub.codex.core.template.stream.template;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
+import pub.codex.common.db.entity.TableEntity;
 import pub.codex.common.db.jdbc.TableDao;
-import pub.codex.common.models.ControllerColumn;
+import pub.codex.common.column.ControllerColumn;
+import pub.codex.core.template.stream.provider.TableEntityProvider;
 
 import java.util.List;
 import java.util.Map;
@@ -12,7 +14,7 @@ import java.util.zip.ZipOutputStream;
 /**
  * TABLE 相关coding 的template执行器
  */
-@Service
+@Component
 public class TableCodexTemplateStream {
 
     @Autowired
@@ -20,6 +22,9 @@ public class TableCodexTemplateStream {
 
     @Autowired
     private TableDao tableDao;
+
+    @Autowired
+    TableEntityProvider tableEntityProvider;
 
     /**
      * foreach template
@@ -33,12 +38,12 @@ public class TableCodexTemplateStream {
         Map<String, String> table = getTable(tableName);
         List<Map<String, String>> columns = getColumns(tableName);
 
+        TableEntity tableEntity = tableEntityProvider.buildTemplateEntity(table, columns, controllerColumn, tablePrefix);
         //遍历
         tableCodexTemplateList.stream().forEach(tableCodexTemplate -> {
-            tableCodexTemplate.buildTemplateEntity(table, columns, controllerColumn, tablePrefix, zip);
+            tableCodexTemplate.build(tableEntity, zip);
         });
     }
-
 
     /**
      * 查询表信息

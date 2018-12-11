@@ -2,4 +2,6 @@ dependencies {
     compile("com.google.code.gson:gson:2.8.5")
     compile("com.google.guava:guava:18.0")
     compile("com.alibaba:fastjson:1.2.31")
+    compile ("org.apache.commons:commons-lang3:3.5")
+    compile("commons-configuration:commons-configuration:1.10")
 }
