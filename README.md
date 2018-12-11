@@ -4,14 +4,19 @@
 >关注官方网站:【http://www.codex.pub】  
 >关注Github:【https://github.com/codex-league/codex】
 
-[toc]
 
 ## 1 我们能做什么？
 >Code-X致力解决团队开发中的各种效率问题，目前我们能做的是解决部分重复性工作，比如CRUD工作的重复性，以及restfulAPI文档编写一致性；  
 从目前看来Code-X希望减少程序员的重复性开发工作，把更多的尽力放在业务实现，或者更有价值的工作当中。
 
+### 演示地址
+http://demo.codex.pub/codex.html
+
+> 使用了Code-X,你的项目将可以看到上演示地址中的所有功能
+
 ## 2 环境要求
 > jdk 1.8 +  
+> mybatis plus (后续支持其他框架)
 > MySql (后续支持其他关系型数据库或非关系型数据库)  
 > maven 、gradle  
 > spring boot 2.x
@@ -20,7 +25,7 @@
 ### 3.1 引入依赖
 
 > 已经发布至maven中央库，阿里云maven均可获取: https://search.maven.org/search?q=pub.codex
-当前版本最新 3.0.0.release  
+当前版本最新 3.0.0  
 
 
 > gradle：
@@ -106,6 +111,9 @@ apix:
 
     IP: 是你的项目地址  
     port: 是你项目的端口
+    
+    
+
 
 ## 4 CRUD生成
 >利用`Code-X`可实现CRUD重复性工作快速生成   

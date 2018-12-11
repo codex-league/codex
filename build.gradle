@@ -2,14 +2,6 @@ def codexVersion = '3.0.0'
 def codexGroup = 'pub.codex'
 def vJavaLang = '1.8'
 
-def javaProjects = [project(':codex-core'),
-                    project(':codex-common-db'),
-                    project(':codex-common'),
-                    project(':codex-apix'),
-                    project(':codex-index'),
-                    project(':codex-core-template-stream'),
-                    project(':codex-core-template-mybatis-plus')]
-def bootProjects = []
 def nexusProjects = [project(':codex-core'),
                      project(':codex-apix'),
                      project(':codex-common-db'),
@@ -25,6 +17,11 @@ def nexusProjects = [project(':codex-core'),
 subprojects() {
 
     apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: "io.spring.dependency-management"
+    apply plugin: "maven-publish"
+    apply plugin: 'maven'
+    apply plugin: 'signing'
 
     group = codexGroup
     version = codexVersion
@@ -36,31 +33,11 @@ subprojects() {
         maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
     }
 
-}
-
-configure(javaProjects) {
-
-    apply plugin: 'idea'
-    apply plugin: "io.spring.dependency-management"
-
     dependencyManagement {
         imports {
             mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
         }
     }
-}
-
-configure(bootProjects) {
-
-    apply plugin: 'org.springframework.boot'
-}
-
-configure(nexusProjects) {
-
-    apply plugin: "maven-publish"
-    apply plugin: 'maven'
-    apply plugin: 'signing'
-
 
     // 后面的都是打包的配置
     task sourcesJar(type: Jar) {
@@ -68,10 +45,10 @@ configure(nexusProjects) {
         from sourceSets.main.allJava
     }
     // 生成 javadoc jar
-        task javadocJar(type: Jar) {
-            classifier = 'javadoc'
-            from javadoc.destinationDir
-        }
+    task javadocJar(type: Jar) {
+        classifier = 'javadoc'
+        from javadoc.destinationDir
+    }
 
 
     publishing {
@@ -142,10 +119,7 @@ configure(nexusProjects) {
     }
 
 
-
-    
 }
-
 
 
 buildscript {
