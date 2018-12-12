@@ -22,9 +22,11 @@ public class ${className}Entity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 #foreach ($column in $columns)
+	#if(${column.comments})
 	/**
 	 * $column.comments
 	 */
+	#end
 	#if($column.columnName == $pk.columnName)
 	@TableId
 	#end
@@ -34,9 +36,7 @@ public class ${className}Entity implements Serializable {
 	#end
 	#end
 	private $column.attrType $column.attrname;
-
 #end
-
 #foreach ($column in $columns)
 
 	public void set${column.attrName}($column.attrType $column.attrname) {
