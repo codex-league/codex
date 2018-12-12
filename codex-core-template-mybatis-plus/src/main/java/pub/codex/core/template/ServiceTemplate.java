@@ -44,6 +44,6 @@ public class ServiceTemplate extends TableCodexTemplate {
         map.put("comments", comments);
         map.put("className", className);
         buildTemplate(TEMPLATE_NAME, map, buildFilePath(TEMPLATE_NAME, className,
-                servicePackagePath, false));
+                servicePackagePath, false, false));
     }
 }
