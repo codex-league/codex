@@ -105,11 +105,13 @@ public class TableEntityProvider {
         FieldColumn fieldColumn = interfaceMap.get(Constant.interfaceConstant.LIST.getType());
         Map<String, BaseColumn> interfaceColumn = TranslateUtil.transformUtils(fieldColumn.getTableData());
         BaseColumn baseColumn = interfaceColumn.get(column);
-        if (baseColumn.getAnnotation().equals(Constant.query.LIKE.getValue())) {
-            queryList.add(".like(!StringUtils.isEmpty(" + tableEntity.getClassname() + "Entity.get" + attrName + "()),\"" + columnName + "\", " + tableEntity.getClassname() + "Entity.get" + attrName + "())");
-        }
-        if (baseColumn.getAnnotation().equals(Constant.query.EQUAL.getValue())) {
-            queryList.add(".eq(!StringUtils.isEmpty(" + tableEntity.getClassname() + "Entity.get" + attrName + "()),\"" + columnName + "\", " + tableEntity.getClassname() + "Entity.get" + attrName + "())");
+        if (baseColumn.getAnnotation() != null) {
+            if (baseColumn.getAnnotation().equals(Constant.query.LIKE.getValue())) {
+                queryList.add(".like(!StringUtils.isEmpty(" + tableEntity.getClassname() + "Entity.get" + attrName + "()),\"" + columnName + "\", " + tableEntity.getClassname() + "Entity.get" + attrName + "())");
+            }
+            if (baseColumn.getAnnotation().equals(Constant.query.EQUAL.getValue())) {
+                queryList.add(".eq(!StringUtils.isEmpty(" + tableEntity.getClassname() + "Entity.get" + attrName + "()),\"" + columnName + "\", " + tableEntity.getClassname() + "Entity.get" + attrName + "())");
+            }
         }
         return queryList;
     }
