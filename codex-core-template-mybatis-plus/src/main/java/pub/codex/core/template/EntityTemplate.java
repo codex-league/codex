@@ -36,7 +36,6 @@ public class EntityTemplate extends TableCodexTemplate {
         ColumnEntity pk = tableEntity.getPk();
         List<ColumnEntity> columns = tableEntity.getColumns();
 
-
         //封装模板数据
         Map<String, Object> map = new HashMap<>();
         map.put("entityPackagePath", entityPackagePath);

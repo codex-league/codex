@@ -31,7 +31,6 @@ public class MapperTemplate extends TableCodexTemplate {
         String comments = tableEntity.getComments();
         String className = tableEntity.getClassName();
 
-
         //封装模板数据
         Map<String, Object> map = new HashMap<>();
         map.put("mapperPackagePath", mapperPackagePath);

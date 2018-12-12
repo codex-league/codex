@@ -35,7 +35,6 @@ public class MapperXmlTemplate extends TableCodexTemplate {
         String classname = tableEntity.getClassname();
         List<ColumnEntity> columns = tableEntity.getColumns();
 
-
         //封装模板数据
         Map<String, Object> map = new HashMap<>();
         map.put("entityPackagePath", entityPackagePath);
