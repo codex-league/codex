@@ -26,15 +26,21 @@ public class TableEntityProvider {
      */
     public TableEntity buildTemplateEntity(Map<String, String> table, List<Map<String, String>> columns, ControllerColumn controllerColumn, String tablePrefix) {
 
-        // 表信息
         TableEntity tableEntity = new TableEntity();
+        List<String> typeList = new ArrayList<>();
 
+        // 表信息
         tableEntity.setTableName(table.get("tableName" ));
         tableEntity.setComments(table.get("tableComment" ));
 
         //添加接口种类
-        tableEntity.setInterfaceType(BaseUtil.getMethod(controllerColumn));
+        Map<String, FieldColumn> interfaceMap = BaseUtil.getMethod(controllerColumn);
+        for (String type : interfaceMap.keySet()) {
+            typeList.add(type);
+        }
+        tableEntity.setInterfaceType(typeList);
 
+        //类名
         String className = TranslateUtil.tableToJava(tableEntity.getTableName(), tablePrefix);
         tableEntity.setClassName(className);
         tableEntity.setClassname(StringUtils.uncapitalize(className));
@@ -59,8 +65,10 @@ public class TableEntityProvider {
             columnEntity.setAttrType(attrType);
 
             //字段的注解拼装
-            List<String> annotationList = combAnnotation(controllerColumn, columnEntity.getAttrname(), columnEntity.getComments());
-            columnEntity.setAnnotationList(annotationList);
+            columnEntity.setAnnotationList(combAnnotation(interfaceMap, columnEntity.getAttrname(), columnEntity.getComments()));
+
+            //字段精确或者模糊查询
+            columnEntity.setQueryList(combQueryStr(interfaceMap,columnEntity.getAttrname(),columnEntity.getAttrName(),column.get("columnName" ),tableEntity));
 
             //是否主键
             if ("PRI".equalsIgnoreCase(column.get("columnKey" )) && tableEntity.getPk() == null) {
@@ -78,24 +86,50 @@ public class TableEntityProvider {
     }
 
     /**
+     * 组装字段精确或者模糊查询
+     * @param interfaceMap
+     * @param column
+     * @param attrName
+     * @param columnName
+     * @param tableEntity
+     * @return
+     */
+    private List<String> combQueryStr(Map<String, FieldColumn> interfaceMap, String column, String attrName, String columnName, TableEntity tableEntity) {
+        if(interfaceMap.get(Constant.interfaceConstant.LIST.getType())==null){
+            return null;
+        }
+        List<String> queryList=new ArrayList<>();
+        FieldColumn fieldColumn = interfaceMap.get(Constant.interfaceConstant.LIST.getType());
+        Map<String, BaseColumn> interfaceColumn = TranslateUtil.transformUtils(fieldColumn.getTableData());
+        BaseColumn baseColumn = interfaceColumn.get(column);
+        if(baseColumn.getAnnotation().equals(Constant.query.LIKE.getValue())){
+            queryList.add(".like(!StringUtils.isEmpty("+tableEntity.getClassname()+"Entity.get"+attrName+"()),\""+ columnName+"\", "+tableEntity.getClassname()+"Entity.get"+attrName+"())");
+        }
+        if(baseColumn.getAnnotation().equals(Constant.query.EQUAL.getValue())){
+            queryList.add(".eq(!StringUtils.isEmpty("+tableEntity.getClassname()+"Entity.get"+attrName+"()),\""+ columnName+"\", "+tableEntity.getClassname()+"Entity.get"+attrName+"())");
+        }
+        return queryList;
+    }
+
+    /**
      * 组装最终tableEntity的注解
      *
-     * @param controllerColumn
+     * @param interfaceMap
      * @param column
      * @param comments
      * @return
      */
-    private List<String> combAnnotation(ControllerColumn controllerColumn, String column, String comments) {
-        if (controllerColumn == null) {
+    private List<String> combAnnotation(Map<String, FieldColumn> interfaceMap, String column, String comments) {
+        if (interfaceMap == null) {
             return null;
         }
         List<String> annotation = new ArrayList<>();
         Map<String, StringBuffer> map = new HashMap<>();
-        findAnnotation(controllerColumn.getAdd(), Constant.interfaceConstant.ADD.getValue(), column, map);
-        findAnnotation(controllerColumn.getDel(), Constant.interfaceConstant.DELETE.getValue(), column, map);
-        findAnnotation(controllerColumn.getDetail(), Constant.interfaceConstant.GET.getValue(), column, map);
-        findAnnotation(controllerColumn.getUpdate(), Constant.interfaceConstant.UPDATE.getValue(), column, map);
-        findAnnotation(controllerColumn.getList(), Constant.interfaceConstant.LIST.getValue(), column, map);
+        for (String type : interfaceMap.keySet()) {
+            if(type!=Constant.interfaceConstant.LIST.getValue()) {
+                findAnnotation(interfaceMap.get(type), type, column, map);
+            }
+        }
         //todo 目前只处理@NotNull,@NotBlank,@NotEmpty,@Null,@Pattern和@ApiModelProperty
         annotationFactory(annotation, map, Constant.annotationConatant.NOTNULL, null);
         annotationFactory(annotation, map, Constant.annotationConatant.NOTBLANK, null);
@@ -126,7 +160,7 @@ public class TableEntityProvider {
         }
         if (annoEnum.getValue().equals(Constant.annotationConatant.APIMODELPROPERTY.getValue())) {
             StringBuffer groups = map.get(annoEnum.getValue());
-            if (comments != null && !comments.equals("" )) {
+            if (!StringUtils.isEmpty(comments)) {
                 annotation.add(Constant.annotationConatant.APIMODELPROPERTY.getValue() + "(describe = \"" + comments + "\",groups = {" + groups.deleteCharAt(groups.length() - 1) + "})" );
             }
             return Constant.flag.APIMODELPROPERTY_ANNOTATION;
@@ -140,12 +174,16 @@ public class TableEntityProvider {
      * 拼接不同注解的分组信息
      *
      * @param fieldColumn
-     * @param value
+     * @param type
      * @param column
      * @param map
      */
-    private void findAnnotation(FieldColumn fieldColumn, String value, String column, Map<String, StringBuffer> map) {
+    private void findAnnotation(FieldColumn fieldColumn, String type, String column, Map<String, StringBuffer> map) {
         if (fieldColumn == null || fieldColumn.getTableData() == null) {
+            return;
+        }
+        String value = Constant.interfaceConstant.getGroupInfo(type);
+        if(StringUtils.isEmpty(value)){
             return;
         }
         Map<String, BaseColumn> interfaceColumn = TranslateUtil.transformUtils(fieldColumn.getTableData());

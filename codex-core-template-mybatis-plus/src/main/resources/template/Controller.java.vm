@@ -1,5 +1,6 @@
 package ${controllerPackagePath};
 
+import org.springframework.util.StringUtils;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import ${servicePackagePath}.${className}Service;
  *
  * @date ${datetime}
  */
+@Api("${comments}")
 @RestController
 public class ${className}Controller {
 
@@ -31,6 +33,7 @@ public class ${className}Controller {
     * @param ${classname}Entity
     * @return
     */
+    @ApiOperation("新增接口")
     @PostMapping("/${classname}/add")
     public R add(@RequestBody @Validated(VG.Add.class)${className}Entity ${classname}Entity) {
         ${classname}Service.insert(${classname}Entity);
@@ -40,10 +43,11 @@ public class ${className}Controller {
 #if(${type}=="del")
 
     /**
-     *删除接口
+     * 删除接口
      * @param ${classname}Entity
      * @return
      */
+    @ApiOperation("删除接口")
     @PostMapping("/${classname}/delete")
     public R delete(@RequestBody @Validated(VG.Delete.class)${className}Entity ${classname}Entity) {
         ${classname}Service.deleteById(${classname}Entity);
@@ -53,10 +57,11 @@ public class ${className}Controller {
 #if(${type}=="update")
 
     /**
-     *更新接口
+     * 更新接口
      * @param ${classname}Entity
      * @return
      */
+    @ApiOperation("更新接口")
     @PostMapping("/${classname}/update")
     public R update(@RequestBody @Validated(VG.Update.class)${className}Entity ${classname}Entity) {
         ${classname}Service.updateById(${classname}Entity);
@@ -66,10 +71,11 @@ public class ${className}Controller {
 #if(${type}=="detail")
 
     /**
-     *详情接口
+     * 详情接口
      * @param ${classname}Entity
      * @return
      */
+    @ApiOperation("详情接口")
     @PostMapping("/${classname}/detail")
     public R detail(@RequestBody @Validated(VG.Get.class)${className}Entity ${classname}Entity) {
         return R.ok().data(${classname}Service.selectById(${classname}Entity));
@@ -78,13 +84,22 @@ public class ${className}Controller {
 #if(${type}=="list")
 
     /**
-     *列表接口
+     * 列表接口
      * @param ${classname}Entity
      * @return
      */
+    @ApiOperation("列表接口")
     @PostMapping("/${classname}/list")
     public R list(@RequestBody @Validated(VG.List.class)${className}Entity ${classname}Entity) {
-        return R.ok().data(${classname}Service.selectList(new EntityWrapper<>()));
+        return R.ok().data(${classname}Service.selectList(new EntityWrapper<${className}Entity>()
+            #foreach (${column} in ${columns})
+            #if(${column.queryList})
+            #foreach(${queryList}in ${column.queryList})
+                 ${queryList}
+            #end
+            #end
+            #end
+        ));
     }
 #end
 #end

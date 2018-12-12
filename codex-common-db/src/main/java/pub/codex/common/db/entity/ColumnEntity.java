@@ -31,6 +31,9 @@ public class ColumnEntity {
     //注解信息
     private List<String> annotationList;
 
+    //精确或者模糊查询字段
+    private List<String> queryList;
+
     public String getColumnName() {
         return columnName;
     }
@@ -93,5 +96,13 @@ public class ColumnEntity {
 
     public void setAnnotationList(List<String> annotationList) {
         this.annotationList = annotationList;
+    }
+
+    public List<String> getQueryList() {
+        return queryList;
+    }
+
+    public void setQueryList(List<String> queryList) {
+        this.queryList = queryList;
     }
 }
