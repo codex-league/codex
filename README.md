@@ -12,11 +12,11 @@
 ### 演示地址
 http://demo.codex.pub/codex.html
 
-> 使用了Code-X,你的项目将可以看到上演示地址中的所有功能
+> 使用了Code-X,你的项目将可以看到演示地址中的所有功能
 
 ## 2 环境要求
 > jdk 1.8 +  
-> mybatis plus (后续支持其他框架)
+> mybatis plus (后续支持其他框架)  
 > MySql (后续支持其他关系型数据库或非关系型数据库)  
 > maven 、gradle  
 > spring boot 2.x
