@@ -47,6 +47,7 @@
                 </template>
             </div>
         </el-col>
+        <!--数据源信息-->
         <el-col :span="10" v-if="jdbc">
             <div class="grid-content bg-purple-light" style="padding: 0 10px;">
                 <el-card class="box-card" shadow="never">
@@ -86,6 +87,7 @@
             </div>
 
         </el-col>
+        <!--包信息-->
         <el-col :span="10" v-if="package">
             <div class="grid-content bg-purple-light" style="padding: 0 10px;">
                 <el-card class="box-card" shadow="never">
@@ -194,8 +196,7 @@
 
         <span slot="footer" class="dialog-footer">
             <el-button @click="crudDialog = false">取 消</el-button>
-            <el-button type="primary"
-                       @click="crudDialogCode('ruleForm')">确 定</el-button>
+            <el-button type="primary" @click="crudDialogCode('ruleForm')">确 定</el-button>
           </span>
 
     </el-dialog>

@@ -23,7 +23,7 @@ var codex = new Vue({
 
         row: null,
         package: {},
-        jdbc:{},
+        jdbc: {},
         ruleForm: {
             tablePrefix: null,
             controller: '1',
@@ -39,13 +39,23 @@ var codex = new Vue({
         value: '',
         options: [
             {value: '@ApiModelProperty', label: '选填', kind: "add,update,del,detail"},
-            {value: 'like', label: '模糊查询',  kind: 'list'},
-            {value: 'equal', label: '精确查询',  kind: 'list'},
-            {value: '@NotNull', label: '@NotNull', type: 'Integer,Long,Short,Byte,Double,Float,Boolean,Date', kind: 'add,update,del,detail'},
-            {value: '@NotBlank', label: '@NotBlank',  type: "String", kind: 'add,update,del,detail'},
-            {value: '@NotEmpty', label: '@NotEmpty',  type: "String", kind: 'add,update,del,detail'},
-            {value: '@Null', label: '@Null',  type: "String,Integer,Long,Short,Byte,Double,Float,Boolean,Date", kind: 'add,update,del,detail'},
-            {value: '@Pattern', label: '@Pattern',  type: "String", kind: 'add,update,del,detail'}
+            {value: 'like', label: '模糊查询', kind: 'list'},
+            {value: 'equal', label: '精确查询', kind: 'list'},
+            {
+                value: '@NotNull',
+                label: '@NotNull',
+                type: 'Integer,Long,Short,Byte,Double,Float,Boolean,Date',
+                kind: 'add,update,del,detail'
+            },
+            {value: '@NotBlank', label: '@NotBlank', type: "String", kind: 'add,update,del,detail'},
+            {value: '@NotEmpty', label: '@NotEmpty', type: "String", kind: 'add,update,del,detail'},
+            {
+                value: '@Null',
+                label: '@Null',
+                type: "String,Integer,Long,Short,Byte,Double,Float,Boolean,Date",
+                kind: 'add,update,del,detail'
+            },
+            {value: '@Pattern', label: '@Pattern', type: "String", kind: 'add,update,del,detail'}
             // {value: '@Max', label: '@Max'},
             // {value: '@Min', label: '@Min'},
             // {value: '@Digits', label: '@Digits'},
@@ -96,9 +106,8 @@ var codex = new Vue({
             var _this = this;
             _this.modules = {};
             this.$refs[formName].validate(function (valid) {
-
-                if (_this.ruleForm.controllertype === '1') {
-                    if (valid) {
+                if (valid) {
+                    if (_this.ruleForm.controller === '2') {
                         _this.crudDialog = false;
                         window.location.href = "/codex/code/" + _this.row.tableName + "?tablePrefix=" + _this.ruleForm.tablePrefix;
                         _this.$message({
@@ -106,21 +115,19 @@ var codex = new Vue({
                             message: '正在下载!'
                         })
                     }
-                }
 
-                if (_this.ruleForm.controllertype === '2'){
-                    for (var i in _this.ruleForm.controllertype) {
-                        _this.modules[_this.ruleForm.controllertype[i]] = {
-                            tableData: JSON.parse(JSON.stringify(_this.info)),
-                            name: _this.interfaces[_this.ruleForm.controllertype[i]],
-                            kind: _this.ruleForm.controllertype[i]
+                    if (_this.ruleForm.controller === '1') {
+                        for (var i in _this.ruleForm.controllertype) {
+                            _this.modules[_this.ruleForm.controllertype[i]] = {
+                                tableData: JSON.parse(JSON.stringify(_this.info)),
+                                name: _this.interfaces[_this.ruleForm.controllertype[i]],
+                                kind: _this.ruleForm.controllertype[i]
+                            }
                         }
+                        _this.crudOperation = true;
                     }
-                    _this.crudOperation = true;
-
                 }
             });
-
         },
 
         //上一步
@@ -139,8 +146,8 @@ var codex = new Vue({
 
             var tempOptions = [];
             this.options.forEach(item => {
-                if((!item['type'] || item.type.indexOf(type) > -1 )
-                    && (!item['kind'] || item.kind.indexOf(kind) > -1)){ // 如果 type没有条件，直接通过
+                if ((!item['type'] || item.type.indexOf(type) > -1)
+                    && (!item['kind'] || item.kind.indexOf(kind) > -1)) { // 如果 type没有条件，直接通过
                     tempOptions.push(JSON.parse(JSON.stringify(item)));
                 }
             });
@@ -175,10 +182,9 @@ var codex = new Vue({
         (function () {
             Vue.http.get('/codex/data').then(function (response) {
                 if (response.ok) {
-                    console.log("111",response.body)
                     _this.tableList = response.body.tableList;
                     _this.package = response.body.package;
-                    _this.jdbc=response.body.jdbc;
+                    _this.jdbc = response.body.jdbc;
                     _this.prefixList = !!response.body.prefix ? response.body.prefix.split(",") : [];
                 } else {
                     alert('获取数据库表信息错误');
