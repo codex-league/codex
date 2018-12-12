@@ -23,8 +23,8 @@ public class ControllerTemplate extends TableCodexTemplate {
     public void coding() {
 
         //判断是否生成controller
-        if(!tableEntity.isController()){
-            return ;
+        if (!tableEntity.isController()) {
+            return;
         }
 
         //表名转换成Java类名
@@ -53,6 +53,6 @@ public class ControllerTemplate extends TableCodexTemplate {
         map.put("columns", columns);
         map.put("interfaceType", interfaceType);
         buildTemplate(TEMPLATE_NAME, map, buildFilePath(TEMPLATE_NAME, className,
-                controllerPackagePath, false));
+                controllerPackagePath, false, true));
     }
 }

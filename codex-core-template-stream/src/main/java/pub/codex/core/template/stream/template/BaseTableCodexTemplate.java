@@ -35,7 +35,7 @@ public class BaseTableCodexTemplate {
     /**
      * 编译文件名
      */
-    protected String buildFilePath(String templateName, String className, String packagePath, boolean isResources) {
+    protected String buildFilePath(String templateName, String className, String packagePath, boolean isResources, boolean isController) {
 
         String headPackagePath;
 
@@ -44,7 +44,11 @@ public class BaseTableCodexTemplate {
         } else {
             headPackagePath = "main" + File.separator + "resources" + File.separator;
         }
-
+        if (!isController) {
+            headPackagePath += "db" + File.separator;
+        } else {
+            headPackagePath += "controller" + File.separator;
+        }
         return headPackagePath + packagePath.replace(".", File.separator) + File.separator + className + templateName;
     }
 

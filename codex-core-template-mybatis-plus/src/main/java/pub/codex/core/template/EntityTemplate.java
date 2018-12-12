@@ -49,7 +49,7 @@ public class EntityTemplate extends TableCodexTemplate {
         map.put("columns", columns);
         map.put("pk", pk);
         buildTemplate(TEMPLATE_NAME, map, buildFilePath(TEMPLATE_NAME, className,
-                entityPackagePath, false));
+                entityPackagePath, false, false));
     }
 
 
