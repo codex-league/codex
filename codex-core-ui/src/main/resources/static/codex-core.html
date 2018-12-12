@@ -47,6 +47,45 @@
                 </template>
             </div>
         </el-col>
+        <el-col :span="10" v-if="jdbc">
+            <div class="grid-content bg-purple-light" style="padding: 0 10px;">
+                <el-card class="box-card" shadow="never">
+                    <div slot="header" class="clearfix" >
+                        <span style="color: #909399">数据源信息</span>
+                    </div>
+                    <div>
+                        <div style="margin-top: 15px;">
+                            <el-input readonly :value="jdbc.url">
+                                <template slot="prepend" style="width: 100px;">
+                                    <div style="width: 70px;">
+                                        URL
+                                    </div>
+                                </template>
+                            </el-input>
+                        </div>
+                        <div style="margin-top: 15px;">
+                            <el-input readonly :value="jdbc.userName">
+                                <template slot="prepend">
+                                    <div style="width: 70px;">
+                                        用 户 名
+                                    </div>
+                                </template>
+                            </el-input>
+                        </div>
+                        <div style="margin-top: 15px;">
+                            <el-input readonly :value="jdbc.driverClassName">
+                                <template slot="prepend">
+                                    <div style="width: 70px;">
+                                        驱动类型
+                                    </div>
+                                </template>
+                            </el-input>
+                        </div>
+                    </div>
+                </el-card>
+            </div>
+
+        </el-col>
         <el-col :span="10" v-if="package">
             <div class="grid-content bg-purple-light" style="padding: 0 10px;">
                 <el-card class="box-card" shadow="never">
@@ -113,6 +152,8 @@
             </div>
 
         </el-col>
+
+
     </el-row>
 
     <!--是否生成controller弹窗-->

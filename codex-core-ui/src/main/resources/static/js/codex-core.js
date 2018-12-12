@@ -23,6 +23,7 @@ var codex = new Vue({
 
         row: null,
         package: {},
+        jdbc:{},
         ruleForm: {
             tablePrefix: null,
             controller: '1',
@@ -174,8 +175,10 @@ var codex = new Vue({
         (function () {
             Vue.http.get('/codex/data').then(function (response) {
                 if (response.ok) {
+                    console.log("111",response.body)
                     _this.tableList = response.body.tableList;
                     _this.package = response.body.package;
+                    _this.jdbc=response.body.jdbc;
                     _this.prefixList = !!response.body.prefix ? response.body.prefix.split(",") : [];
                 } else {
                     alert('获取数据库表信息错误');

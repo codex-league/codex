@@ -50,7 +50,8 @@ public class CodexcController {
         return CodexResult.ok()
                 .put("tableList", tableList)
                 .put("package", configProvider.getPackageInfo())
-                .put("prefix", configProvider.getPrefix());
+                .put("prefix", configProvider.getPrefix())
+                .put("jdbc",configProvider.getJdbcInfo());
     }
 
     /**
