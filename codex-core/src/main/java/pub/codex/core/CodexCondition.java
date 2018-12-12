@@ -43,7 +43,7 @@ public class CodexCondition implements Condition {
         }
         String controller1 = context.getEnvironment().getProperty("codex.package.controllerPath");
         String controller2 = context.getEnvironment().getProperty("codex.package.controller-path");
-        if (StringUtils.isEmpty(serviceImpl1) && StringUtils.isEmpty(serviceImpl2)) {
+        if (StringUtils.isEmpty(controller1) && StringUtils.isEmpty(controller2)) {
             return false;
         }
 
