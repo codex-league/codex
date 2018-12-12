@@ -39,7 +39,6 @@ public class ControllerTemplate extends TableCodexTemplate {
         List<ColumnEntity> columns = tableEntity.getColumns();
         List<String> interfaceType = tableEntity.getInterfaceType();
 
-
         //封装模板数据
         Map<String, Object> map = new HashMap<>();
         map.put("controllerPackagePath", controllerPackagePath);

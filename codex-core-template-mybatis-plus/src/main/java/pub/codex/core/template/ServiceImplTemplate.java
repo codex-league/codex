@@ -34,7 +34,6 @@ public class ServiceImplTemplate extends TableCodexTemplate {
         String className = tableEntity.getClassName();
         String classname = tableEntity.getClassname();
 
-
         //封装模板数据
         Map<String, Object> map = new HashMap<>();
         map.put("entityPackagePath", entityPackagePath);
