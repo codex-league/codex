@@ -41,13 +41,13 @@ public class BaseTableCodexTemplate {
 
         if (!isResources) {
             headPackagePath = "main" + File.separator + "java" + File.separator;
+            if (!isController) {
+                headPackagePath += "db" + File.separator;
+            } else {
+                headPackagePath += "controller" + File.separator;
+            }
         } else {
             headPackagePath = "main" + File.separator + "resources" + File.separator;
-        }
-        if (!isController) {
-            headPackagePath += "db" + File.separator;
-        } else {
-            headPackagePath += "controller" + File.separator;
         }
         return headPackagePath + packagePath.replace(".", File.separator) + File.separator + className + templateName;
     }
