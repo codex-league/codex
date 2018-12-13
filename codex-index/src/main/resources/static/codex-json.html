@@ -20,8 +20,7 @@
         <div style="padding: 0 10px;">
 
             <el-card shadow="never">
-                <el-input type="textarea" :rows="16" placeholder="请输入内容"
-                          v-model="content"></el-input>
+                <el-input type="textarea" :rows="16" placeholder="请输入内容" v-model="content"></el-input>
                 <div style="margin-top: 15px;">
                     <el-button @click="formatData()" size="mini" type="success" round>格式化json数据
                     </el-button>
@@ -36,3 +35,16 @@
 </html>
 
 <script src="js/codex-json.js"></script>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>原生js格式化json的方法</title>
+</head>
+<body>
+<!--格式化后的json写入的位置-->
+<div id="writePlace"></div>
+</body>
+</html>
