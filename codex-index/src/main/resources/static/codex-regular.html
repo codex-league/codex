@@ -1,0 +1,52 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+    <script src="/webjars/vue/2.5.17/dist/vue.min.js"></script>
+    <script src="/webjars/vue-resource/1.5.1/dist/vue-resource.js"></script>
+    <script src="/webjars/element-ui/2.4.8/lib/index.js"></script>
+
+    <title>codex-regular</title>
+
+    <link rel="stylesheet" href="/webjars/element-ui/2.4.8/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/commmon.css"/>
+    <link rel="stylesheet" href="css/codex-core.css"/>
+
+</head>
+<body>
+<div id="regular">
+    <el-row>
+        <el-col :span="12">
+            <div class="grid-content bg-purple-light" style="padding: 0 10px;">
+                <el-card class="box-card" shadow="never">
+                    <div style="margin-top: 15px">
+                        <el-input v-model="expression" type="textarea" :rows="13" placeholder="请输入待校验文本"></el-input>
+                    </div>
+                    <div style="margin-top: 15px">
+                        <el-input v-model="reg" placeholder="请输入正则表达式">
+                            <el-button slot="append" @click="regular(reg,expression)">提交</el-button>
+                        </el-input>
+                    </div>
+                </el-card>
+            </div>
+        </el-col>
+
+        <el-col :span="12">
+            <div style="margin-top: 2px">
+                <el-card class="box-card" shadow="never">
+                    <span>输出信息</span>
+                    <el-input v-model="isMatching" type="textarea" :rows="15" disabled>
+                    </el-input>
+                </el-card>
+            </div>
+        </el-col>
+    </el-row>
+</div>
+</body>
+</html>
+
+<script src="js/codex-regular.js">
+</script>
+
