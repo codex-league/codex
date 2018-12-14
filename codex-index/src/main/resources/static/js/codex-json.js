@@ -6,7 +6,6 @@ var codex = new Vue({
                 content: [{required: true, message: '验证内容不能为空'},],
             },
         },
-
         methods: {
             //格式化json数据
             formatData(formName) {
@@ -47,38 +46,39 @@ var codex = new Vue({
                         json = json.replace(reg, ':');
                     }
                     (json.split('\r\n')).forEach(function (node, index) {
-                            var i = 0,
-                                indent = 0,
-                                padding = '';
+                        var i = 0,
+                            indent = 0,
+                            padding = '';
 
-                            if (node.match(/\{$/) || node.match(/\[$/)) {
-                                indent = 1;
-                            } else if (node.match(/\}/) || node.match(/\]/)) {
-                                if (pad !== 0) {
-                                    pad -= 1;
-                                }
-                            } else {
-                                indent = 0;
+                        if (node.match(/\{$/) || node.match(/\[$/)) {
+                            indent = 1;
+                        } else if (node.match(/\}/) || node.match(/\]/)) {
+                            if (pad !== 0) {
+                                pad -= 1;
                             }
-
-                            for (i = 0; i < pad; i++) {
-                                padding += PADDING;
-                            }
-
-                            formatted += padding + node + '\r\n';
-                            pad += indent;
+                        } else {
+                            indent = 0;
                         }
-                    );
+
+                        for (i = 0; i < pad; i++) {
+                            padding += PADDING;
+                        }
+                        formatted += padding + node + '\r\n';
+                        pad += indent;
+                    });
                     return formatted;
-                }
+                };
                 try {
                     var resultJson = formatJson(content);
                 } catch (e) {
                     alert("有错哦！！！！！！！" + e.toString())
                 }
                 _this.content = resultJson;
-            },
+            }
+            ,
         }
     })
 ;
+
+
 
