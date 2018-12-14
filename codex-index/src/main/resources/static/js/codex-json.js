@@ -11,7 +11,7 @@ var codex = new Vue({
             //格式化json数据
             formatData(formName) {
                 var _this = this;
-
+                var content = _this.content;
                 var formatJson = function (json, options) {
                     var reg = null,
                         formatted = '',
@@ -71,8 +71,12 @@ var codex = new Vue({
                     );
                     return formatted;
                 }
-                var resultJson = formatJson(_this.content);
-                _this.content= resultJson ;
+                try {
+                    var resultJson = formatJson(content);
+                } catch (e) {
+                    alert("有错哦！！！！！！！" + e.toString())
+                }
+                _this.content = resultJson;
             },
         }
     })
