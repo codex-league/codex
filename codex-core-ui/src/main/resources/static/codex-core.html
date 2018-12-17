@@ -155,7 +155,7 @@
     </el-row>
 
     <!--是否生成controller弹窗-->
-    <el-dialog title="准备生成CRUD" :visible.sync="crudDialog" width="900">
+    <el-dialog title="准备生成CRUD" top="10" :visible.sync="crudDialog" width="900">
 
         <div class="dialog-body">
             <el-form :model="ruleForm" ref="ruleForm" :rules="rules" label-width="200px" size="medium" border>
@@ -200,7 +200,7 @@
 
     <!--增删改查选择进度条弹窗-->
 
-    <el-dialog title="接口预览" :visible.sync="crudOperation" width="900">
+    <el-dialog title="接口预览" top="10" :visible.sync="crudOperation" width="900">
 
         <div class="dialog-body">
             <el-steps :active="step" align-center finish-status="success">
