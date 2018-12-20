@@ -18,7 +18,7 @@
 <div id="codex"><br/>
     <el-row>
         <el-col :span="14">
-            <div class="grid-content bg-purple" style="padding: 0 10px;">
+            <div class="grid-content bg-purple"  style="padding: 0 10px;">
                 <template>
                     <el-table border
                               :data="tableList"
@@ -47,9 +47,10 @@
                 </template>
             </div>
         </el-col>
-        <!--数据源信息-->
-        <el-col :span="10" v-if="jdbc">
-            <div class="grid-content bg-purple-light" style="padding: 0 10px;">
+
+        <el-col :span="10">
+            <!--数据源信息-->
+            <div  v-if="jdbc" class="grid-content bg-purple-light" style="padding: 0 10px;">
                 <el-card class="box-card" shadow="never">
                     <div slot="header" class="clearfix" >
                         <span style="color: #909399">数据源信息</span>
@@ -86,10 +87,8 @@
                 </el-card>
             </div>
 
-        </el-col>
-        <!--包信息-->
-        <el-col :span="10" v-if="package">
-            <div class="grid-content bg-purple-light" style="padding: 0 10px;">
+            <!--包信息-->
+            <div v-if="package" class="grid-content bg-purple-light" style="padding: 0 10px;">
                 <el-card class="box-card" shadow="never">
                     <div slot="header" class="clearfix">
                         <span style="color: #909399">包信息</span>
@@ -152,10 +151,7 @@
                     </div>
                 </el-card>
             </div>
-
         </el-col>
-
-
     </el-row>
 
     <!--是否生成controller弹窗-->
