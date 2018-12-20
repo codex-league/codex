@@ -50,17 +50,23 @@
 
                     <el-card style="margin: 20px 0" class="box-card" v-for="operation in api.operations">
 
-                        <div class="demo-input-suffix">
+                        <div style="float:left;width: 88%">
                             <el-input v-model="protocol+ '//' +host+api.path" readonly>
                                 <template slot="prepend">{{operation.method}}</template>
                             </el-input>
-                        </div>
 
+
+                        </div>
+                        <div style="float:right;width: 10%">
+                            <el-button @click="request()" type="success">请 求</el-button>
+                        </div>
+                        <div style="clear:both;"></div>
 
                         <el-collapse v-model="active"
-                                v-if="(operation.params && operation.params.length != 0 ) || ( operation.paramsBody && operation.paramsBody.fields)"
-                                 @change="handleChange">
-                            <el-collapse-item v-if="operation.params && operation.params.length != 0 " title="URI参数" name="1">
+                                     v-if="(operation.params && operation.params.length != 0 ) || ( operation.paramsBody && operation.paramsBody.fields)"
+                                     @change="handleChange">
+                            <el-collapse-item v-if="operation.params && operation.params.length != 0 " title="URI参数"
+                                              name="1">
                                 <template>
                                     <el-table
                                             :data="operation.params"
@@ -118,12 +124,16 @@
                                 </template>
                             </el-collapse-item>
                         </el-collapse>
+
                     </el-card>
                 </div>
             </div>
         </el-container>
     </el-container>
+    <el-dialog title="模拟请求" :visible.sync="requestStates" width="900">
 
+
+    </el-dialog>
 </div>
 </body>
 </html>

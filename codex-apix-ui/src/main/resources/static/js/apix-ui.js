@@ -5,6 +5,7 @@ var apix = new Vue({
         active: ["1","2"],
         apis: {},
         api: {},
+        requestStates:false,
         isNotice: true,
         paramsTableData: null,
         bodyTableData: null,
@@ -16,6 +17,9 @@ var apix = new Vue({
     methods: {
         handleChange(val) {
             console.log(val);
+        },
+        request(){
+            this.requestStates=true;
         },
         countIndex: function (index, index1, index2) { // 计算索引组合
 
