@@ -4,5 +4,6 @@ dependencies {
     compile('javax.validation:validation-api:2.0.1.Final')
     compile("com.google.code.gson:gson:2.8.5")
     compile("com.google.guava:guava:18.0")
+    compile("org.freemarker:freemarker:2.3.20")
 
 }

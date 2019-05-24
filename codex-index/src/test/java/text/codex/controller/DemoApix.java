@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import text.codex.controller.module.Person;
+import text.codex.controller.module.Student;
 
 @Api("演示API管理接口")  // 只描述Controller 信息
 @RestController
@@ -27,6 +28,18 @@ public class DemoApix {
 
 
         return person;
+    }
+
+    @ApiOperation(value = "测试接口1")
+    @PostMapping("ceshi-1")
+    private void ceshi11(@Validated(Student.class) @RequestBody Student student) {
+
+    }
+
+    @ApiOperation(value = "测试接口2")
+    @PostMapping("ceshi-2")
+    private void ceshi22(@ApiParam(value = "登录名") @RequestParam(required = false) String loginName) {
+
     }
 
 }
