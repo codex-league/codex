@@ -18,7 +18,7 @@
 <div id="codex"><br/>
     <el-row>
         <el-col :span="14">
-            <div class="grid-content bg-purple"  style="padding: 0 10px;">
+            <div class="grid-content bg-purple" style="padding: 0 10px;">
                 <template>
                     <el-table border
                               :data="tableList"
@@ -33,15 +33,13 @@
                         </el-table-column>
                         <el-table-column
                                 label="操作"
-                                width="100">
-
+                                width="105">
                             <template slot-scope="scope">
                                 <el-button type="primary"
                                            size="mini"
                                            @click="code(scope.row)">生成代码
                                 </el-button>
                             </template>
-
                         </el-table-column>
                     </el-table>
                 </template>
@@ -50,9 +48,9 @@
 
         <el-col :span="10">
             <!--数据源信息-->
-            <div  v-if="jdbc" class="grid-content bg-purple-light" style="padding: 0 10px;">
+            <div v-if="jdbc" class="grid-content bg-purple-light" style="padding: 0 10px;">
                 <el-card class="box-card" shadow="never">
-                    <div slot="header" class="clearfix" >
+                    <div slot="header" class="clearfix">
                         <span style="color: #909399">数据源信息</span>
                     </div>
                     <div>
@@ -204,11 +202,11 @@
 
         <div class="dialog-body">
             <el-steps :active="step" align-center finish-status="success">
-                <el-step :title="type.name+'接口'" v-for="type in modules"></el-step>
+                <el-step :title="type.name +'接口'" v-for="type in modules"></el-step>
             </el-steps>
             <el-form :model="operationForm" ref="operationForm" :rules="rules" label-width="200px" size="medium">
-                <div style="padding-top: 30px" v-for="(obj, key,index) in modules" v-show="step == index">
-                    <template>
+                <div style="padding-top: 30px" v-for="(obj, key, index) in modules" v-show="step == index">
+                    <template v-if="key === 'add' || key === 'update'">
                         <el-table :data="obj.tableData" style="width: 100%">
                             <el-table-column prop="attrType" label="类型" width="120"></el-table-column>
                             <el-table-column prop="attrname" align-center label="字段名称" width="200"></el-table-column>
@@ -225,6 +223,9 @@
                                 </template>
                             </el-table-column>
                         </el-table>
+                    </template>
+                    <template v-else>
+                        无需设置，请直接下一步
                     </template>
                 </div>
             </el-form>

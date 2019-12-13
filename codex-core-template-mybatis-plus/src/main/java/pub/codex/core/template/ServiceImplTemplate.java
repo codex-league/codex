@@ -29,7 +29,7 @@ public class ServiceImplTemplate extends TableCodexTemplate {
         String entityPackagePath = baseTemplateConfigProvider.getEntityPath();
         String mapperPackagePath = baseTemplateConfigProvider.getMapperPath();
         String servicePackagePath = baseTemplateConfigProvider.getServicePath();
-        String datetime = DateUtil.getDateTime();
+        String datetime = DateUtil.getDateTime("yyyy-MM-dd HH:mm:ss");
         String comments = tableEntity.getComments();
         String className = tableEntity.getClassName();
         String classname = tableEntity.getClassname();

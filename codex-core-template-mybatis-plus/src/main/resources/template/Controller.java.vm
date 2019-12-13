@@ -1,15 +1,15 @@
 package ${controllerPackagePath};
 
-import org.springframework.util.StringUtils;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
-import pub.codex.apix.annotations.*;
-import pub.codex.common.models.R;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import pub.codex.apix.annotations.Api;
+import pub.codex.apix.annotations.ApiOperation;
 import pub.codex.apix.annotations.group.VG;
+import pub.codex.common.models.R;
 import ${entityPackagePath}.${className}Entity;
 import ${servicePackagePath}.${className}Service;
 
@@ -27,17 +27,17 @@ public class ${className}Controller {
     ${className}Service ${classname}Service;
 #end
 #foreach (${type} in ${interfaceType})
-#if(${type}=="add")
 
+#if(${type}=="add")
     /**
     * 新增接口
     * @param ${classname}Entity
     * @return
     */
     @ApiOperation("新增接口")
-    @PostMapping("/${classname}/add")
+    @PostMapping("/${classname}")
     public R add(@RequestBody @Validated(VG.Add.class)${className}Entity ${classname}Entity) {
-        ${classname}Service.insert(${classname}Entity);
+        ${classname}Service.save(${classname}Entity);
         return R.ok();
     }
 #end
@@ -45,13 +45,13 @@ public class ${className}Controller {
 
     /**
      * 删除接口
-     * @param ${classname}Entity
+     * @param id 根据ID删除
      * @return
      */
     @ApiOperation("删除接口")
-    @PostMapping("/${classname}/delete")
-    public R delete(@RequestBody @Validated(VG.Delete.class)${className}Entity ${classname}Entity) {
-        ${classname}Service.deleteById(${classname}Entity);
+    @DeleteMapping("/${classname}/{id}")
+    public R delete(@PathVariable("id") String id) {
+        ${classname}Service.removeById(id);
         return R.ok();
     }
 #end
@@ -63,7 +63,7 @@ public class ${className}Controller {
      * @return
      */
     @ApiOperation("更新接口")
-    @PostMapping("/${classname}/update")
+    @PutMapping("/${classname}")
     public R update(@RequestBody @Validated(VG.Update.class)${className}Entity ${classname}Entity) {
         ${classname}Service.updateById(${classname}Entity);
         return R.ok();
@@ -73,34 +73,32 @@ public class ${className}Controller {
 
     /**
      * 详情接口
-     * @param ${classname}Entity
+     * @param id 根据ID查询
      * @return
      */
     @ApiOperation("详情接口")
-    @PostMapping("/${classname}/detail")
-    public R detail(@RequestBody @Validated(VG.Get.class)${className}Entity ${classname}Entity) {
-        return R.ok().data(${classname}Service.selectById(${classname}Entity));
+    @GetMapping("/${classname}/{id}")
+    public R detail(@PathVariable("id") String id) {
+        return R.ok().data(${classname}Service.getById(id));
     }
 #end
 #if(${type}=="list")
 
     /**
      * 列表接口
-     * @param ${classname}Entity
+     * @param  where JSON条件
+     *         pageIndex 当前页
+     *         pageSize 页数
      * @return
      */
     @ApiOperation("列表接口")
-    @PostMapping("/${classname}/list")
-    public R list(@RequestBody @Validated(VG.List.class)${className}Entity ${classname}Entity) {
-        return R.ok().data(${classname}Service.selectList(new EntityWrapper<${className}Entity>()
-            #foreach (${column} in ${columns})
-            #if(${column.queryList})
-            #foreach(${queryList}in ${column.queryList})
-                 ${queryList}
-            #end
-            #end
-            #end
-        ));
+    @GetMapping("/${classname}")
+    public R list(@RequestParam(required = false) String where, @RequestParam(defaultValue = "0") Long pageIndex, @RequestParam(defaultValue = "10") Long pageSize) {
+        QueryWrapper<DemoEntity> entity = new QueryWrapper<>();
+        entity.allEq(JSON.parseObject(where));
+
+        return R.ok().data(${classname}Service.page(new Page<>(pageIndex, pageSize), entity));
+
     }
 #end
 #end

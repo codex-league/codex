@@ -1,19 +1,21 @@
 server:
   port: 8080
 
+# 开发工具，禁止复制到别处环境
 codex:
   jdbc:
-    url: jdbc:mysql://10.240.4.27:3306/longmarch?useSSL=false
-    username: root
-    password: admin
+    url: ${DB_MICRO_URL:jdbc:mysql://localhost:3306/codex?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false}
+    username: ${DB_MICRO_USERNAME}
+    password: ${DB_MICRO_PWD}
     driverClassName: com.mysql.jdbc.Driver
   package:
-    entity-path: werwer1
-    mapper-path: werwer2
-    mapperXML-path: werwer3
-    service-path: werwer4
-    serviceImpl-path: werwer5
-    controller-path: werwer6
-  prefix: cz_,czl,xxxxxxx
+    entity-path: pub.codex.db.core.entity
+    mapper-path: pub.codex.db.core.mapper
+    mapperXML-path: mapper
+    service-path: pub.codex.db.core.service
+    serviceImpl-path: pub.codex.db.core.service.impl
+    controller-path: pub.codex.core.controller
+  prefix: sys_
 apix:
-  controllerPackage: text.codex.controller
+  controllerPackage: pub.codex.core.controller
+

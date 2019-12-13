@@ -74,8 +74,6 @@ var codex = new Vue({
             // {value: '@Positive', label: '@Positive'},
             // {value: '@PositiveOrZero', label: '@PositiveOrZero'}
         ],
-
-
         rules: {
             tablePrefix: [
                 {required: true, message: '请选择一个你需要忽略的表名前缀'},
