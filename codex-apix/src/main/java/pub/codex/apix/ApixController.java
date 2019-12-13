@@ -32,6 +32,10 @@ public class ApixController {
         return new DocDocument(documentationCache.getDocumentationLookup());
     }
 
+
+    /**
+     * todo 这个方法报错需改正
+     */
     @GetMapping("apix/getDoc")
     @ResponseBody
     public void getDoc() {
