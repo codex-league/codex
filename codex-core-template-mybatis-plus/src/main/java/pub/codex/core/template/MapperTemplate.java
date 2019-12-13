@@ -27,7 +27,7 @@ public class MapperTemplate extends TableCodexTemplate {
         //表名转换成Java类名
         String mapperPackagePath = baseTemplateConfigProvider.getMapperPath();
         String entityPackagePath = baseTemplateConfigProvider.getEntityPath();
-        String datetime = DateUtil.getDateTime();
+        String datetime = DateUtil.getDateTime("yyyy-MM-dd HH:mm:ss");
         String comments = tableEntity.getComments();
         String className = tableEntity.getClassName();
 

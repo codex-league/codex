@@ -29,7 +29,7 @@ public class ServiceTemplate extends TableCodexTemplate {
         //表名转换成Java类名
         String servicePackagePath = baseTemplateConfigProvider.getServicePath();
         String entityPackagePath = baseTemplateConfigProvider.getEntityPath();
-        String datetime = DateUtil.getDateTime();
+        String datetime = DateUtil.getDateTime("yyyy-MM-dd HH:mm:ss");
         String comments = tableEntity.getComments();
         String className = tableEntity.getClassName();
 

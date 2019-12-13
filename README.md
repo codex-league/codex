@@ -16,10 +16,10 @@ http://demo.codex.pub/codex.html
 
 ## 2 环境要求
 > jdk 1.8 +  
-> mybatis plus (后续支持其他框架)  
+> mybatis-plus 3.x+ (后续支持其他框架)  
 > MySql (后续支持其他关系型数据库或非关系型数据库)  
 > maven 、gradle  
-> spring boot 2.x
+> spring boot 2.x+
 
 ## 3 快速开始
 ### 3.1 引入依赖

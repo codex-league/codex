@@ -29,7 +29,7 @@ public class EntityTemplate extends TableCodexTemplate {
 
         //表名转换成Java类名
         String entityPackagePath = baseTemplateConfigProvider.getEntityPath();
-        String datetime = DateUtil.getDateTime();
+        String datetime = DateUtil.getDateTime("yyyy-MM-dd HH:mm:ss");
         String comments = tableEntity.getComments();
         String tableName = tableEntity.getTableName();
         String className = tableEntity.getClassName();

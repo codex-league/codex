@@ -31,12 +31,11 @@ public class ControllerTemplate extends TableCodexTemplate {
         String controllerPackagePath = baseTemplateConfigProvider.getControllerPath();
         String servicePackagePath = baseTemplateConfigProvider.getServicePath();
         String entityPackagePath = baseTemplateConfigProvider.getEntityPath();
-        String datetime = DateUtil.getDateTime();
+        String datetime = DateUtil.getDateTime("yyyy-MM-dd HH:mm:ss");
         String comments = tableEntity.getComments();
         String tableName = tableEntity.getTableName();
         String className = tableEntity.getClassName();
         String classname = tableEntity.getClassname();
-        List<ColumnEntity> columns = tableEntity.getColumns();
         List<String> interfaceType = tableEntity.getInterfaceType();
 
         //封装模板数据
@@ -49,7 +48,6 @@ public class ControllerTemplate extends TableCodexTemplate {
         map.put("tableName", tableName);
         map.put("className", className);
         map.put("classname", classname);
-        map.put("columns", columns);
         map.put("interfaceType", interfaceType);
         buildTemplate(TEMPLATE_NAME, map, buildFilePath(TEMPLATE_NAME, className,
                 controllerPackagePath, false, true));
