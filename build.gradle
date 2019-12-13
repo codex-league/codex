@@ -118,6 +118,10 @@ subprojects() {
         sign publishing.publications.mavenJava
     }
 
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+    }
+
 
 }
 
