@@ -1,4 +1,4 @@
-def codexVersion = '3.0.0'
+def codexVersion = '3.2.0'
 def codexGroup = 'pub.codex'
 def vJavaLang = '1.8'
 
@@ -96,8 +96,8 @@ subprojects() {
                 url 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
 
                 credentials {
-                    username = System.getenv("NEXUS_USERNAME")
-                    password = System.getenv("NEXUS_PASSWORD")
+                    username = System.getenv("NEXUS_USERNAME") // 获取环境变量
+                    password = System.getenv("NEXUS_PASSWORD") // 获取环境变量
                 }
             }
 
@@ -106,8 +106,8 @@ subprojects() {
                 url 'https://oss.sonatype.org/content/repositories/snapshots'
 
                 credentials {
-                    username = System.getenv("NEXUS_USERNAME")
-                    password = System.getenv("NEXUS_PASSWORD")
+                    username = System.getenv("NEXUS_USERNAME") // 获取环境变量
+                    password = System.getenv("NEXUS_PASSWORD") // 获取环境变量
                 }
             }
 
