@@ -1,6 +1,6 @@
 package ${servicePackagePath};
 
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.extension.service.IService;
 import ${entityPackagePath}.${className}Entity;
 
 
