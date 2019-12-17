@@ -1,7 +1,7 @@
 var codex = new Vue({
     el: '#codex',
     data: {
-        message: 'Code-X 让程序员喝茶的朋友',
+        message: 'Code-X 解放双手，解放重复劳动力，辅助开发专注业务实现',
 
         interfaces: {
             add: "增加",
