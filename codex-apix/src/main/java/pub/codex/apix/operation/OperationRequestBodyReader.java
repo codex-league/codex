@@ -100,7 +100,7 @@ public class OperationRequestBodyReader implements OperationBuilderPlugin {
     private void requestBodyHandel(OperationContext context) {
 
         // 处理POST请求
-        if (HttpMethod.POST.equals(context.httpMethod())) {
+        if (HttpMethod.POST.equals(context.httpMethod()) || HttpMethod.PUT.equals(context.httpMethod())) {
 
             requestBodyParamsHandle(context);
 

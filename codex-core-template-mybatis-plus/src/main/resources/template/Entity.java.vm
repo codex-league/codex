@@ -1,11 +1,10 @@
 package ${entityPackagePath};
 
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import pub.codex.apix.annotations.*;
 import pub.codex.apix.annotations.group.VG;
 import javax.validation.constraints.*;
-import java.util.Date;
 
 #if(${hasBigDecimal})
 import java.math.BigDecimal;

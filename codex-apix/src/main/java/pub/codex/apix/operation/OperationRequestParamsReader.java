@@ -5,6 +5,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import pub.codex.apix.annotations.factory.ApiParamFactory;
+import pub.codex.apix.annotations.factory.PathVariableFactory;
 import pub.codex.apix.annotations.factory.RequestParamFactory;
 import pub.codex.apix.context.OperationContext;
 
@@ -61,9 +62,14 @@ public class OperationRequestParamsReader implements OperationBuilderPlugin {
                 map.put("describe", describe);
             }
 
-            Boolean required = RequestParamFactory.getRequired(methodParameter);
-            if (required != null) {
-                map.put("required", required);
+            Boolean requestParamRequired = RequestParamFactory.getRequired(methodParameter);
+            if (requestParamRequired != null) {
+                map.put("required", requestParamRequired);
+            }
+
+            Boolean pathVariableRequired = PathVariableFactory.getRequired(methodParameter);
+            if (pathVariableRequired != null) {
+                map.put("required", pathVariableRequired);
             }
 
             // 获取类型

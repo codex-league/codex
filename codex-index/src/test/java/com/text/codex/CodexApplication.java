@@ -1,4 +1,4 @@
-package text.codex;
+package com.text.codex;
 
 
 import org.springframework.boot.SpringApplication;
