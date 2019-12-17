@@ -22,7 +22,7 @@ public class PrintingCodexInfo implements ApplicationListener<ContextRefreshedEv
         try {
             log.info("\n----------------------------------------------------------\n\t" +
                             "\t\t欢迎使用Code-x\n\t" +
-                            "关注官方网站:【http://www.codex.pub】\n\t" +
+                            "关注官方网站:【http://www.codex.pub/codex.html】\n\t" +
                             "关注Github:【https://github.com/codex-league/codex】\n\t\n\t" +
                             "本地访问Code-x: \thttp://localhost:{}/codex.html (重要)\n\t" +
                             "外网访问Code-x: \thttp://{}:{}/codex.html\n----------------------------------------------------------",
