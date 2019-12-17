@@ -1,7 +1,7 @@
 # Code-X Reference Guide
 
 >欢迎使用Code-X  
->关注官方网站:【http://www.codex.pub】  
+>关注官方网站:【http://www.codex.pub/codex.html】  
 >关注Github:【https://github.com/codex-league/codex】
 
 
@@ -10,7 +10,7 @@
 从目前看来Code-X希望减少程序员的重复性开发工作，把更多的尽力放在业务实现，或者更有价值的工作当中。
 
 ### 演示地址
-http://demo.codex.pub/codex.html
+http://www.codex.pub/codex.html
 
 > 使用了Code-X,你的项目将可以看到演示地址中的所有功能
 
@@ -25,7 +25,7 @@ http://demo.codex.pub/codex.html
 ### 3.1 引入依赖
 
 > 已经发布至maven中央库，阿里云maven均可获取: https://search.maven.org/search?q=pub.codex
-当前版本最新 3.2.0  
+当前版本最新 3.2.1  
 
 
 > gradle：
@@ -38,13 +38,13 @@ http://demo.codex.pub/codex.html
 <dependency>
   <groupId>pub.codex</groupId>
   <artifactId>codex-index</artifactId>
-  <version>3.2.0</version>
+  <version>3.2.1</version>
 </dependency>
 
 <dependency>
   <groupId>pub.codex</groupId>
   <artifactId>codex-core-template-mybatis-plus</artifactId>
-  <version>3.2.0</version>
+  <version>3.2.1</version>
 </dependency>
      
 ```
