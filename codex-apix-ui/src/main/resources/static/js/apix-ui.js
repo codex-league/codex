@@ -1,7 +1,8 @@
 var apix = new Vue({
     el: '#apix',
     data: {
-        message: '项目处于开发阶段，存在一些令人惊奇的BUG ',
+        message: '项目处于现处于孵化期，并存在未知的BUG，动动你的小手，把缺陷或者建议告知我们，并帮助我们改进它',
+        email: 'codex_team@163.com',
         active: ["1","2"],
         apis: {},
         api: {},
