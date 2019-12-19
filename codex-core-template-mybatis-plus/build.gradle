@@ -4,6 +4,6 @@ dependencies {
     compile project(':codex-common-db')
     compile project(':codex-common')
     compile project(':codex-core-template-stream')
-    compile('org.springframework:spring-context')
+    implementation('org.springframework:spring-context')
 
 }

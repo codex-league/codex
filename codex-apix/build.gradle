@@ -1,6 +1,6 @@
 dependencies {
     compile project(':codex-apix-ui')
-    compile('org.springframework.boot:spring-boot-starter-web')
+    implementation('org.springframework.boot:spring-boot-starter-web')
     compile('javax.validation:validation-api:2.0.1.Final')
     compile("com.google.code.gson:gson:2.8.5")
     compile("com.google.guava:guava:18.0")

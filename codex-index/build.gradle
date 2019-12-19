@@ -1,13 +1,14 @@
 
 dependencies {
-    implementation project(':codex-core')
-    implementation project(':codex-apix')
+    compile project(':codex-core')
+    compile project(':codex-apix')
 
     implementation('org.webjars:bootstrap:3.3.7-1')
     implementation('org.webjars:jquery:3.1.1')
     implementation('org.webjars.npm:vue:2.5.17')
     implementation('org.webjars.npm:vue-resource:1.5.1')
     implementation('org.webjars.npm:element-ui:2.4.8')
+    implementation('org.springframework.boot:spring-boot-starter-web')
 
     testImplementation project(':codex-core-template-mybatis-plus')
 
