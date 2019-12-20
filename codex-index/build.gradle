@@ -1,7 +1,7 @@
 
 dependencies {
-    implementation project(':codex-core')
-    implementation project(':codex-apix')
+    compile project(':codex-core')
+    compile project(':codex-apix')
 
     implementation('org.webjars:bootstrap:3.3.7-1')
     implementation('org.webjars:jquery:3.1.1')

@@ -7,70 +7,40 @@ package pub.codex.apix.annotations.group;
 public interface VG {
 
     // 分页
-    interface Page{
+    public interface Page {
     }
 
     // 新增
-    interface Add {
+    public interface Add {
     }
 
     // 删除
-    interface Delete {
+    public interface Delete {
     }
 
     // 查询单条记录
-    interface Get {
+    public interface Get {
     }
 
     // 列表查询
-    interface List {
+    public interface List {
     }
 
     // 更新
-    interface Update {
+    public interface Update {
     }
 
     // 登录
-    interface Login {
+    public interface Login {
     }
 
     // 密码
-    interface Passwd{
+    public interface Passwd {
 
     }
 
     // 验证测试
-    interface ValiTest {
+    public interface ValiTest {
 
     }
-    // 验证开库
-    interface ValiOpen {
-
-    }
-
-    // 验证分配
-    interface ValiDistr {
-
-    }
-
-    // 验证添加/删除角色权限时的参数
-    interface ValidRolePermission {
-
-    }
-
-    // 验证添加/删除用户角色时的参数
-    interface ValidUserRole {
-
-    }
-
-    // 验证添加/删除用户部门时的参数
-    interface ValidUserDepartment {
-
-    }
-
-    // 判断数据归集是否可用时的参数
-    interface ValidDataCollectionAvailable {
-
-    }
-
 }

@@ -3,12 +3,4 @@
 
 <mapper namespace="com.text.codex.db.mapper.DemoMapper">
 
-	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.text.codex.db.entity.DemoEntity" id="demoMap">
-        <result property="id" column="id"/>
-        <result property="name" column="name"/>
-        <result property="age" column="age"/>
-    </resultMap>
-
-
 </mapper>

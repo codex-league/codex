@@ -4,5 +4,5 @@ dependencies {
     compile("com.google.guava:guava:18.0")
     compile("org.springframework.boot:spring-boot")
     compile("org.springframework:spring-jdbc")
-    compile("mysql:mysql-connector-java:5.1.38")
+    implementation("mysql:mysql-connector-java:5.1.38")
 }
