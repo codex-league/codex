@@ -5,11 +5,15 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import pub.codex.apix.annotations.*;
 import pub.codex.apix.annotations.group.VG;
 import javax.validation.constraints.*;
-
-#if(${hasBigDecimal})
-import java.math.BigDecimal;
-#end
 import java.io.Serializable;
+#foreach ($column in $columns)
+	#if($column.attrType == 'Date')
+import java.util.Date;
+		#break;
+	#end
+#end
+
+
 
 /**
  * ${comments}
@@ -21,9 +25,9 @@ public class ${className}Entity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 #foreach ($column in $columns)
-	#if(${column.comments})
+	#if($column.comments)
 	/**
-	 * $column.comments
+	 * ${column.comments}
 	 */
 	#end
 	#if($column.columnName == $pk.columnName)

@@ -94,7 +94,7 @@ public class ${className}Controller {
     @ApiOperation("列表接口")
     @GetMapping("/${classname}")
     public R list(@RequestParam(required = false) String where, @RequestParam(defaultValue = "0") Long pageIndex, @RequestParam(defaultValue = "10") Long pageSize) {
-        QueryWrapper<DemoEntity> entity = new QueryWrapper<>();
+        QueryWrapper<${className}Entity> entity = new QueryWrapper<>();
         entity.allEq(JSON.parseObject(where));
 
         return R.ok().data(${classname}Service.page(new Page<>(pageIndex, pageSize), entity));

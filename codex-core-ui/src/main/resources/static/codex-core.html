@@ -156,30 +156,29 @@
     <el-dialog title="准备生成CRUD" top="10" :visible.sync="crudDialog" width="900">
 
         <div class="dialog-body">
-            <el-form :model="ruleForm" ref="ruleForm" :rules="rules" label-width="200px" size="medium" border>
+            <el-form :model="ruleForm" ref="ruleForm" :rules="rules" label-width="200px" size="mini" border>
                 <el-form-item label="表名：">
-                    <span style="font-size: 16px" v-if="row">{{row.tableName}}</span>
+                    <span style="font-size: 16px; font-weight: 500" v-if="row">{{row.tableName}}</span>
                 </el-form-item>
                 <el-form-item label="表注释：">
-                    <span style="font-size: 16px" v-if="row">{{row.tableComment}}</span>
+                    <span style="font-size: 14px" v-if="row">{{row.tableComment}}</span>
                 </el-form-item>
 
                 <el-form-item v-if="!!prefixList && prefixList.length > 0 " label="忽略的前缀" required
                               prop="tablePrefix">
-
-                    <el-radio-group v-model="ruleForm.tablePrefix" size="medium" prpo="tablePrefix">
+                    <el-radio-group v-model="ruleForm.tablePrefix" prpo="tablePrefix">
                         <el-radio v-for="prefix in prefixList" :label="prefix" border>{{prefix}}</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="是否生成Controller:" required prop="controller">
-                    <el-radio-group v-model="ruleForm.controller" size="medium" prpo="controller">
+                    <el-radio-group v-model="ruleForm.controller" prpo="controller">
                         <el-radio label="1" border>是</el-radio>
                         <el-radio label="2" border>否</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item v-if="ruleForm.controller === '1'" label="生成接口:" required
                               prop="controllertype">
-                    <el-checkbox-group style="padding-top: 8px;" v-model="ruleForm.controllertype" size="medium"
+                    <el-checkbox-group style="padding-top: 8px;" v-model="ruleForm.controllertype"
                                        prpo="controllertype">
 
                         <el-checkbox v-for="(name, key) in interfaces" :label="key">{{name}}</el-checkbox>
@@ -204,22 +203,26 @@
             <el-steps :active="step" align-center finish-status="success">
                 <el-step :title="type.name +'接口'" v-for="type in modules"></el-step>
             </el-steps>
-            <el-form :model="operationForm" ref="operationForm" :rules="rules" label-width="200px" size="medium">
+            <el-form :model="operationForm" ref="operationForm" :rules="rules" label-width="200px" size="mini">
                 <div style="padding-top: 30px" v-for="(obj, key, index) in modules" v-show="step == index">
                     <template v-if="key === 'add' || key === 'update'">
                         <el-table :data="obj.tableData" style="width: 100%">
-                            <el-table-column prop="attrType" label="类型" width="120"></el-table-column>
-                            <el-table-column prop="attrname" align-center label="字段名称" width="200"></el-table-column>
-                            <el-table-column prop="comments" label="注释" width="249"></el-table-column>
+                            <el-table-column prop="attrType" label="类型"></el-table-column>
+                            <el-table-column prop="attrname" align-center label="字段名称"></el-table-column>
+                            <el-table-column prop="comments" label="注释"></el-table-column>
                             <el-table-column label="注解">
                                 <template slot-scope="scope">
-                                    <el-select placeholder="不显示" v-model="scope.row.annotation">
-                                        <el-option
-                                                v-for="item in getOptions(scope.row.attrType,obj.kind)"
-                                                :label="item.label"
-                                                :value="item.value">
-                                        </el-option>
-                                    </el-select>
+                                    <div style="display: flex;">
+                                        <el-select v-model="scope.row.annotation" placeholder="不显示">
+                                            <el-option
+                                                    v-for="item in getOptions(scope.row.attrType, obj.kind)"
+                                                    :label="item.label"
+                                                    :value="item.value">
+                                            </el-option>
+                                        </el-select>
+                                        &nbsp;
+                                        <el-button  type="primary" @click="scope.row.annotation = undefined;">不显示</el-button>
+                                    </div>
                                 </template>
                             </el-table-column>
                         </el-table>
