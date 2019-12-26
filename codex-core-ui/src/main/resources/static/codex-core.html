@@ -213,7 +213,7 @@
                             <el-table-column label="注解">
                                 <template slot-scope="scope">
                                     <div style="display: flex;">
-                                        <el-select v-model="scope.row.annotation" placeholder="不显示">
+                                        <el-select v-model="scope.row.annotation" placeholder="不显示" size="mini">
                                             <el-option
                                                     v-for="item in getOptions(scope.row.attrType, obj.kind)"
                                                     :label="item.label"
@@ -221,7 +221,7 @@
                                             </el-option>
                                         </el-select>
                                         &nbsp;
-                                        <el-button  type="primary" @click="scope.row.annotation = undefined;">不显示</el-button>
+                                        <el-button  type="primary" size="mini" @click="scope.row.annotation = undefined;">不显示</el-button>
                                     </div>
                                 </template>
                             </el-table-column>

@@ -128,7 +128,7 @@ public class CodexcController {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         ZipOutputStream zip = new ZipOutputStream(outputStream);
 
-        tableCodexTemplateStream.doTemplate(tableName, controllerColumn, tablePrefix, zip);
+        tableCodexTemplateStream.doTemplate(tableName, controllerColumn, tablePrefix.trim(), zip);
 
         IOUtils.closeQuietly(zip);
         byte[] data = outputStream.toByteArray();

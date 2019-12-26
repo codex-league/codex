@@ -25,26 +25,26 @@ http://www.codex.pub/codex.html
 ### 3.1 引入依赖
 
 > 已经发布至maven中央库，阿里云maven均可获取: https://search.maven.org/search?q=pub.codex
-当前版本最新 3.2.6  
+当前版本最新 3.2.7
 
 
 > gradle：
 ```Groovy
-    compile 'pub.codex:codex-index:3.2.0'
-    compile 'pub.codex:codex-core-template-mybatis-plus:3.2.0'
+    compile 'pub.codex:codex-index:3.2.7'
+    compile 'pub.codex:codex-core-template-mybatis-plus:3.2.7'
 ```
 > maven:
 ```xml
 <dependency>
   <groupId>pub.codex</groupId>
   <artifactId>codex-index</artifactId>
-  <version>3.2.6</version>
+  <version>3.2.7</version>
 </dependency>
 
 <dependency>
   <groupId>pub.codex</groupId>
   <artifactId>codex-core-template-mybatis-plus</artifactId>
-  <version>3.2.6</version>
+  <version>3.2.7</version>
 </dependency>
      
 ```
