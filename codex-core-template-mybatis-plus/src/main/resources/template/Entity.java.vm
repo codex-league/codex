@@ -2,6 +2,7 @@ package ${entityPackagePath};
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import pub.codex.apix.annotations.*;
 import pub.codex.apix.annotations.group.VG;
 import javax.validation.constraints.*;
@@ -32,6 +33,7 @@ public class ${className}Entity implements Serializable {
 	#end
 	#if($column.columnName == $pk.columnName)
 	@TableId
+	@JsonSerialize(using=ToStringSerializer.class)
 	#end
 	#if(${column.annotationList})
 	#foreach ($annotation in $column.annotationList)

@@ -2,6 +2,7 @@ package pub.codex.apix.annotations;
 
 
 import org.springframework.core.annotation.AliasFor;
+import pub.codex.apix.annotations.constant.Describe;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
