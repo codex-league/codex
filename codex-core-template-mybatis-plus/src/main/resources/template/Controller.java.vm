@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.*;
 import pub.codex.apix.annotations.Api;
 import pub.codex.apix.annotations.ApiOperation;
 import pub.codex.apix.annotations.ApiParam;
+import pub.codex.apix.annotations.constant.Describe;
 import pub.codex.apix.annotations.group.VG;
 import pub.codex.common.models.R;
+import pub.codex.core.template.utils.WhereUtils;
 import ${entityPackagePath}.${className}Entity;
 import ${servicePackagePath}.${className}Service;
 
@@ -101,16 +103,7 @@ public class ${className}Controller {
 
         QueryWrapper<${className}Entity> entity = new QueryWrapper<>();
 
-        if(where != null) {
-            entity.allEq(JSON.parseObject(where));
-        }
-
-        if(keyword != null) {
-            Map<String,Object> keywordMap = JSON.parseObject(keyword);
-            for(String key : keywordMap.keySet()) {
-                entity.or().eq(key, keywordMap.get(key));
-            }
-        }
+        WhereUtils.setWhereAndKeyword(entity, where, keyword); // 设置 where 和  keyword查询
 
         return R.ok().data(${classname}Service.page(new Page<>(pageIndex, pageSize), entity));
 

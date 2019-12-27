@@ -14,6 +14,7 @@ import pub.codex.apix.annotations.constant.Describe;
 import pub.codex.apix.annotations.group.VG;
 import pub.codex.common.models.R;
 import com.text.codex.db.entity.DemoEntity;
+import pub.codex.core.template.utils.WhereUtils;
 
 import java.util.Map;
 
@@ -97,16 +98,8 @@ public class DemoController {
     public R list(@ApiParam(Describe.WHERE) @RequestParam(required = false) String where, @ApiParam(Describe.KEYWORD) @RequestParam(required = false) String keyword, @ApiParam(Describe.PAGE_INDEX) @RequestParam(defaultValue = "0") Long pageIndex, @ApiParam(Describe.PAGE_SIZE) @RequestParam(defaultValue = "10") Long pageSize) {
         QueryWrapper<DemoEntity> entity = new QueryWrapper<>();
 
-        if (where != null) {
-            entity.allEq(JSON.parseObject(where));
-        }
+        WhereUtils.setWhereAndKeyword(entity, where, keyword); // 设置 where 和  keyword查询
 
-        if (keyword != null) {
-            Map<String, Object> keywordMap = JSON.parseObject(keyword);
-            for (String key : keywordMap.keySet()) {
-                entity.or().eq(key, keywordMap.get(key));
-            }
-        }
 
         return R.ok().data(demoService.page(new Page<>(pageIndex, pageSize), entity));
 
