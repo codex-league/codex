@@ -30,13 +30,14 @@ public class DemoController {
     DemoService demoService;
 
     /**
-    * 新增接口
-    * @param demoEntity
-    * @return
-    */
+     * 新增接口
+     *
+     * @param demoEntity
+     * @return
+     */
     @ApiOperation("新增接口")
     @PostMapping("/demo")
-    public R add(@RequestBody @Validated(VG.Add.class)DemoEntity demoEntity) {
+    public R add(@RequestBody @Validated(VG.Add.class) DemoEntity demoEntity) {
         demoService.save(demoEntity);
         return R.ok();
     }
@@ -44,12 +45,13 @@ public class DemoController {
 
     /**
      * 更新接口
+     *
      * @param demoEntity
      * @return
      */
     @ApiOperation("更新接口")
     @PutMapping("/demo")
-    public R update(@RequestBody @Validated(VG.Update.class)DemoEntity demoEntity) {
+    public R update(@RequestBody @Validated(VG.Update.class) DemoEntity demoEntity) {
         demoService.updateById(demoEntity);
         return R.ok();
     }
@@ -57,6 +59,7 @@ public class DemoController {
 
     /**
      * 删除接口
+     *
      * @param id 根据ID删除
      * @return
      */
@@ -70,6 +73,7 @@ public class DemoController {
 
     /**
      * 详情接口
+     *
      * @param id 根据ID查询
      * @return
      */
@@ -82,23 +86,24 @@ public class DemoController {
 
     /**
      * 列表接口
-     * @param  where JSON条件
-     *         pageIndex 当前页
-     *         pageSize 页数
+     *
+     * @param where JSON条件
+     *              pageIndex 当前页
+     *              pageSize 页数
      * @return
      */
     @ApiOperation("列表接口")
     @GetMapping("/buildingBasic")
-    public R list(@ApiParam("ID") @RequestParam(required = false) String where, @RequestParam(required = false ) String keyword, @RequestParam(defaultValue = "0") Long pageIndex, @RequestParam(defaultValue = "10") Long pageSize) {
+    public R list(@ApiParam(Describe.WHERE) @RequestParam(required = false) String where, @ApiParam(Describe.KEYWORD) @RequestParam(required = false) String keyword, @ApiParam(Describe.PAGE_INDEX) @RequestParam(defaultValue = "0") Long pageIndex, @ApiParam(Describe.PAGE_SIZE) @RequestParam(defaultValue = "10") Long pageSize) {
         QueryWrapper<DemoEntity> entity = new QueryWrapper<>();
 
-        if(where != null) {
+        if (where != null) {
             entity.allEq(JSON.parseObject(where));
         }
 
-        if(keyword != null) {
-            Map<String,Object> keywordMap = JSON.parseObject(keyword);
-            for(String key : keywordMap.keySet()) {
+        if (keyword != null) {
+            Map<String, Object> keywordMap = JSON.parseObject(keyword);
+            for (String key : keywordMap.keySet()) {
                 entity.or().eq(key, keywordMap.get(key));
             }
         }
