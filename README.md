@@ -25,7 +25,7 @@ http://www.codex.pub/codex.html
 ### 3.1 引入依赖
 
 > 已经发布至maven中央库，阿里云maven均可获取: https://search.maven.org/search?q=pub.codex
-当前版本最新 3.2.10
+当前版本最新 3.2.14
 
 
 > gradle：
