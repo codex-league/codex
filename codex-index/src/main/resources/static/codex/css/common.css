@@ -49,3 +49,10 @@ li{
 input,img{
     border: none;
 }
+
+
+.head_block > ul > li.active {
+    background: linear-gradient(to right, #41EBC1, #4DA1FF);
+    -webkit-background-clip: text;
+    text-decoration: underline;
+}

@@ -1,0 +1,36 @@
+
+body {
+    background-color: #16296A;
+}
+
+.container {
+}
+
+.head_block {
+    display: flex;
+    justify-content: space-between;
+}
+
+.head_block > .logo > img{
+    height: 65px;
+}
+
+.head_block > ul > li {
+    font-family: PingFang SC;
+    font-weight: 600;
+    line-height: 65px;
+    background: white;
+    -webkit-background-clip: text;
+    color: transparent;
+    display: inline;
+    float: left;
+    font-size: 13px;
+    margin-left: 20px;
+    cursor:pointer
+}
+
+.head_block > ul > li:hover {
+    background: linear-gradient(to right, #41EBC1, #4DA1FF);
+    -webkit-background-clip: text;
+}
+
