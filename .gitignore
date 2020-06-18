@@ -5,6 +5,7 @@
 */build/
 !gradle/wrapper/gradle-wrapper.jar
 
+
 ### STS ###
 .apt_generated
 .classpath
@@ -39,3 +40,11 @@ classes
 gradle
 gradlew
 gradlew.bat
+
+### jrebel ###
+rebel-remote.xml
+rebel.xml
+*/rebel-remote.xml
+*/rebel.xml
+**/rebel-remote.xml
+**/rebel.xml
