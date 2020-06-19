@@ -56,3 +56,8 @@ input,img{
     -webkit-background-clip: text;
     text-decoration: underline;
 }
+
+.container {
+    min-width: 850px;
+    max-width: 992px;
+}
