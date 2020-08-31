@@ -1,0 +1,21 @@
+
+
+.bottom_block {
+    background-color: #031759;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 40px;
+}
+
+.bottom_block > div {
+    color: white;
+    font-size: 9px;
+    height: 38px;
+    line-height: 38px;
+    opacity: 0.8;
+}
+.bottom_block > div > a {
+    color: white;
+    font-size: 9px;
+}
+

@@ -1,42 +1,14 @@
 
 body {
-    background-color: #16296A;
+    background-color: #16296A; !important;
 }
 
-
-
-.head_block, .copywriting_block {
-    display: flex;
-    justify-content: space-between;
-}
-
-.head_block > .logo > img{
-    height: 65px;
-}
-
-.head_block > ul > li {
-    font-family: PingFang SC;
-    font-weight: 600;
-    line-height: 65px;
-    background: white;
-    -webkit-background-clip: text;
-    color: transparent;
-    display: inline;
-    float: left;
-    font-size: 13px;
-    margin-left: 20px;
-    cursor:pointer
-}
-
-.head_block > ul > li:hover {
-    background: linear-gradient(to right, #41EBC1, #4DA1FF);
-    -webkit-background-clip: text;
-}
 
 .copywriting_block {
-    margin-top: 100px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 65px;
 }
-
 
 .copywriting {
     color: white;
@@ -122,24 +94,6 @@ body {
 .star_block > .star > span > img {
     width: 166px;
     height: 166px;
-}
-
-.bottom_block {
-    background-color: #031759;
-    display: flex;
-    justify-content: space-around;
-}
-
-.bottom_block > div {
-    color: white;
-    font-size: 9px;
-    height: 38px;
-    line-height: 38px;
-    opacity: 0.8;
-}
-.bottom_block > div > a {
-    color: white;
-    font-size: 9px;
 }
 
 

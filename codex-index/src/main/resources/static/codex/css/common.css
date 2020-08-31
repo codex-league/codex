@@ -1,55 +1,88 @@
-html{color:#000;background:#FFF;}
-body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,
-fieldset,input,textarea,p,blockquote,th,td {
-    margin:0;
-    padding:0;
+html {
+    color: #000;
 }
-table{
-    border-collapse:collapse;
-    border-spacing:0;
+body {
+    background: #FFF;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form,
+fieldset, input, textarea, p, blockquote, th, td {
+    margin: 0;
+    padding: 0;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
     font-size: 13px;
 }
-fieldset,img {
-    border:0;
+
+fieldset, img {
+    border: 0;
 }
-address,caption,cite,code,dfn,em,strong,th,var {
-    font-style:normal;
-    font-weight:normal;
+
+address, caption, cite, code, dfn, em, strong, th, var {
+    font-style: normal;
+    font-weight: normal;
 }
-ol,ul {
-    list-style:none;
+
+ol, ul {
+    list-style: none;
 }
-caption,th {
-    text-align:left;
+
+caption, th {
+    text-align: left;
 }
-h1,h2,h3,h4,h5,h6 {
-    font-size:100%;
-    font-weight:normal;
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+    font-weight: normal;
 }
-q:before,q:after {
-    content:'';
+
+q:before, q:after {
+    content: '';
 }
-abbr,acronym { border:0;
+
+abbr, acronym {
+    border: 0;
 }
+
 @charset "utf-8";
-*{
+* {
     margin: 0px;
     padding: 0px;
 
 }
-a{
+
+a {
+    color: transparent;
     text-decoration: none;
-    color: #000000;
-    font-size:15px;
-    /*字体*/
 }
-li{
+
+a:hover {
+    color: transparent;
+    text-decoration: none;
+}
+
+li {
     list-style: none;
 }
-input,img{
+
+input, img {
     border: none;
 }
 
+
+.pt20 {
+    padding-top: 20px;
+}
 
 .head_block > ul > li.active {
     background: linear-gradient(to right, #41EBC1, #4DA1FF);
@@ -57,7 +90,19 @@ input,img{
     text-decoration: underline;
 }
 
-.container {
-    min-width: 850px;
-    max-width: 992px;
+
+.hr_top {
+    border: #EEE 5px solid;
+    margin: 20px 0 0;
 }
+
+.container {
+    min-width: 1024px;
+    max-width: 1920px;
+}
+
+
+.container_body {
+}
+
+

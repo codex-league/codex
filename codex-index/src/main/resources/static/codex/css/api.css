@@ -1,0 +1,130 @@
+
+.boundary_left {
+    border-right: #EEE 2px solid;
+    min-height: 100%;
+}
+
+.boundary_left > div {
+    margin: 20px 0 0;
+}
+
+.preview_api .el-collapse {
+    border-top: none;
+}
+.preview_api .el-collapse .el-collapse-item__header{
+    color: #8A8E93;
+}
+
+.preview_api ul li {
+    height: 35px;
+    line-height: 35px;
+    font-size: 12px;
+    font-weight: 500;
+    color:#68717F;
+    cursor:pointer;
+    padding-left: 5px;
+}
+
+.preview_api ul li:hover {
+    background-color: #F3F3F3;
+    border-right: #4BAAF7 2px solid;
+}
+
+    /*.boundary_left > .table table tr th {*/
+/*    padding-left: 10px;*/
+/*    background-color: #EAF6FE;*/
+/*    border-right: #EAF6FE 2px solid;*/
+/*    height: 35px;*/
+/*    font-size: 14px;*/
+/*    font-weight: 500;*/
+/*    color: rgba(138, 142, 147, 1);*/
+/*}*/
+
+/*.boundary_left > .table table tr td {*/
+/*    padding-left: 10px;*/
+/*    height: 35px;*/
+/*    font-size: 14px;*/
+/*    color: rgba(138, 142, 147, 1);*/
+/*}*/
+
+/*.boundary_left > .table table tr:nth-of-type(odd) {*/
+/*    background-color: #fafafa;*/
+/*    border-right: #fafafa 2px solid;*/
+/*}*/
+
+/*.boundary_left > .table table tr:not(:first-child):hover {*/
+/*    background-color: #F3F3F3;*/
+/*    border-right: #4BAAF7 2px solid;*/
+/*}*/
+
+
+.boundary_right {
+
+}
+
+.boundary_right > div {
+    margin: 20px 0 0 10px;
+    width: 100%;
+}
+
+.boundary_right > div > .title {
+    font-size: 16px;
+    font-weight: 500;
+    color: #68717F;
+    padding: 0 0 10px 0;
+    display: block;
+    /*border-bottom: #efefef 1px solid;*/
+}
+
+
+.restful_box {
+    width: 100%;
+}
+
+.request {
+    display: flex;
+    align-items: center;
+}
+
+.request > div {
+    padding: 5px;
+}
+
+.request_body > .title {
+    font-size: 16px;
+    font-weight: 500;
+    color: #8A8E93;
+    margin: 10px 0;
+    display: block;
+}
+
+.request_body table {
+    width: 100%;
+}
+
+.request_body table th,
+.request_body table td {
+    height: 35px;
+    padding-left: 30px;
+}
+
+.request_body table tr {
+    border-bottom: 1px solid #DFDFDF;
+}
+
+.request_body table tr:hover {
+    background-color: #F3F3F3;
+}
+
+.request_body table tr th {
+    background-color: #F5F7F9;
+    font-size: 14px;
+    font-weight: 500;
+    color: #68717F;
+}
+
+.request_body table tr td {
+    font-size: 14px;
+    color: #68717F;
+}
+
