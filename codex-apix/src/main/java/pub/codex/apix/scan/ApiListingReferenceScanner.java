@@ -8,7 +8,7 @@ import pub.codex.apix.Docket;
 import pub.codex.apix.annotations.ApiIgnore;
 import pub.codex.apix.context.DocumentationContext;
 import pub.codex.apix.context.RequestHandler;
-import pub.codex.apix.context.RequestMappingContext;
+import pub.codex.apix.context.DescriptionContext;
 import pub.codex.apix.module.ResourceGroup;
 
 import java.lang.annotation.Annotation;
@@ -33,8 +33,8 @@ public class ApiListingReferenceScanner {
         this.docket = docket;
     }
 
-    public Map<ResourceGroup, List<RequestMappingContext>> scan(DocumentationContext context) {
-        ArrayListMultimap<ResourceGroup, RequestMappingContext> resourceGroupRequestMappings
+    public Map<ResourceGroup, List<DescriptionContext>> scan(DocumentationContext context) {
+        ArrayListMultimap<ResourceGroup, DescriptionContext> resourceGroupRequestMappings
                 = ArrayListMultimap.create();
 
         // 获取指定包和未标记 @Apilgnore的 mapping对象
@@ -43,7 +43,7 @@ public class ApiListingReferenceScanner {
 
         matchingHandlers.forEach(requestHandler -> {
             ResourceGroup resourceGroup = new ResourceGroup(requestHandler.groupName(), requestHandler.declaringClass());
-            resourceGroupRequestMappings.put(resourceGroup, new RequestMappingContext(requestHandler));
+            resourceGroupRequestMappings.put(resourceGroup, new DescriptionContext(requestHandler));
         });
 
         return asMap(resourceGroupRequestMappings);

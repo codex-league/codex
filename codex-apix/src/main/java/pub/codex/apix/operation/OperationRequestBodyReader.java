@@ -125,7 +125,7 @@ public class OperationRequestBodyReader implements OperationBuilderPlugin {
         methodParameterList.stream().forEach(methodParameter -> {
 
             Map<String, Object> map = newHashMap();
-            map.put("fields", paramsHandle(methodParameter));
+            map.put("fields", paramsHandle(methodParameter));  // todo 暂时只处理了JSON的结构型数据
 
             context.operationBuilder().setParamsBody(map);
         });

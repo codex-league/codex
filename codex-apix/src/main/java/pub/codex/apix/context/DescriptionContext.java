@@ -10,7 +10,7 @@ import java.lang.annotation.Annotation;
 import java.util.List;
 import java.util.Set;
 
-public class RequestMappingContext {
+public class DescriptionContext {
 
 
     private RequestHandler handler;
@@ -18,7 +18,7 @@ public class RequestMappingContext {
     private final ApiDescriptionBuilder apiDescriptionBuilder;
 
 
-    public RequestMappingContext(RequestHandler handler) {
+    public DescriptionContext(RequestHandler handler) {
         this.handler = handler;
         this.apiDescriptionBuilder = new ApiDescriptionBuilder();
     }

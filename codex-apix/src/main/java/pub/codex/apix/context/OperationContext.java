@@ -13,19 +13,19 @@ public class OperationContext {
 
     private final RequestMethod requestMethod;
 
-    private final RequestMappingContext requestContext;
+    private final DescriptionContext descriptionContext;
 
     private final OperationBuilder operationBuilder;
 
 
-    public OperationContext(RequestMethod requestMethod, RequestMappingContext requestContext) {
+    public OperationContext(RequestMethod requestMethod, DescriptionContext descriptionContext) {
         this.requestMethod = requestMethod;
-        this.requestContext = requestContext;
+        this.descriptionContext = descriptionContext;
         this.operationBuilder = new OperationBuilder();
     }
 
     public String getName() {
-        return requestContext.getName();
+        return descriptionContext.getName();
     }
 
 
@@ -39,14 +39,14 @@ public class OperationContext {
     }
 
     public <T extends Annotation> Optional<T> findAnnotation(Class<T> annotation) {
-        return requestContext.findAnnotation(annotation);
+        return descriptionContext.findAnnotation(annotation);
     }
 
     public List<MethodParameter>  getParameterAnnotation(Class<? extends Annotation> annotation) {
-        return requestContext.getParameterAnnotation(annotation);
+        return descriptionContext.getParameterAnnotation(annotation);
     }
     public List<MethodParameter>  getParameter() {
-        return requestContext.getParameter();
+        return descriptionContext.getParameter();
     }
 
 }

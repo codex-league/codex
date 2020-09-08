@@ -16,9 +16,9 @@
 }
 
 .preview_api ul li {
-    height: 35px;
+    height: 38px;
     line-height: 35px;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 500;
     color:#68717F;
     cursor:pointer;
@@ -30,33 +30,10 @@
     border-right: #4BAAF7 2px solid;
 }
 
-    /*.boundary_left > .table table tr th {*/
-/*    padding-left: 10px;*/
-/*    background-color: #EAF6FE;*/
-/*    border-right: #EAF6FE 2px solid;*/
-/*    height: 35px;*/
-/*    font-size: 14px;*/
-/*    font-weight: 500;*/
-/*    color: rgba(138, 142, 147, 1);*/
-/*}*/
 
-/*.boundary_left > .table table tr td {*/
-/*    padding-left: 10px;*/
-/*    height: 35px;*/
-/*    font-size: 14px;*/
-/*    color: rgba(138, 142, 147, 1);*/
-/*}*/
-
-/*.boundary_left > .table table tr:nth-of-type(odd) {*/
-/*    background-color: #fafafa;*/
-/*    border-right: #fafafa 2px solid;*/
-/*}*/
-
-/*.boundary_left > .table table tr:not(:first-child):hover {*/
-/*    background-color: #F3F3F3;*/
-/*    border-right: #4BAAF7 2px solid;*/
-/*}*/
-
+.preview_api ul li span {
+    color: #CFCFCF;
+}
 
 .boundary_right {
 
@@ -78,7 +55,10 @@
 
 
 .restful_box {
+    margin: 0 0 40px 0;
+    border-bottom: 1px #efefef solid;
     width: 100%;
+    padding: 0 0 40px 0;
 }
 
 .request {
@@ -90,7 +70,8 @@
     padding: 5px;
 }
 
-.request_body > .title {
+.request_body > .title,
+.request_param > .title{
     font-size: 16px;
     font-weight: 500;
     color: #8A8E93;
@@ -98,32 +79,45 @@
     display: block;
 }
 
-.request_body table {
+.request_body table,
+.request_param table{
     width: 100%;
 }
 
 .request_body table th,
-.request_body table td {
-    height: 35px;
+.request_body table td,
+.request_param table th,
+.request_param table td {
+    height: 45px;
     padding-left: 30px;
 }
 
-.request_body table tr {
+.request_body table tr,
+.request_param table tr{
     border-bottom: 1px solid #DFDFDF;
 }
 
-.request_body table tr:hover {
+.request_body table tr:hover,
+.request_param table tr:hover{
     background-color: #F3F3F3;
 }
 
-.request_body table tr th {
+.request_body table tr th,
+.request_param table tr th{
     background-color: #F5F7F9;
     font-size: 14px;
     font-weight: 500;
     color: #68717F;
 }
 
-.request_body table tr td {
+.request_body table tr th > span,
+.request_param table tr th> span {
+    color: #cfcfcf;
+    font-size: 12px;
+}
+
+.request_body table tr td,
+.request_param table tr td{
     font-size: 14px;
     color: #68717F;
 }

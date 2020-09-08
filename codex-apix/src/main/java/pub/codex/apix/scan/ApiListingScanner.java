@@ -5,7 +5,7 @@ import com.google.common.collect.Multimap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pub.codex.apix.build.ApiListingBuilder;
-import pub.codex.apix.context.RequestMappingContext;
+import pub.codex.apix.context.DescriptionContext;
 import pub.codex.apix.module.ResourceGroup;
 import pub.codex.apix.schema.ApiDescription;
 import pub.codex.apix.schema.ApiListing;
@@ -29,8 +29,7 @@ public class ApiListingScanner {
     }
 
 
-
-    public Multimap<String, ApiListing> scan(Map<ResourceGroup, List<RequestMappingContext>> resourceGroupListMap) {
+    public Multimap<String, ApiListing> scan(Map<ResourceGroup, List<DescriptionContext>> resourceGroupListMap) {
 
         Multimap<String, ApiListing> apiListingMap = LinkedListMultimap.create();
 
@@ -38,7 +37,7 @@ public class ApiListingScanner {
 
             Set<ApiDescription> apiDescriptions = newHashSet();
 
-            for (RequestMappingContext each : resourceGroupListMap.get(resourceGroup)) {
+            for (DescriptionContext each : resourceGroupListMap.get(resourceGroup)) {
 
                 apiDescriptions.addAll(apiDescriptionReader.read(each));
             }

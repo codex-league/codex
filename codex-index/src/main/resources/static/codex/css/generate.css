@@ -12,7 +12,6 @@
     width: 100%;
 }
 
-
 .boundary_left > .table table tr th {
     padding-left: 10px;
     background-color: #EAF6FE;
@@ -39,7 +38,6 @@
     background-color: #F3F3F3;
     border-right: #4BAAF7 2px solid;
 }
-
 
 .boundary_right {
 
@@ -78,7 +76,7 @@
 }
 
 .preview_table tr th {
-    background-color: #DFDFDF;
+    background-color: #F5F7F9;
     height: 35px;
     font-size: 14px;
     font-weight: 500;

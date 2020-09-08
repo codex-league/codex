@@ -10,7 +10,9 @@ public class DefaultOperationReader implements OperationBuilderPlugin {
 
     @Override
     public void apply(OperationContext context) {
+
         String operationName = context.getName();
+
         context.operationBuilder()
                 .setMethod(context.httpMethod())
                 .setSummary(operationName);

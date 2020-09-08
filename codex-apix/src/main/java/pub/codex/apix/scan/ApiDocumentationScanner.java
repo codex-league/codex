@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pub.codex.apix.build.DocumentationBuilder;
 import pub.codex.apix.context.DocumentationContext;
-import pub.codex.apix.context.RequestMappingContext;
+import pub.codex.apix.context.DescriptionContext;
 import pub.codex.apix.module.ResourceGroup;
 import pub.codex.apix.schema.ApiListing;
 import pub.codex.apix.schema.Documentation;
@@ -34,7 +34,7 @@ public class ApiDocumentationScanner {
 
 
         // 获取所有API信息，并准备分组
-        Map<ResourceGroup, List<RequestMappingContext>> resourceGroupListMap = apiListingReferenceScanner.scan(documentationContext);
+        Map<ResourceGroup, List<DescriptionContext>> resourceGroupListMap = apiListingReferenceScanner.scan(documentationContext);
 
         Multimap<String, ApiListing> apiListings = apiListingScanner.scan(resourceGroupListMap);
 

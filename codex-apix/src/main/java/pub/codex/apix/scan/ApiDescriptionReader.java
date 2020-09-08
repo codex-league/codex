@@ -3,10 +3,13 @@ package pub.codex.apix.scan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.condition.PatternsRequestCondition;
-import pub.codex.apix.context.RequestMappingContext;
+import pub.codex.apix.context.DescriptionContext;
+import pub.codex.apix.description.DescriptionBuilderPlugin;
+import pub.codex.apix.operation.OperationBuilderPlugin;
 import pub.codex.apix.schema.ApiDescription;
 import pub.codex.apix.schema.Operation;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
@@ -15,11 +18,14 @@ import static com.google.common.collect.Lists.newArrayList;
 public class ApiDescriptionReader {
 
 
+    private DescriptionBuilderPlugin[] descriptionBuilderPlugins;
+
     private ApiOperationReader apiOperationReader;
 
     @Autowired
-    public ApiDescriptionReader(ApiOperationReader apiOperationReader) {
+    public ApiDescriptionReader(ApiOperationReader apiOperationReader, DescriptionBuilderPlugin[] descriptionBuilderPlugins) {
         this.apiOperationReader = apiOperationReader;
+        this.descriptionBuilderPlugins = descriptionBuilderPlugins;
     }
 
     /**
@@ -27,8 +33,7 @@ public class ApiDescriptionReader {
      *
      * @param context
      */
-    public List<ApiDescription> read(RequestMappingContext context) {
-
+    public List<ApiDescription> read(DescriptionContext context) {
 
         PatternsRequestCondition patternsCondition = context.getPatternsCondition();
 
@@ -38,14 +43,16 @@ public class ApiDescriptionReader {
 
             List<Operation> operations = apiOperationReader.read(context);
 
+            // 遍历应用方法
+            Arrays.stream(descriptionBuilderPlugins).forEach(plugin -> {
+                plugin.apply(context);
+            });
+
             context.getApiDescriptionBuilder()
                     .setPath(path)
-                    .setMethodName(context.getName())
                     .setOperations(operations);
 
-            ApiDescription apiDescription = context.apiDescriptionBuilder().build();
-
-            apiDescriptionList.add(apiDescription);
+            apiDescriptionList.add(context.apiDescriptionBuilder().build());
         }
 
         return apiDescriptionList;

@@ -10,19 +10,25 @@ import java.util.Map;
  * api 选项内容构造器
  */
 public class OperationBuilder {
-    private HttpMethod method = HttpMethod.GET;
+
     private String summary;
+    private String path;
+    private HttpMethod method = HttpMethod.GET;
     private List<Map<String, Object>> params;
     private Map<String, Object> paramsBody;
 
 
-    public OperationBuilder setMethod(HttpMethod method) {
-        this.method = method;
+    public OperationBuilder setSummary(String summary) {
+        this.summary = summary;
         return this;
     }
 
-    public OperationBuilder setSummary(String summary) {
-        this.summary = summary;
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public OperationBuilder setMethod(HttpMethod method) {
+        this.method = method;
         return this;
     }
 
@@ -36,7 +42,7 @@ public class OperationBuilder {
         return this;
     }
 
-    public Operation build(){
-        return new Operation(method, summary, params, paramsBody);
+    public Operation build() {
+        return new Operation(summary, path, method, params, paramsBody);
     }
 }

@@ -26,7 +26,6 @@ public class RequestHandlersProvider {
         this.handlerMappings = handlerMappings;
     }
 
-
     /**
      * 获取restful api映射对象
      *

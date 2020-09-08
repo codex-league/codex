@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.text.codex.db.service.DemoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pub.codex.apix.annotations.Api;
@@ -79,7 +80,7 @@ public class DemoController {
      * @return
      */
     @ApiOperation("详情接口")
-    @GetMapping("/demo/{id}")
+    @RequestMapping(value = "/demo/{id}" ,method = {RequestMethod.GET, RequestMethod.POST})
     public R detail(@ApiParam(Describe.ID) @PathVariable("id") String id) {
         return R.ok().data(demoService.getById(id));
     }
@@ -99,7 +100,6 @@ public class DemoController {
         QueryWrapper<DemoEntity> entity = new QueryWrapper<>();
 
         WhereUtils.setWhereAndKeyword(entity, where, keyword); // 设置 where 和  keyword查询
-
 
         return R.ok().data(demoService.page(new Page<>(pageIndex, pageSize), entity));
 

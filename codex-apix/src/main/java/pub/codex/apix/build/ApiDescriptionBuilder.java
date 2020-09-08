@@ -11,10 +11,14 @@ import java.util.List;
  */
 public class ApiDescriptionBuilder {
 
+    private String summary;
     private String path;
     private String methodName;
     private List<Operation> operations;
 
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
 
     public ApiDescriptionBuilder setPath(String path) {
         this.path = path;
@@ -32,6 +36,6 @@ public class ApiDescriptionBuilder {
     }
 
     public ApiDescription build() {
-        return new ApiDescription(path, methodName, operations);
+        return new ApiDescription(summary, path, methodName, operations);
     }
 }

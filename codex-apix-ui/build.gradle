@@ -4,4 +4,5 @@ dependencies {
     compile('org.webjars.npm:vue:2.5.17')
     compile('org.webjars.npm:vue-resource:1.5.1')
     compile('org.webjars.npm:element-ui:2.4.8')
+    compile ("org.apache.commons:commons-lang3:3.5")
 }

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMethod;
 import pub.codex.apix.context.OperationContext;
-import pub.codex.apix.context.RequestMappingContext;
+import pub.codex.apix.context.DescriptionContext;
 import pub.codex.apix.operation.OperationBuilderPlugin;
 import pub.codex.apix.schema.Operation;
 
@@ -30,7 +30,7 @@ public class ApiOperationReader {
      *
      * @param context
      */
-    public List<Operation> read(RequestMappingContext context) {
+    public List<Operation> read(DescriptionContext context) {
 
         Set<RequestMethod> requestMethods = context.getMethodsCondition();
 

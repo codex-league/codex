@@ -9,14 +9,17 @@ import java.util.Map;
 
 public class ApiDocument {
 
-    private String path;
+    private final String summary;
 
-    private String methodName;
+    private final String path;
+
+    private final String methodName;
 
     private List<Map<String, Object>> operations;
 
     public ApiDocument(ApiDescription apiDescription) {
 
+        this.summary = apiDescription.getSummary();
         this.path = apiDescription.getPath();
         this.methodName = apiDescription.getMethodName();
 
@@ -24,8 +27,9 @@ public class ApiDocument {
             operations = new ArrayList<>();
             apiDescription.getOperations().forEach(operation -> {
                 Map<String, Object> map = new HashMap<>();
-                map.put("method", operation.getMethod().toString());
                 map.put("summary", operation.getSummary());
+                map.put("path", operation.getPath());
+                map.put("method", operation.getMethod().toString());
                 map.put("params", operation.getParams());
                 map.put("paramsBody", operation.getParamsBody());
                 this.operations.add(map);
@@ -33,6 +37,10 @@ public class ApiDocument {
         }
     }
 
+
+    public String getSummary() {
+        return summary;
+    }
 
     public String getPath() {
         return path;

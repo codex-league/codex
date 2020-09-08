@@ -42,138 +42,78 @@
             <el-col :span="6" class="boundary_left">
                 <div class="preview_api">
                     <el-collapse v-model="activeName" accordion>
-                        <el-collapse-item title="用户管理" name="1">
+                        <el-collapse-item v-for="(item, index) in apis" :key="index" :title="item.name" name="1">
                             <ul>
-                                <li>新增接口</li>
-                                <li>删除接口</li>
-                                <li>更新接口</li>
-                                <li>列表接口</li>
-                                <li>详情接口</li>
-                            </ul>
-                        </el-collapse-item>
-                        <el-collapse-item title="管理员管理" name="2">
-                            <ul>
-                                <li>新增接口</li>
-                                <li>删除接口</li>
-                                <li>更新接口</li>
-                                <li>列表接口</li>
-                                <li>详情接口</li>
-                            </ul>
-                        </el-collapse-item>
-                        <el-collapse-item title="权限管理" name="3">
-                            <ul>
-                                <li>新增接口</li>
-                                <li>删除接口</li>
-                                <li>更新接口</li>
-                                <li>列表接口</li>
-                                <li>详情接口</li>
-                            </ul>
-                        </el-collapse-item>
-                        <el-collapse-item title="审计管理" name="4">
-                            <ul>
-                                <li>新增接口</li>
-                                <li>删除接口</li>
-                                <li>更新接口</li>
-                                <li>列表接口</li>
-                                <li>详情接口</li>
+                                <li v-for="(api, index) in item.apis" @click="checkoutApi(api)">{{ api.summary }}  <span>- {{api.path}} <span></span></li>
                             </ul>
                         </el-collapse-item>
                     </el-collapse>
                 </div>
             </el-col>
+
             <el-col :span="16" class="boundary_right">
-                <div>
-                    <span class="title">更新接口</span>
-                    <div class="restful_box">
+                <div v-if="activeApi">
+                    <span class="title">{{ activeApi.summary }}</span>
+                    <div v-for="(peration, index) in activeApi.operations" class="restful_box">
                         <div class="request">
-                            <el-input value="http://localhost:8080/user" readonly>
-                                <template slot="prepend">POST</template>
+                            <el-input v-model="protocol + '//' + host + peration.path"  readonly>
+                                <template slot="prepend">{{ peration.method }}</template>
                             </el-input>
-                            <el-button type="primary">请 求</el-button>
+                            <el-button type="success" @click="$message('功能暂未实现，Please wait.')" >Copy</el-button>
+                            <el-button type="primary" @click="$message('功能暂未实现，Please wait.')">请 求</el-button>
                         </div>
-                        <div class="request_body">
-                            <span class="title">Request body参数</span>
+
+                        <div v-if="peration.params.length" class="request_param">
+                            <span class="title">Request param</span>
                             <table>
                                 <tr>
-                                    <th width="130px">字段</th>
-                                    <th>描述</th>
-                                    <th width="130px">类型</th>
-                                    <th width="130px">是否必填</th>
+                                    <th width="150px">字段 <span>(field name)</span></th>
+                                    <th>描述 <span>(describe)</span></th>
+                                    <th width="200px">类型 <span>(fileld type)</span></th>
+                                    <th width="150px">是否必填 <span>(required)</span></th>
                                 </tr>
-                                <tr>
-                                    <td>Long</td>
-                                    <td>姓名</td>
-                                    <td>类型</td>
-                                    <td>选填</td>
+
+                                <tr v-for="(item, index) in peration.params">
+                                    <td> {{ item.field }} </td>
+                                    <td> {{ item.describe }} </td>
+                                    <td>
+                                        <el-tag size="mini" type="info">{{ item.type }}</el-tag>
+                                    </td>
+                                    <td>
+                                        <el-tag v-if="item.required" size="mini" type="danger">必填</el-tag>
+                                        <el-tag v-if="!item.required" size="mini" type="success">选填</el-tag>
+                                    </td>
                                 </tr>
+
+                            </table>
+                        </div>
+
+                        <div v-if="peration.paramsBody" class="request_body">
+                            <span class="title">Request body</span>
+                            <table v-if="peration.paramsBody.fields">
                                 <tr>
-                                    <td>Long</td>
-                                    <td>姓名</td>
-                                    <td>类型</td>
-                                    <td>选填</td>
+                                    <th width="150px">字段 <span>(field name)</span></th>
+                                    <th>描述 <span>(describe)</span></th>
+                                    <th width="200px">类型 <span>(fileld type)</span></th>
+                                    <th width="150px">是否必填 <span>(required)</span></th>
                                 </tr>
-                                <tr>
-                                    <td>Long</td>
-                                    <td>姓名</td>
-                                    <td>类型</td>
-                                    <td>选填</td>
-                                </tr>
-                                <tr>
-                                    <td>Long</td>
-                                    <td>姓名</td>
-                                    <td>类型</td>
-                                    <td>选填</td>
+
+                                <tr v-for="(item, index) in peration.paramsBody.fields">
+                                    <td> {{ item.field }} </td>
+                                    <td> {{ item.describe }} </td>
+                                    <td>
+                                        <el-tag size="mini" type="info">{{ item.type }}</el-tag>
+                                    </td>
+                                    <td>
+                                        <el-tag v-if="item.required" size="mini" type="danger">必填</el-tag>
+                                        <el-tag v-if="!item.required" size="mini" type="success">选填</el-tag>
+                                    </td>
                                 </tr>
                             </table>
                         </div>
                     </div>
+
                 </div>
-
-
-                <!--                <div>-->
-                <!--                    <span class="title">准备生成CRUD</span>-->
-                <!--                    <el-card shadow="never">-->
-                <!--                    <div class="crud_option">-->
-                <!--                        <el-form label-width="150px" size="mini"-->
-                <!--                                 border>-->
-                <!--                            <el-form-item label="表名：">-->
-                <!--                                <span style="font-size: 16px; font-weight: 500">t_user</span>-->
-                <!--                            </el-form-item>-->
-                <!--                            <el-form-item label="表注释：">-->
-                <!--                                <span style="font-size: 14px">用户表</span>-->
-                <!--                            </el-form-item>-->
-
-                <!--                            <el-form-item label="忽略的前缀">-->
-                <!--                                <el-radio-group>-->
-                <!--                                    <el-radio border>t_</el-radio>-->
-                <!--                                    <el-radio border>sys_</el-radio>-->
-                <!--                                </el-radio-group>-->
-                <!--                            </el-form-item>-->
-                <!--                            <el-form-item label="是否生成Controller:">-->
-                <!--                                <el-radio-group>-->
-                <!--                                    <el-radio label="1" border>是</el-radio>-->
-                <!--                                    <el-radio label="2" border>否</el-radio>-->
-                <!--                                </el-radio-group>-->
-                <!--                            </el-form-item>-->
-                <!--                            <el-form-item label="生成接口:" required>-->
-                <!--                                <el-checkbox-group style="padding-top: 8px;">-->
-                <!--                                    <el-checkbox> 增加</el-checkbox>-->
-                <!--                                    <el-checkbox> 删除</el-checkbox>-->
-                <!--                                </el-checkbox-group>-->
-                <!--                            </el-form-item>-->
-                <!--                        </el-form>-->
-                <!--                    </div>-->
-                <!--                    </el-card>-->
-                <!--                </div>-->
-
-                <!--                <div>-->
-                <!--                    <span class="title">接口预览</span>-->
-                <!--                    -->
-                <!--                </div>-->
-
-                <!--                <div class="generate_button">-->
-                <!--                    <el-button type="primary">生成代码</el-button>-->
-                <!--                </div>-->
             </el-col>
         </el-row>
     </div>
@@ -192,9 +132,30 @@
     new Vue({
         el: '#index',
         data: {
-            message: 'Code-X 解放双手，解放重复劳动力，辅助开发专注业务实现',
-            activeName: undefined,
-        }, methods: {}
+            host: window.location.host,
+            protocol: window.location.protocol,
+            activeName: ['1'],
+            apis: undefined,
+            activeApi: undefined
+
+        },
+        methods: {
+            checkoutApi(api){
+                this.activeApi = api;
+            }
+        },
+        created() {
+
+            Vue.http.get('/codex/apix/doc').then(fulfilled => {
+                this.apis = fulfilled.data.controller
+                if(this.apis && this.apis.length > 0) {
+                    this.activeApi = this.apis[0].apis[0]
+                }
+            }, rejected => {
+                this.$message.error('获取API失败，请检查配置是否正确！');
+            })
+        }
+
     });
 </script>
 

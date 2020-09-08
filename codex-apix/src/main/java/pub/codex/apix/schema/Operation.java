@@ -10,24 +10,31 @@ import java.util.Map;
  * mapping 属性 schema 映射
  */
 public class Operation {
-    private final HttpMethod method;
     private final String summary;
+    private final String path;
+    private final HttpMethod method;
     private List<Map<String, Object>> params;
     private Map<String, Object> paramsBody;
 
-    public Operation(HttpMethod method, String summary, List<Map<String, Object>> params, Map<String, Object> paramsBody) {
-        this.method = method;
+    public Operation(String summary, String path, HttpMethod method, List<Map<String, Object>> params, Map<String, Object> paramsBody) {
         this.summary = summary;
+        this.path = path;
+        this.method = method;
         this.params = params;
         this.paramsBody = paramsBody;
     }
 
-    public HttpMethod getMethod() {
-        return method;
-    }
 
     public String getSummary() {
         return summary;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public HttpMethod getMethod() {
+        return method;
     }
 
     public List<Map<String, Object>> getParams() {
@@ -37,4 +44,6 @@ public class Operation {
     public Map<String, Object> getParamsBody() {
         return paramsBody;
     }
+
+
 }
