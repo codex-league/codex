@@ -42,7 +42,7 @@ public class CodexcController {
      *
      * @return
      */
-    @GetMapping("/codex/data")
+    @GetMapping("/codex/generate/table/option")
     public CodexResult codex() {
 
         List<Map<String, Object>> tableList = tableDao.queryTableList();
@@ -60,7 +60,7 @@ public class CodexcController {
      * @param tableName
      * @return
      */
-    @GetMapping("/codex/info/{tableName}")
+    @GetMapping("/codex/generate/table/attribute/detail/{tableName}")
     public CodexResult infoResponse(@PathVariable String tableName) {
         List<Map<String, String>> columns = (List<Map<String, String>>) tableDao.queryColumns(tableName);
         List<InfoColumn> infoList = new ArrayList<>();
@@ -82,7 +82,7 @@ public class CodexcController {
             }
             infoList.add(infoColumn);
         }
-        return CodexResult.ok().put("info", infoList);
+        return CodexResult.ok().put("attributes", infoList);
     }
 
     /**

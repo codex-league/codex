@@ -46,25 +46,9 @@
                             <th>表名</th>
                             <th>注释</th>
                         </tr>
-                        <tr>
-                            <td>t_user</td>
-                            <td>用户表</td>
-                        </tr>
-                        <tr>
-                            <td>t_user</td>
-                            <td>用户表</td>
-                        </tr>
-                        <tr>
-                            <td>t_user</td>
-                            <td>用户表</td>
-                        </tr>
-                        <tr>
-                            <td>t_user</td>
-                            <td>用户表</td>
-                        </tr>
-                        <tr>
-                            <td>t_user</td>
-                            <td>用户表</td>
+                        <tr v-for="(item, index) in tableList" @click="intTableOptions(item)">
+                            <td>{{ item.tableName }}</td>
+                            <td>{{ item.tableComment }}</td>
                         </tr>
                     </table>
                 </div>
@@ -78,28 +62,26 @@
                             <el-form label-width="150px" size="mini"
                                      border>
                                 <el-form-item label="表名：">
-                                    <span style="font-size: 16px; font-weight: 500">t_user</span>
+                                    <span v-if="activeTable" style="font-size: 16px; font-weight: 500">{{ activeTable.tableName }}</span>
                                 </el-form-item>
                                 <el-form-item label="表注释：">
-                                    <span style="font-size: 14px">用户表</span>
+                                    <span v-if="activeTable" style="font-size: 14px">{{ activeTable.tableComment }}</span>
                                 </el-form-item>
 
                                 <el-form-item label="忽略的前缀">
                                     <el-radio-group>
-                                        <el-radio border>t_</el-radio>
-                                        <el-radio border>sys_</el-radio>
+                                        <el-radio v-if="activeTable" v-for="(item, index) in prefix" border>{{ item }}</el-radio>
                                     </el-radio-group>
                                 </el-form-item>
                                 <el-form-item label="是否生成Controller:">
-                                    <el-radio-group>
+                                    <el-radio-group v-model="isCtrlGenerate">
                                         <el-radio label="1" border>是</el-radio>
                                         <el-radio label="2" border>否</el-radio>
                                     </el-radio-group>
                                 </el-form-item>
                                 <el-form-item label="生成接口:" required>
-                                    <el-checkbox-group style="padding-top: 8px;">
-                                        <el-checkbox> 增加</el-checkbox>
-                                        <el-checkbox> 删除</el-checkbox>
+                                    <el-checkbox-group v-model="checkoutInterface">
+                                        <el-checkbox v-for="(item, index) in interfaces" :label="item"> {{ item }}</el-checkbox>
                                     </el-checkbox-group>
                                 </el-form-item>
                             </el-form>
@@ -316,7 +298,7 @@
                 </div>
 
                 <div class="generate_button">
-                    <el-button type="primary">生成代码</el-button>
+                    <el-button type="primary" @click="generate">生成代码</el-button>
                 </div>
             </el-col>
         </el-row>
@@ -336,9 +318,57 @@
     new Vue({
         el: '#index',
         data: {
-            message: 'Code-X 解放双手，解放重复劳动力，辅助开发专注业务实现',
+            interfaces: {
+                add: "增加",
+                update: "修改",
+                del: "删除",
+                detail: "详情",
+                list: "列表"
+            },
+            checkoutInterface: [],
             activeName: undefined,
-        }, methods: {}
+            tableList: undefined,
+            attributes: undefined,
+            package: undefined,
+            prefix: undefined,
+            activeTable: undefined,
+            isCtrlGenerate: '1',
+        },
+        methods: {
+            intTableOptions(table) {
+                this.activeTable = table;
+
+                Vue.http.get('/codex/generate/table/attribute/detail/' + table.tableName).then(fulfilled => {
+                    if (fulfilled.ok) {
+                        const {attributes} = fulfilled.data;
+
+                        this.attributes = attributes;
+
+                    }
+
+                })
+            },
+            generate() {
+                console.log(this.checkoutInterface)
+            }
+        },
+        created() {
+            Vue.http.get('/codex/generate/table/option').then(fulfilled => {
+                if (fulfilled.ok) {
+                    const {jdbc, tableList, package, prefix} = fulfilled.data;
+                    this.tableList = tableList;
+                    this.package = package;
+                    this.prefix = prefix.split(',');
+
+                    if(tableList.length > 0) {
+                        this.intTableOptions(tableList[0])
+                    }
+                }
+            }, () => {
+                this.$message.error('获取API失败，请检查配置是否正确！');
+            })
+
+        }
     });
 </script>
 

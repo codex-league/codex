@@ -147,9 +147,11 @@
         created() {
 
             Vue.http.get('/codex/apix/doc').then(fulfilled => {
-                this.apis = fulfilled.data.controller
-                if(this.apis && this.apis.length > 0) {
-                    this.activeApi = this.apis[0].apis[0]
+                if(fulfilled.ok) {
+                    this.apis = fulfilled.data.controller
+                    if(this.apis && this.apis.length > 0) {
+                        this.activeApi = this.apis[0].apis[0]
+                    }
                 }
             }, rejected => {
                 this.$message.error('获取API失败，请检查配置是否正确！');
