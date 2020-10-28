@@ -65,12 +65,14 @@
                                     <span v-if="activeTable" style="font-size: 16px; font-weight: 500">{{ activeTable.tableName }}</span>
                                 </el-form-item>
                                 <el-form-item label="表注释：">
-                                    <span v-if="activeTable" style="font-size: 14px">{{ activeTable.tableComment }}</span>
+                                    <span v-if="activeTable"
+                                          style="font-size: 14px">{{ activeTable.tableComment }}</span>
                                 </el-form-item>
 
                                 <el-form-item label="忽略的前缀">
                                     <el-radio-group>
-                                        <el-radio v-if="activeTable" v-for="(item, index) in prefix" border>{{ item }}</el-radio>
+                                        <el-radio v-if="activeTable" v-for="(item, index) in prefix" border>{{ item }}
+                                        </el-radio>
                                     </el-radio-group>
                                 </el-form-item>
                                 <el-form-item label="是否生成Controller:">
@@ -80,8 +82,9 @@
                                     </el-radio-group>
                                 </el-form-item>
                                 <el-form-item label="生成接口:" required>
-                                    <el-checkbox-group v-model="checkoutInterface">
-                                        <el-checkbox v-for="(item, index) in interfaces" :label="item"> {{ item }}</el-checkbox>
+                                    <el-checkbox-group v-model="checkoutInterface" @change="handleCheckInterface">
+                                        <el-checkbox v-for="(item, key) in interfaces" :label="key"> {{ item }}
+                                        </el-checkbox>
                                     </el-checkbox-group>
                                 </el-form-item>
                             </el-form>
@@ -93,7 +96,7 @@
                     <span class="title">接口预览</span>
                     <div class="preview_option">
                         <el-collapse v-model="activeName" accordion>
-                            <el-collapse-item title="新增接口" name="1">
+                            <el-collapse-item title="新增接口" name="1" v-if="controllerContainer.add">
                                 <table class="preview_table">
                                     <tr>
                                         <th width="10%">类型</th>
@@ -101,39 +104,15 @@
                                         <th width="20%">注释</th>
                                         <th width="20%">注解</th>
                                     </tr>
-                                    <tr>
-                                        <td>Long</td>
-                                        <td>id</td>
-                                        <td>主键</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Long</td>
-                                        <td>id</td>
-                                        <td>主键</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Long</td>
-                                        <td>id</td>
-                                        <td>主键</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Long</td>
-                                        <td>id</td>
-                                        <td>主键</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Long</td>
-                                        <td>id</td>
-                                        <td>主键</td>
-                                        <td></td>
+                                    <tr v-for="(field, index) in controllerContainer.add.fields" v-key="index">
+                                        <td>{{ field.attrType }}</td>
+                                        <td>{{ field.attrname }}</td>
+                                        <td>{{ field.comments}}</td>
+                                        <td>注解</td>
                                     </tr>
                                 </table>
                             </el-collapse-item>
-                            <el-collapse-item title="更新接口" name="2">
+                            <el-collapse-item title="更新接口" name="2" v-if="controllerContainer.update">
                                 <table class="preview_table">
                                     <tr>
                                         <th width="10%">类型</th>
@@ -141,157 +120,22 @@
                                         <th width="20%">注释</th>
                                         <th width="20%">注解</th>
                                     </tr>
-                                    <tr>
-                                        <td>Long</td>
-                                        <td>id</td>
-                                        <td>主键</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Long</td>
-                                        <td>id</td>
-                                        <td>主键</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Long</td>
-                                        <td>id</td>
-                                        <td>主键</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Long</td>
-                                        <td>id</td>
-                                        <td>主键</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Long</td>
-                                        <td>id</td>
-                                        <td>主键</td>
-                                        <td></td>
+                                    <tr v-for="(field, index) in controllerContainer.update.fields" v-key="index">
+                                        <td>{{ field.attrType }}</td>
+                                        <td>{{ field.attrname }}</td>
+                                        <td>{{ field.comments}}</td>
+                                        <td>注解</td>
                                     </tr>
                                 </table>
                             </el-collapse-item>
-                            <el-collapse-item title="删除接口" name="3">
-                                <table class="preview_table">
-                                    <tr>
-                                        <th width="10%">类型</th>
-                                        <th>字段名称</th>
-                                        <th width="20%">注释</th>
-                                        <th width="20%">注解</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Long</td>
-                                        <td>id</td>
-                                        <td>主键</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Long</td>
-                                        <td>id</td>
-                                        <td>主键</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Long</td>
-                                        <td>id</td>
-                                        <td>主键</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Long</td>
-                                        <td>id</td>
-                                        <td>主键</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Long</td>
-                                        <td>id</td>
-                                        <td>主键</td>
-                                        <td></td>
-                                    </tr>
-                                </table>
+                            <el-collapse-item title="删除接口" name="3" v-if="controllerContainer.del">
+                                无需设置
                             </el-collapse-item>
-                            <el-collapse-item title="详情接口" name="4">
-                                <table class="preview_table">
-                                    <tr>
-                                        <th width="10%">类型</th>
-                                        <th>字段名称</th>
-                                        <th width="20%">注释</th>
-                                        <th width="20%">注解</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Long</td>
-                                        <td>id</td>
-                                        <td>主键</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Long</td>
-                                        <td>id</td>
-                                        <td>主键</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Long</td>
-                                        <td>id</td>
-                                        <td>主键</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Long</td>
-                                        <td>id</td>
-                                        <td>主键</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Long</td>
-                                        <td>id</td>
-                                        <td>主键</td>
-                                        <td></td>
-                                    </tr>
-                                </table>
+                            <el-collapse-item title="详情接口" name="4" v-if="controllerContainer.detail">
+                                无需设置
                             </el-collapse-item>
-                            <el-collapse-item title="列表接口（分页）" name="5">
-                                <table class="preview_table">
-                                    <tr>
-                                        <th width="10%">类型</th>
-                                        <th>字段名称</th>
-                                        <th width="20%">注释</th>
-                                        <th width="20%">注解</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Long</td>
-                                        <td>id</td>
-                                        <td>主键</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Long</td>
-                                        <td>id</td>
-                                        <td>主键</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Long</td>
-                                        <td>id</td>
-                                        <td>主键</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Long</td>
-                                        <td>id</td>
-                                        <td>主键</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Long</td>
-                                        <td>id</td>
-                                        <td>主键</td>
-                                        <td></td>
-                                    </tr>
-                                </table>
+                            <el-collapse-item title="列表接口（分页）" name="5" v-if="controllerContainer.list">
+                                无需设置
                             </el-collapse-item>
                         </el-collapse>
                     </div>
@@ -333,6 +177,7 @@
             prefix: undefined,
             activeTable: undefined,
             isCtrlGenerate: '1',
+            controllerContainer: {}
         },
         methods: {
             intTableOptions(table) {
@@ -344,9 +189,25 @@
 
                         this.attributes = attributes;
 
+                        console.log(attributes)
+
                     }
 
                 })
+            },
+            handleCheckInterface(controllerKeys) {
+
+                for (const key in this.interfaces) {
+                    if (!this.controllerContainer[key] && controllerKeys.indexOf(key) !== -1 ) {
+                        this.$set(this.controllerContainer, key, {
+                            fields: JSON.parse(JSON.stringify(this.attributes))
+                        })
+                    }
+
+                    if(controllerKeys.indexOf(key) === -1) {
+                        this.$delete(this.controllerContainer, key)
+                    }
+                }
             },
             generate() {
                 console.log(this.checkoutInterface)
@@ -360,12 +221,12 @@
                     this.package = package;
                     this.prefix = prefix.split(',');
 
-                    if(tableList.length > 0) {
+                    if (tableList.length > 0) {
                         this.intTableOptions(tableList[0])
                     }
                 }
             }, () => {
-                this.$message.error('获取API失败，请检查配置是否正确！');
+                this.$message.error('获取配置选项失败，请检查配置是否正确！');
             })
 
         }

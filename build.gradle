@@ -63,7 +63,7 @@ subprojects() {
 
                 pom {
                     name = "Code-x"
-                    description = "Code-X 让程序狗喝茶"
+                    description = "Code-X"
                     url = "https://github.com/codex-league/codex"
                     licenses {
                         license {
