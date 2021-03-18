@@ -24,8 +24,8 @@ public class PrintingCodexInfo implements ApplicationListener<ContextRefreshedEv
                             "\t\t欢迎使用Code-x\n\t" +
                             "关注官方网站:【http://www.codex.pub】\n\t" +
                             "关注Github:【https://github.com/codex-league/codex】\n\t\n\t" +
-                            "本地访问Code-x: \thttp://localhost:{}/ (非常重要)\n\t" +
-                            "外网访问Code-x: \thttp://{}:{}/\n----------------------------------------------------------",
+                            "本地访问Code-x: \thttp://localhost:{}/codex/index.html (非常重要)\n\t" +
+                            "外网访问Code-x: \thttp://{}:{}/codex/index.html\n----------------------------------------------------------",
                     env.getProperty("server.port") != null? env.getProperty("server.port"):"8080",
                     InetAddress.getLocalHost().getHostAddress(),
                     env.getProperty("server.port") != null? env.getProperty("server.port"):"8080");
