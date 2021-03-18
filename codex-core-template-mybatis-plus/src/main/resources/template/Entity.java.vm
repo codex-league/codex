@@ -8,6 +8,8 @@ import pub.codex.apix.annotations.*;
 import pub.codex.apix.annotations.group.VG;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+
+
 #foreach ($column in $columns)
 	#if($column.attrType == 'Date')
 import java.util.Date;

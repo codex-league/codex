@@ -1,13 +1,13 @@
 
 
 dependencies {
-    compile project(':codex-core-ui')
     compile project(':codex-common-db')
     compile project(':codex-common')
     compile project(':codex-core-template-stream')
+
     implementation('org.springframework.boot:spring-boot-starter-web')
-    compile('org.apache.velocity:velocity-engine-core:2.0')
-    compile ("org.apache.commons:commons-lang3:3.5")
-    compile("commons-configuration:commons-configuration:1.10")
-    compile("commons-io:commons-io:2.5")
+    implementation('org.apache.velocity:velocity-engine-core:2.0')
+    implementation ("org.apache.commons:commons-lang3:3.5")
+    implementation("commons-configuration:commons-configuration:1.10")
+    implementation("commons-io:commons-io:2.5")
 }

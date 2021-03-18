@@ -1,15 +1,17 @@
 package pub.codex.core.template.stream.provider;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import pub.codex.common.Constant;
-import pub.codex.common.column.BaseColumn;
-import pub.codex.common.column.ControllerColumn;
-import pub.codex.common.column.FieldColumn;
+import pub.codex.common.field.BaseField;
+import pub.codex.common.field.ControllerMethod;
+import pub.codex.common.field.ControllerlClass;
 import pub.codex.common.db.entity.ColumnEntity;
 import pub.codex.common.db.entity.TableEntity;
 import pub.codex.common.utils.BaseUtil;
 import pub.codex.common.utils.TranslateUtil;
+import pub.codex.core.template.stream.build.ValidateAnnotationBuild;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,13 +20,18 @@ import java.util.Map;
 
 @Component
 public class TableEntityProvider {
+
+    @Autowired
+    private ValidateAnnotationBuild validateAnnotationBuild;
+
+
     /**
      * 设置 组建信息
      *
      * @param table
      * @param columns
      */
-    public TableEntity buildTemplateEntity(Map<String, String> table, List<Map<String, String>> columns, ControllerColumn controllerColumn, String tablePrefix) {
+    public TableEntity buildTemplateEntity(Map<String, String> table, List<Map<String, String>> columns, ControllerlClass controllerlClass, String tablePrefix) {
 
         TableEntity tableEntity = new TableEntity();
         List<String> typeList = new ArrayList<>();
@@ -34,7 +41,7 @@ public class TableEntityProvider {
         tableEntity.setComments(table.get("tableComment"));
 
         //添加接口种类
-        Map<String, FieldColumn> interfaceMap = BaseUtil.getMethod(controllerColumn);
+        Map<String, ControllerMethod> interfaceMap = BaseUtil.getPropertyByMethod(controllerlClass);
         if (interfaceMap != null) {
             for (String type : interfaceMap.keySet()) {
                 typeList.add(type);
@@ -81,7 +88,7 @@ public class TableEntityProvider {
         }
         tableEntity.setColumns(columsList);
 
-        tableEntity.setController(controllerColumn != null);
+        tableEntity.setController(controllerlClass != null);
 
         return tableEntity;
 
@@ -97,19 +104,19 @@ public class TableEntityProvider {
      * @param tableEntity
      * @return
      */
-    private List<String> combQueryStr(Map<String, FieldColumn> interfaceMap, String column, String attrName, String columnName, TableEntity tableEntity) {
+    private List<String> combQueryStr(Map<String, ControllerMethod> interfaceMap, String column, String attrName, String columnName, TableEntity tableEntity) {
         if (interfaceMap == null || interfaceMap.get(Constant.interfaceConstant.LIST.getType()) == null) {
             return null;
         }
         List<String> queryList = new ArrayList<>();
-        FieldColumn fieldColumn = interfaceMap.get(Constant.interfaceConstant.LIST.getType());
-        Map<String, BaseColumn> interfaceColumn = TranslateUtil.transformUtils(fieldColumn.getTableData());
-        BaseColumn baseColumn = interfaceColumn.get(column);
-        if (baseColumn.getAnnotation() != null) {
-            if (baseColumn.getAnnotation().equals(Constant.query.LIKE.getValue())) {
+        ControllerMethod controllerMethod = interfaceMap.get(Constant.interfaceConstant.LIST.getType());
+        Map<String, BaseField> interfaceColumn = TranslateUtil.transformUtils(controllerMethod.getFields());
+        BaseField baseField = interfaceColumn.get(column);
+        if (baseField.getAnnotation() != null) {
+            if (baseField.getAnnotation().equals(Constant.query.LIKE.getValue())) {
                 queryList.add(".like(!StringUtils.isEmpty(" + tableEntity.getClassname() + "Entity.get" + attrName + "()),\"" + columnName + "\", " + tableEntity.getClassname() + "Entity.get" + attrName + "())");
             }
-            if (baseColumn.getAnnotation().equals(Constant.query.EQUAL.getValue())) {
+            if (baseField.getAnnotation().equals(Constant.query.EQUAL.getValue())) {
                 queryList.add(".eq(!StringUtils.isEmpty(" + tableEntity.getClassname() + "Entity.get" + attrName + "()),\"" + columnName + "\", " + tableEntity.getClassname() + "Entity.get" + attrName + "())");
             }
         }
@@ -124,81 +131,59 @@ public class TableEntityProvider {
      * @param comments
      * @return
      */
-    private List<String> combAnnotation(Map<String, FieldColumn> interfaceMap, String column, String comments) {
+    private List<String> combAnnotation(Map<String, ControllerMethod> interfaceMap, String column, String comments) {
         if (interfaceMap == null) {
             return null;
         }
         List<String> annotation = new ArrayList<>();
-        Map<String, StringBuffer> map = new HashMap<>();
+        Map<String, StringBuffer> groupMap = new HashMap<>();
         for (String type : interfaceMap.keySet()) {
-            if (type != Constant.interfaceConstant.LIST.getValue()) {
-                findAnnotation(interfaceMap.get(type), type, column, map);
+            if (!type.equals(Constant.interfaceConstant.LIST.getValue())) {
+                findAnnotation(interfaceMap.get(type), type, column, groupMap);
             }
         }
+
         //todo 目前只处理@NotNull,@NotBlank,@NotEmpty,@Null,@Pattern和@ApiModelProperty
-        annotationFactory(annotation, map, Constant.annotationConatant.NOTNULL, null);
-        annotationFactory(annotation, map, Constant.annotationConatant.NOTBLANK, null);
-        annotationFactory(annotation, map, Constant.annotationConatant.NOTEMPTY, null);
-        annotationFactory(annotation, map, Constant.annotationConatant.NULL, null);
-        annotationFactory(annotation, map, Constant.annotationConatant.PATTERN, null);
-        if (annotationFactory(annotation, map, Constant.annotationConatant.APIMODELPROPERTY, comments) == Constant.flag.APIMODELPROPERTY_ANNOTATION) {
-            return annotation;
-        }
-        if (comments != null && !comments.equals("")) {
-            annotation.add(Constant.annotationConatant.APIMODELPROPERTY.getValue() + "(\"" + comments + "\")");
-        }
+        validateAnnotationBuild.baseAnnotationFactory(annotation, groupMap, Constant.annotationConatant.NOTNULL);
+        validateAnnotationBuild.baseAnnotationFactory(annotation, groupMap, Constant.annotationConatant.NOTEMPTY);
+        validateAnnotationBuild.baseAnnotationFactory(annotation, groupMap, Constant.annotationConatant.NULL);
+        validateAnnotationBuild.baseAnnotationFactory(annotation, groupMap, Constant.annotationConatant.PATTERN);
+
+        validateAnnotationBuild.NotBlankAnnotationFactory(annotation, groupMap);
+
+        validateAnnotationBuild.apiModelPropertyAnnotationFactory(annotation, groupMap, comments);
+
         return annotation;
     }
 
-    /**
-     * 注解的完整拼装
-     *
-     * @param annotation
-     * @param map
-     * @param annoEnum
-     * @param comments
-     * @return
-     */
-    private Constant.flag annotationFactory(List<String> annotation, Map<String, StringBuffer> map, Constant.annotationConatant annoEnum, String comments) {
-        if (map.get(annoEnum.getValue()) == null) {
-            return Constant.flag.NULL_EXCEPTION;
-        }
-        if (annoEnum.getValue().equals(Constant.annotationConatant.APIMODELPROPERTY.getValue())) {
-            StringBuffer groups = map.get(annoEnum.getValue());
-            if (!StringUtils.isEmpty(comments)) {
-                annotation.add(Constant.annotationConatant.APIMODELPROPERTY.getValue() + "(describe = \"" + comments + "\",groups = {" + groups.deleteCharAt(groups.length() - 1) + "})");
-            }
-            return Constant.flag.APIMODELPROPERTY_ANNOTATION;
-        }
-        StringBuffer groups = map.get(annoEnum.getValue());
-        annotation.add(annoEnum.getValue() + "(groups = {" + groups.deleteCharAt(groups.length() - 1) + "})");
-        return Constant.flag.EXTERNAL_ANNOTATION;
-    }
 
     /**
      * 拼接不同注解的分组信息
      *
-     * @param fieldColumn
+     * @param controllerMethod
      * @param type
      * @param column
      * @param map
      */
-    private void findAnnotation(FieldColumn fieldColumn, String type, String column, Map<String, StringBuffer> map) {
-        if (fieldColumn == null || fieldColumn.getTableData() == null) {
+    private void findAnnotation(ControllerMethod controllerMethod, String type, String column, Map<String, StringBuffer> map) {
+        if (controllerMethod == null || controllerMethod.getFields() == null) {
             return;
         }
+
         String value = Constant.interfaceConstant.getGroupInfo(type);
         if (StringUtils.isEmpty(value)) {
             return;
         }
-        Map<String, BaseColumn> interfaceColumn = TranslateUtil.transformUtils(fieldColumn.getTableData());
-        BaseColumn baseColumn = interfaceColumn.get(column);
-        if (map.get(baseColumn.getAnnotation()) != null) {
-            StringBuffer stringBuffer = map.get(baseColumn.getAnnotation());
-            map.put(baseColumn.getAnnotation(), stringBuffer.append(value + ","));
+
+        Map<String, BaseField> interfaceColumn = TranslateUtil.transformUtils(controllerMethod.getFields());
+        BaseField baseField = interfaceColumn.get(column);
+
+        if (map.get(baseField.getAnnotation()) != null) {
+            StringBuffer stringBuffer = map.get(baseField.getAnnotation());
+            map.put(baseField.getAnnotation(), stringBuffer.append(value + ","));
         } else {
             StringBuffer stringBuffer = new StringBuffer();
-            map.put(baseColumn.getAnnotation(), stringBuffer.append(value + ","));
+            map.put(baseField.getAnnotation(), stringBuffer.append(value + ","));
         }
 
     }

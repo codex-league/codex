@@ -1,17 +1,18 @@
-package pub.codex.common.column;
+package pub.codex.common.field;
 
+public class BaseField {
 
-public class BaseColumn {
     //字段名
     private String attrname;
+
     //字段类型
     private String attrType;
-    //最大长度
-    private String maxLength;
+
     //字段注释
     private String comments;
-    //主键标识
-    private String primary;
+
+    //注解
+    private String annotation;
 
     public String getAttrname() {
         return attrname;
@@ -37,19 +38,11 @@ public class BaseColumn {
         this.comments = comments;
     }
 
-    public String getPrimary() {
-        return primary;
+    public String getAnnotation() {
+        return annotation;
     }
 
-    public void setPrimary(String primary) {
-        this.primary = primary;
-    }
-
-    public String getMaxLength() {
-        return maxLength;
-    }
-
-    public void setMaxLength(String maxLength) {
-        this.maxLength = maxLength;
+    public void setAnnotation(String annotation) {
+        this.annotation = annotation;
     }
 }

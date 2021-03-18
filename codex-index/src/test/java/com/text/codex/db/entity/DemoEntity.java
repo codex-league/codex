@@ -1,5 +1,7 @@
 package com.text.codex.db.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import pub.codex.apix.annotations.*;
@@ -50,6 +52,7 @@ public class DemoEntity implements Serializable {
 	public String getName() {
 		return name;
 	}
+
 
 	public void setAge(Integer age) {
 		this.age = age;

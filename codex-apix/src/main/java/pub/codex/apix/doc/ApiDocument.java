@@ -2,12 +2,15 @@ package pub.codex.apix.doc;
 
 import pub.codex.apix.schema.ApiDescription;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-public class ApiDocument {
+/**
+ * Api 文档结构
+ */
+public class ApiDocument implements Comparable<ApiDocument> {
 
     private final String summary;
 
@@ -24,16 +27,15 @@ public class ApiDocument {
         this.methodName = apiDescription.getMethodName();
 
         if (apiDescription.getOperations().size() > 0) {
-            operations = new ArrayList<>();
-            apiDescription.getOperations().forEach(operation -> {
+            operations = apiDescription.getOperations().stream().map(operation -> {
                 Map<String, Object> map = new HashMap<>();
                 map.put("summary", operation.getSummary());
                 map.put("path", operation.getPath());
                 map.put("method", operation.getMethod().toString());
                 map.put("params", operation.getParams());
                 map.put("paramsBody", operation.getParamsBody());
-                this.operations.add(map);
-            });
+                return map;
+            }).collect(Collectors.toList());
         }
     }
 
@@ -52,5 +54,10 @@ public class ApiDocument {
 
     public List<Map<String, Object>> getOperations() {
         return operations;
+    }
+
+    @Override
+    public int compareTo(ApiDocument o) {
+        return summary.compareTo(o.getSummary());
     }
 }

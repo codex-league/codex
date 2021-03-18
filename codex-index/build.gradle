@@ -3,11 +3,7 @@ dependencies {
     compile project(':codex-core')
     compile project(':codex-apix')
 
-    implementation('org.webjars:bootstrap:3.3.7-1')
-    implementation('org.webjars:jquery:3.1.1')
-    implementation('org.webjars.npm:vue:2.5.17')
-    implementation('org.webjars.npm:vue-resource:1.5.1')
-    implementation('org.webjars.npm:element-ui:2.4.8')
+    implementation('org.springframework:spring-context')
 
     testImplementation project(':codex-core-template-mybatis-plus')
 
@@ -16,6 +12,7 @@ dependencies {
     testImplementation("com.baomidou:mybatis-plus-boot-starter:3.3.0")
     testImplementation("org.springframework.boot:spring-boot-starter-aop")
     testImplementation('org.springframework.boot:spring-boot-starter-web')
+
 
 
 }

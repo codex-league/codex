@@ -34,7 +34,7 @@ public class TableDao {
 
 
     public List<?> queryColumns(String tableName) {
-        String sql = "SELECT column_name columnName,data_type dataType,column_comment columnComment,column_key columnKey,extra FROM information_schema.COLUMNS WHERE table_name=? and table_schema = (select database()) order by ordinal_position";
+        String sql = "SELECT column_name columnName,data_type dataType,character_maximum_length maxLength,column_comment columnComment,column_key columnKey,extra FROM information_schema.COLUMNS WHERE table_name=? and table_schema = (select database()) order by ordinal_position";
 
         return jdbcTemplate.queryForList(sql,tableName);
     }

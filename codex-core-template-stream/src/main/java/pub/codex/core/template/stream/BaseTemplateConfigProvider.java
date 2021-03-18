@@ -41,7 +41,6 @@ public interface BaseTemplateConfigProvider {
      */
     String getEntityPath();
 
-    //todo 文档补充
     /**
      * 获取controller包路径
      * @return

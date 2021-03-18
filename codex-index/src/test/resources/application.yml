@@ -16,7 +16,7 @@ codex:
     service-path: com.text.codex.service
     serviceImpl-path: com.text.codex.db.service.impl
     controller-path: com.text.codex.controller
-  prefix: sys_
+  prefix: sys_,t_
 apix:
   controllerPackage: com.text.codex.controller
 

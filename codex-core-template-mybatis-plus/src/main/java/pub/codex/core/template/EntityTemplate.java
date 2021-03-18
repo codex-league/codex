@@ -39,14 +39,14 @@ public class EntityTemplate extends TableCodexTemplate {
         //封装模板数据
         Map<String, Object> map = new HashMap<>();
         map.put("entityPackagePath", entityPackagePath);
-//        map.put("author", author);
-//        map.put("email", email);
         map.put("datetime", datetime);
         map.put("comments", comments);
         map.put("tableName", tableName);
         map.put("className", className);
         map.put("columns", columns);
         map.put("pk", pk);
+
+
         buildTemplate(TEMPLATE_NAME, map, buildFilePath(TEMPLATE_NAME, className,
                 entityPackagePath, false, false));
     }

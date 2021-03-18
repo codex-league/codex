@@ -16,7 +16,7 @@
             </tr>
             <tr>
                 <td>提交方式</td>
-                <td colspan="12">${api.operations[0].method}</td>
+                <td colspan="12">${api.operations[0].controllerMethod}</td>
             </tr>
             <tr>
                 <td>接口协议</td>

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pub.codex.common.db.entity.TableEntity;
 import pub.codex.common.db.jdbc.TableDao;
-import pub.codex.common.column.ControllerColumn;
+import pub.codex.common.field.ControllerlClass;
 import pub.codex.core.template.stream.provider.TableEntityProvider;
 
 import java.util.List;
@@ -32,13 +32,13 @@ public class TableCodexTemplateStream {
      * @param tableName
      * @param zip
      */
-    public void doTemplate(String tableName, ControllerColumn controllerColumn, String tablePrefix, ZipOutputStream zip) {
+    public void doTemplate(String tableName, ControllerlClass controllerlClass, String tablePrefix, ZipOutputStream zip) {
 
         // 表&列信息
         Map<String, String> table = getTable(tableName);
         List<Map<String, String>> columns = getColumns(tableName);
 
-        TableEntity tableEntity = tableEntityProvider.buildTemplateEntity(table, columns, controllerColumn, tablePrefix);
+        TableEntity tableEntity = tableEntityProvider.buildTemplateEntity(table, columns, controllerlClass, tablePrefix);
         //遍历
         tableCodexTemplateList.stream().forEach(tableCodexTemplate -> {
             tableCodexTemplate.build(tableEntity, zip);

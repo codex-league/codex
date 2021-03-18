@@ -11,7 +11,7 @@ public class CodexResult extends HashMap<String, Object> {
     private static final long serialVersionUID = 1L;
 
     public CodexResult() {
-        put("code", "00");
+        put("code", "0000");
         put("msg", "成功");
     }
 

@@ -1,4 +1,4 @@
-def codexVersion = '3.2.15'
+def codexVersion = '4.0.0'
 def codexGroup = 'pub.codex'
 def vJavaLang = '1.8'
 
@@ -6,8 +6,6 @@ def nexusProjects = [project(':codex-core'),
                      project(':codex-apix'),
                      project(':codex-common-db'),
                      project(':codex-common'),
-                     project(':codex-core-ui'),
-                     project(':codex-apix-ui'),
                      project(':codex-index'),
                      project(':codex-core-template-stream'),
                      project(':codex-core-template-mybatis-plus')]

@@ -1,8 +1,9 @@
 dependencies {
     compile project(':codex-common')
-    compile("com.google.code.gson:gson:2.8.5")
-    compile("com.google.guava:guava:18.0")
-    compile("org.springframework.boot:spring-boot")
-    compile("org.springframework:spring-jdbc")
+
+    implementation("com.google.code.gson:gson:2.8.5")
+    implementation("com.google.guava:guava:18.0")
+    implementation("org.springframework.boot:spring-boot")
+    implementation("org.springframework:spring-jdbc")
     implementation("mysql:mysql-connector-java:5.1.38")
 }
