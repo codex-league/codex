@@ -1,0 +1,88 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+    <script src="/webjars/vue/2.5.17/dist/vue.min.js"></script>
+    <script src="/webjars/vue-resource/1.5.1/dist/vue-resource.js"></script>
+    <script src="/webjars/element-ui/2.14.0/lib/index.js"></script>
+
+    <title>Code-X-让程序员喝茶 解放重复劳动力</title>
+
+    <link rel="stylesheet" href="/webjars/element-ui/2.14.0/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/commmon.css"/>
+
+</head>
+<body>
+<div id="codex" class="container"><br/>
+    <div class="alert alert-success">
+        <div>
+            公告：{{ message }}
+        </div>
+    </div>
+
+
+    <template>
+        <el-tabs v-model="activeName">
+            <el-tab-pane label="代码生成" name="first">
+
+                <iframe src="codex-core.html" style="width: 100%;height: 76%;" frameborder="no" border="0"></iframe>
+
+            </el-tab-pane>
+
+
+            <el-tab-pane label="Api-x" name="second">
+
+                <iframe src="codex-apix.html" style="width: 100%;height: 76%;" frameborder="no" border="0"></iframe>
+
+            </el-tab-pane>
+
+
+            <el-tab-pane label="正则工具" name="third">
+
+                <iframe src="codex-regular.html" style="width: 100%;height: 76%;" frameborder="no" border="0"></iframe>
+
+            </el-tab-pane>
+            <el-tab-pane label="json校验工具" name="fourth">
+
+                <iframe src="codex-json.html" style="width: 100%;height: 76%;" frameborder="no" border="0"></iframe>
+
+            </el-tab-pane>
+            <el-tab-pane label="代码贡献者" name="fifth">
+                <div style="color: #777777a3; font-size: 14px; font-weight: 500;">
+                    许西（叉叉、皮皮西）、徐超（摸鱼超）、王成成（刷图成）、陈煜灿（潜水灿）
+                </div>
+            </el-tab-pane>
+        </el-tabs>
+    </template>
+
+</div>
+</body>
+</html>
+
+
+<script>
+    new Vue({
+        el: '#codex',
+        data: {
+            message: 'Code-X 解放双手，解放重复劳动力，辅助开发专注业务实现',
+            activeName:'first'
+        },methods: {
+            createApi(){
+                // var _this = this;
+
+                // Vue.http.get('/apix/getDoc').then(function (response) {
+                //     console.log(response);
+                //     if (response.ok) {
+                //         alert("API文档生成成功")
+                //     } else {
+                //         alert('API文档生成错误');
+                //     }
+                // }, function () {
+                //     alert('获取文档信息错误');
+                // })
+            }
+        }
+    });
+</script>
