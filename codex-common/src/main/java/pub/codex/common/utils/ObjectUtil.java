@@ -14,4 +14,10 @@ public class ObjectUtil {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.convertValue(object, clzz);
     }
+
+
+    public static <T> T toObject(TypeReference<T> toValueTypeRef, Object object) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.convertValue(object, toValueTypeRef);
+    }
 }

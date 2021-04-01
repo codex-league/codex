@@ -1,4 +1,4 @@
-def codexVersion = '4.2.1'
+def codexVersion = '4.2.2'
 def codexGroup = 'pub.codex'
 def vJavaLang = '1.8'
 

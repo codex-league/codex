@@ -1,15 +1,18 @@
 package pub.codex.common.models;
 
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import pub.codex.common.exception.RsponseException;
 import pub.codex.common.utils.ObjectUtil;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * 返回数据
  */
-public class R extends HashMap<String, Object> {
+public class R<C> extends HashMap<String, Object> {
 
     private static final long serialVersionUID = 1L;
 
@@ -19,9 +22,13 @@ public class R extends HashMap<String, Object> {
 
     private static final String DATA = "data";
 
+    private static final String CODE_VALUE = "0000";
+
+    private static final String MSG_VALUE = "successful";
+
     public R() {
-        this.put(CODE, "0000");
-        this.put(MSG, "successful");
+        this.put(CODE, CODE_VALUE);
+        this.put(MSG, MSG_VALUE);
     }
 
     public static R error(String code, String msg) {
@@ -55,11 +62,16 @@ public class R extends HashMap<String, Object> {
     }
 
     public <T> T getData(Class<T> clzz) {
-        return ObjectUtil.toObject(clzz, getData());
+        return ObjectUtil.toObject(clzz, this.get(DATA));
     }
 
-    public Object getData() {
-        return this.get(DATA);
+    public C getData() {
+        if (!super.get(CODE).equals(CODE_VALUE)) {
+            throw new RsponseException(super.get(CODE).toString(), super.get(MSG).toString());
+        }
+
+        return ObjectUtil.toObject(new TypeReference<C>() {
+        }, this.get(DATA));
     }
 
 
@@ -77,4 +89,5 @@ public class R extends HashMap<String, Object> {
     public <T> T get(Class<T> clzz, String key) {
         return ObjectUtil.toObject(clzz, super.get(key));
     }
+
 }
