@@ -1,7 +1,8 @@
 dependencies {
     compile("com.google.code.gson:gson:2.8.5")
     compile("com.google.guava:guava:18.0")
-    compile("com.alibaba:fastjson:1.2.31")
+    compile("com.alibaba:fastjson:1.2.75")
     compile ("org.apache.commons:commons-lang3:3.5")
     compile("commons-configuration:commons-configuration:1.10")
+    compile("com.fasterxml.jackson.core:jackson-databind:2.12.2")
 }

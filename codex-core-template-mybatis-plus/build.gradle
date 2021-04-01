@@ -7,5 +7,9 @@ dependencies {
     implementation project(':codex-core-template-stream')
     implementation('org.springframework:spring-context')
     implementation('com.baomidou:mybatis-plus-core:3.3.0')
+    implementation('com.fasterxml.jackson.core:jackson-core:2.8.5')
+    implementation('com.fasterxml.jackson.core:jackson-annotations:2.8.5')
+    implementation('com.fasterxml.jackson.core:jackson-databind:2.8.5')
+
 
 }

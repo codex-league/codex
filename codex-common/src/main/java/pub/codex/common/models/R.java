@@ -1,5 +1,8 @@
 package pub.codex.common.models;
 
+
+import pub.codex.common.utils.ObjectUtil;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,17 +10,24 @@ import java.util.Map;
  * 返回数据
  */
 public class R extends HashMap<String, Object> {
+
     private static final long serialVersionUID = 1L;
 
+    private static final String CODE = "code";
+
+    private static final String MSG = "msg";
+
+    private static final String DATA = "data";
+
     public R() {
-        put("code", "0000");
-        put("msg", "successful");
+        this.put(CODE, "0000");
+        this.put(MSG, "successful");
     }
 
     public static R error(String code, String msg) {
         R r = new R();
-        r.put("code", code);
-        r.put("msg", msg);
+        r.put(CODE, code);
+        r.put(MSG, msg);
         return r;
     }
 
@@ -35,18 +45,26 @@ public class R extends HashMap<String, Object> {
 
     public static R ok(String msg) {
         R r = new R();
-        r.put("msg", msg);
-        return r;
-    }
-
-    public static R ok(Map<String, Object> map) {
-        R r = new R();
-        r.putAll(map);
+        r.put(MSG, msg);
         return r;
     }
 
     public R data(Object value) {
-        super.put("data", value);
+        super.put(DATA, value);
+        return this;
+    }
+
+    public <T> T getData(Class<T> clzz) {
+        return ObjectUtil.toObject(clzz, getData());
+    }
+
+    public Object getData() {
+        return this.get(DATA);
+    }
+
+
+    public R dataMap(Map<String, Object> map) {
+        super.putAll(map);
         return this;
     }
 
@@ -56,4 +74,7 @@ public class R extends HashMap<String, Object> {
         return this;
     }
 
+    public <T> T get(Class<T> clzz, String key) {
+        return ObjectUtil.toObject(clzz, super.get(key));
+    }
 }
