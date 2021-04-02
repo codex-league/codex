@@ -1,9 +1,6 @@
 package com.text.codex.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.RequestEntity;
+import com.text.codex.db.entity.UserEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pub.codex.apix.annotations.Api;
@@ -11,12 +8,9 @@ import pub.codex.apix.annotations.ApiOperation;
 import pub.codex.apix.annotations.ApiParam;
 import pub.codex.apix.annotations.constant.Describe;
 import pub.codex.apix.annotations.group.VG;
+import pub.codex.common.column.BaseColumn;
+import pub.codex.common.factory.RFactory;
 import pub.codex.common.models.R;
-import pub.codex.core.template.utils.WhereUtils;
-import com.text.codex.db.entity.UserEntity;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 用户表
@@ -90,13 +84,17 @@ public class UserController {
      */
     @ApiOperation("列表接口")
     @GetMapping("/user")
-    public Object list(@ApiParam(Describe.WHERE) @RequestParam(required = false) String where,
+    public BaseColumn list(@ApiParam(Describe.WHERE) @RequestParam(required = false) String where,
                        @ApiParam(Describe.KEYWORD) @RequestParam(required = false) String keyword,
                        @ApiParam(Describe.PAGE_INDEX) @RequestParam(defaultValue = "0") Long pageIndex,
                        @ApiParam(Describe.PAGE_SIZE) @RequestParam(defaultValue = "10") Long pageSize) {
 
+        BaseColumn baseColumn = new BaseColumn();
+        baseColumn.setMaxLength("1");
+        baseColumn.setComments("haha");
 
-        return R.ok();
+
+        return RFactory.build(BaseColumn.class, baseColumn).getData();
 
     }
 

@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class ObjectUtil {
 
+
     public static <T> T toObject(Class<T> clzz, Object object) {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.convertValue(object, clzz);
