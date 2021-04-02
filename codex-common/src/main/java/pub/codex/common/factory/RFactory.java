@@ -13,6 +13,10 @@ public class RFactory {
         return new R<>();
     }
 
+    public static R<?> build(Object object) {
+        return new R<>();
+    }
+
     public static R<?> build(String code, String msg) {
         return new R<>(code, msg);
     }
@@ -32,6 +36,7 @@ public class RFactory {
         r.data(data);
         return r;
     }
+
 
     public static R<?> error() {
         return new R<>(R.ERROR_CODE_VALUE, R.ERROR_MSG_VALUE);

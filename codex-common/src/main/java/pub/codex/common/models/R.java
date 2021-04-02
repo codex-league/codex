@@ -44,7 +44,7 @@ public class R<T> extends HashMap<String, Object> {
         return this;
     }
 
-    public R<T> data(T value) {
+    public R<T> data(Object value) {
         super.put(DATA, value);
         return this;
     }

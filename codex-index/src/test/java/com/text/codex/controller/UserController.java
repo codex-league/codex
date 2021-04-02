@@ -84,7 +84,7 @@ public class UserController {
      */
     @ApiOperation("列表接口")
     @GetMapping("/user")
-    public BaseColumn list(@ApiParam(Describe.WHERE) @RequestParam(required = false) String where,
+    public R list(@ApiParam(Describe.WHERE) @RequestParam(required = false) String where,
                        @ApiParam(Describe.KEYWORD) @RequestParam(required = false) String keyword,
                        @ApiParam(Describe.PAGE_INDEX) @RequestParam(defaultValue = "0") Long pageIndex,
                        @ApiParam(Describe.PAGE_SIZE) @RequestParam(defaultValue = "10") Long pageSize) {
@@ -94,7 +94,7 @@ public class UserController {
         baseColumn.setComments("haha");
 
 
-        return RFactory.build(BaseColumn.class, baseColumn).getData();
+        return RFactory.build(BaseColumn.class, baseColumn);
 
     }
 
