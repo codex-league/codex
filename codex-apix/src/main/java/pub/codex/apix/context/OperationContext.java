@@ -17,10 +17,13 @@ public class OperationContext {
 
     private final OperationBuilder operationBuilder;
 
+    private final String mappingPath;
 
-    public OperationContext(RequestMethod requestMethod, DescriptionContext descriptionContext) {
+
+    public OperationContext(RequestMethod requestMethod, DescriptionContext descriptionContext, String mappingPath) {
         this.requestMethod = requestMethod;
         this.descriptionContext = descriptionContext;
+        this.mappingPath = mappingPath;
         this.operationBuilder = new OperationBuilder();
     }
 
@@ -42,11 +45,15 @@ public class OperationContext {
         return descriptionContext.findAnnotation(annotation);
     }
 
-    public List<MethodParameter>  getParameterAnnotation(Class<? extends Annotation> annotation) {
+    public List<MethodParameter> getParameterAnnotation(Class<? extends Annotation> annotation) {
         return descriptionContext.getParameterAnnotation(annotation);
     }
-    public List<MethodParameter>  getParameter() {
+
+    public List<MethodParameter> getParameter() {
         return descriptionContext.getParameter();
     }
 
+    public String getMappingPath() {
+        return mappingPath;
+    }
 }

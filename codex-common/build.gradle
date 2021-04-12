@@ -5,4 +5,5 @@ dependencies {
     compile ("org.apache.commons:commons-lang3:3.5")
     compile("commons-configuration:commons-configuration:1.10")
     compile("com.fasterxml.jackson.core:jackson-databind:2.12.2")
+    compile("commons-beanutils:commons-beanutils:1.8.3")
 }

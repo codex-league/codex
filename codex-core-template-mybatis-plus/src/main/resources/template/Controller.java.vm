@@ -2,14 +2,16 @@ package ${controllerPackagePath};
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.fasterxml.jackson.core.type.TypeReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import pub.codex.apix.Api;
-import pub.codex.apix.ApiOperation;
-import pub.codex.apix.ApiParam;
-import pub.codex.apix.Describe;
-import pub.codex.apix.VG;
+import pub.codex.apix.annotations.Api;
+import pub.codex.apix.annotations.ApiOperation;
+import pub.codex.apix.annotations.ApiParam;
+import pub.codex.apix.annotations.constant.Describe;
+import pub.codex.apix.annotations.group.VG;
+import pub.codex.common.factory.RFactory;
 import pub.codex.common.models.R;
 import pub.codex.core.template.utils.WhereUtils;
 import ${entityPackagePath}.${className}Entity;
@@ -40,7 +42,7 @@ public class ${className}Controller {
     @PostMapping("/${classname}")
     public R add(@RequestBody @Validated(VG.Add.class)${className}Entity ${classname}Entity) {
         ${classname}Service.save(${classname}Entity);
-        return R.ok();
+        return RFactory.build();
     }
 #end
 #if(${type}=="del")
@@ -54,7 +56,7 @@ public class ${className}Controller {
     @DeleteMapping("/${classname}/{id}")
     public R delete(@ApiParam(Describe.ID) @PathVariable("id") String id) {
         ${classname}Service.removeById(id);
-        return R.ok();
+        return RFactory.build();
     }
 #end
 #if(${type}=="update")
@@ -68,7 +70,7 @@ public class ${className}Controller {
     @PutMapping("/${classname}")
     public R update(@RequestBody @Validated(VG.Update.class)${className}Entity ${classname}Entity) {
         ${classname}Service.updateById(${classname}Entity);
-        return R.ok();
+        return RFactory.build();
     }
 #end
 #if(${type}=="detail")
@@ -80,8 +82,8 @@ public class ${className}Controller {
      */
     @ApiOperation("详情接口")
     @GetMapping("/${classname}/{id}")
-    public R detail(@ApiParam(Describe.ID) @PathVariable("id") String id) {
-        return R.ok().data(${classname}Service.getById(id));
+    public R<${className}Entity> detail(@ApiParam(Describe.ID) @PathVariable("id") String id) {
+        return RFactory.build(${className}Entity.class, ${classname}Service.getById(id));
     }
 #end
 #if(${type}=="list")
@@ -95,17 +97,17 @@ public class ${className}Controller {
      */
     @ApiOperation("列表接口")
     @GetMapping("/${classname}")
-    public R list(@ApiParam(Describe.WHERE) @RequestParam(required = false) String where,
+    public R<Page<${className}Entity>> list(@ApiParam(Describe.WHERE) @RequestParam(required = false) String where,
                   @ApiParam(Describe.KEYWORD) @RequestParam(required = false) String keyword,
                   @ApiParam(Describe.PAGE_INDEX) @RequestParam(defaultValue = "0") Long pageIndex,
                   @ApiParam(Describe.PAGE_SIZE) @RequestParam(defaultValue = "10") Long pageSize) {
 
         QueryWrapper<${className}Entity> entity = new QueryWrapper<>();
 
-        WhereUtils.setWhereAndKeyword(entity, where, keyword); // 设置 where 和  keyword查询
+        WhereUtils.setWhereAndKeyword(entity, where, keyword);
 
-        return R.ok().data(${classname}Service.page(new Page<>(pageIndex, pageSize), entity));
-
+        return RFactory.build(new TypeReference<Page<${className}Entity>>() {
+        }, ${classname}Service.page(new Page<>(pageIndex, pageSize), entity));
     }
 #end
 #end

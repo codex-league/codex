@@ -1,5 +1,6 @@
 package pub.codex.common.factory;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import pub.codex.common.models.R;
 
 /**
@@ -25,7 +26,17 @@ public class RFactory {
         return new R<>();
     }
 
+    public static <T> R<T> build(TypeReference<T> toValueTypeRef) {
+        return new R<>();
+    }
+
     public static <T> R<T> build(Class<T> clzz, T data, String code, String msg) {
+        R<T> r = new R<>(code, msg);
+        r.data(data);
+        return r;
+    }
+
+    public static <T> R<T> build(TypeReference<T> toValueTypeRef, T data, String code, String msg) {
         R<T> r = new R<>(code, msg);
         r.data(data);
         return r;
@@ -37,6 +48,11 @@ public class RFactory {
         return r;
     }
 
+    public static <T> R<T> build(TypeReference<T> toValueTypeRef, T data) {
+        R<T> r = new R<>();
+        r.data(data);
+        return r;
+    }
 
     public static R<?> error() {
         return new R<>(R.ERROR_CODE_VALUE, R.ERROR_MSG_VALUE);

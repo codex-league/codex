@@ -43,4 +43,41 @@ public interface VG {
     public interface ValiTest {
 
     }
+
+    public interface G1 {
+
+    }
+
+    public interface G2 {
+
+    }
+
+    public interface G3 {
+
+    }
+
+    public interface G4 {
+
+    }
+
+    public interface G5 {
+
+    }
+
+    public interface G6 {
+
+    }
+
+    public interface G7 {
+
+    }
+
+    public interface G8 {
+
+    }
+
+    public interface G9 {
+
+    }
+
 }

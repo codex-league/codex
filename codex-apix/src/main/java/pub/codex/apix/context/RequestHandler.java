@@ -38,7 +38,6 @@ public class RequestHandler {
         return handlerMethod.getMethod().getName();
     }
 
-
     /**
      * 查询注解是否存在
      *
@@ -121,7 +120,7 @@ public class RequestHandler {
     public String groupName() {
 
         Annotation annotation = AnnotationUtils.getAnnotation(handlerMethod.getBeanType(), Api.class);
-        if(annotation != null){
+        if (annotation != null) {
             return ((Api) annotation).describe();
         }
 
@@ -145,7 +144,7 @@ public class RequestHandler {
     }
 
     /**
-     * 获取请求条件
+     * 获取请求状态
      *
      * @return
      */

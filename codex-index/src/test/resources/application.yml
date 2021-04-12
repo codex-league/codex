@@ -10,12 +10,12 @@ codex:
     password: ${DB_MICRO_PWD}
     driverClassName: com.mysql.jdbc.Driver
   package:
-    entity-path: com.text.codex.db.entity
-    mapper-path: com.text.codex.db.mapper
+    entity-path: com.xiaodeai.entity.nurse.entity
+    mapper-path: com.xiaodeai.db.nurse.mapper
     mapperXML-path: mapper
-    service-path: com.text.codex.service
-    serviceImpl-path: com.text.codex.db.service.impl
-    controller-path: com.text.codex.controller
+    service-path: com.xiaodeai.db.nurse.service
+    serviceImpl-path: com.xiaodeai.db.nurse.service.impl
+    controller-path: com.xiaodeai.nurse.controller
   prefix: sys_,t_
 apix:
   controllerPackage: com.text.codex.controller

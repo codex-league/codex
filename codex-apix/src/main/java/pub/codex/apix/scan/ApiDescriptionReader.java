@@ -39,9 +39,9 @@ public class ApiDescriptionReader {
 
         List<ApiDescription> apiDescriptionList = newArrayList();
 
-        for (String path : patternsCondition.getPatterns()) {
+        for (String mappingPath : patternsCondition.getPatterns()) {
 
-            List<Operation> operations = apiOperationReader.read(context);
+            List<Operation> operations = apiOperationReader.read(context, mappingPath);
 
             // 遍历应用方法
             Arrays.stream(descriptionBuilderPlugins).forEach(plugin -> {
@@ -49,7 +49,7 @@ public class ApiDescriptionReader {
             });
 
             context.getApiDescriptionBuilder()
-                    .setPath(path)
+                    .setPath(mappingPath)
                     .setOperations(operations);
 
             apiDescriptionList.add(context.apiDescriptionBuilder().build());

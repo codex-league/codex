@@ -1,6 +1,7 @@
 package pub.codex.common.models;
 
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import pub.codex.common.exception.RsponseException;
 import pub.codex.common.utils.ObjectUtil;
 
@@ -54,6 +55,15 @@ public class R<T> extends HashMap<String, Object> {
         return this;
     }
 
+    /**
+     * 根据类泛型返回数据
+     * 如因泛型类型擦除原因，导致无法强制转换,见下
+     * eg.
+     * java.util.LinkedHashMap cannot be cast to {Object}
+     * 请使用  getData(Class<T> clzz) 或 getData(TypeReference<T> toValueTypeRef) 指明转换类型
+     *
+     * @return
+     */
     public T getData() {
         if (!super.get(CODE).equals(CODE_VALUE)) {
             throw new RsponseException(super.get(CODE).toString(), super.get(MSG).toString());
@@ -62,8 +72,40 @@ public class R<T> extends HashMap<String, Object> {
         return (T) super.get(DATA);
     }
 
+    /**
+     * 指定返回类型返回数据
+     *
+     * @param clzz 指定的类型
+     * @return
+     */
+    public T getData(Class<T> clzz) {
+        if (!super.get(CODE).equals(CODE_VALUE)) {
+            throw new RsponseException(super.get(CODE).toString(), super.get(MSG).toString());
+        }
+
+        return ObjectUtil.toObject(clzz, super.get(DATA));
+    }
+
+    /**
+     * 指定返回类型返回数据
+     *
+     * @param toValueTypeRef 指定的类型
+     * @return
+     */
+    public T getData(TypeReference<T> toValueTypeRef) {
+        if (!super.get(CODE).equals(CODE_VALUE)) {
+            throw new RsponseException(super.get(CODE).toString(), super.get(MSG).toString());
+        }
+
+        return ObjectUtil.toObject(toValueTypeRef, super.get(DATA));
+    }
+
     public <C> C get(Class<C> clzz, String key) {
         return ObjectUtil.toObject(clzz, super.get(key));
+    }
+
+    public <C> C get(TypeReference<C> toValueTypeRef, String key) {
+        return ObjectUtil.toObject(toValueTypeRef, super.get(key));
     }
 
 

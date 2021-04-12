@@ -12,10 +12,12 @@ public class DefaultOperationReader implements OperationBuilderPlugin {
     public void apply(OperationContext context) {
 
         String operationName = context.getName();
+        String mappingPath = context.getMappingPath();
 
         context.operationBuilder()
                 .setMethod(context.httpMethod())
-                .setSummary(operationName);
+                .setSummary(operationName)
+                .setPath(mappingPath);
     }
 
 }

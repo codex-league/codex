@@ -28,9 +28,10 @@ public class ApiOperationReader {
     /**
      * 读取 API 选项的描述信息
      *
-     * @param context
+     * @param context 描述上下文
+     * @param mappingPath    描述当前请求的url
      */
-    public List<Operation> read(DescriptionContext context) {
+    public List<Operation> read(DescriptionContext context, String mappingPath) {
 
         Set<RequestMethod> requestMethods = context.getMethodsCondition();
 
@@ -38,7 +39,7 @@ public class ApiOperationReader {
 
         for (RequestMethod httpRequestMethod : requestMethods) {
 
-            OperationContext operationContext = new OperationContext(httpRequestMethod, context);
+            OperationContext operationContext = new OperationContext(httpRequestMethod, context, mappingPath);
 
             // 遍历应用方法
             Arrays.stream(operationBuilderPlugins).forEach(plugin -> {
