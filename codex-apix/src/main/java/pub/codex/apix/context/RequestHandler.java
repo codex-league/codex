@@ -5,6 +5,7 @@ import org.springframework.core.MethodParameter;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.mvc.condition.PathPatternsRequestCondition;
 import org.springframework.web.servlet.mvc.condition.PatternsRequestCondition;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import pub.codex.apix.annotations.Api;
@@ -148,8 +149,8 @@ public class RequestHandler {
      *
      * @return
      */
-    public PatternsRequestCondition getPatternsCondition() {
-        return requestMapping.getPatternsCondition();
+    public PathPatternsRequestCondition getPathPatternsCondition() {
+        return requestMapping.getPathPatternsCondition();
     }
 
 

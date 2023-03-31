@@ -1,8 +1,6 @@
-
-
 dependencies {
-    compile project(':codex-common-db')
-    compile project(':codex-common')
+    implementation project(':codex-common-db')
+    implementation project(':codex-common')
 
     implementation('org.springframework:spring-context')
     implementation('org.apache.velocity:velocity-engine-core:2.0')

@@ -1,9 +1,7 @@
-
-
 dependencies {
-    compile project(':codex-common-db')
-    compile project(':codex-common')
-    compile project(':codex-core-template-stream')
+    api project(':codex-common-db')
+    api project(':codex-common')
+    api project(':codex-core-template-stream')
 
     implementation('org.springframework.boot:spring-boot-starter-web')
     implementation('org.apache.velocity:velocity-engine-core:2.0')

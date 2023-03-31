@@ -1,13 +1,13 @@
 
 dependencies {
-    compile project(':codex-core')
-    compile project(':codex-apix')
+    api project(':codex-core')
+    api project(':codex-apix')
 
     implementation('org.springframework:spring-context')
 
     testImplementation project(':codex-core-template-mybatis-plus')
 
-    testImplementation("mysql:mysql-connector-java:5.1.21")
+    testImplementation 'mysql:mysql-connector-java:8.0.32'
     testImplementation("com.baomidou:mybatis-plus:3.3.0")
     testImplementation("com.baomidou:mybatis-plus-boot-starter:3.3.0")
     testImplementation("org.springframework.boot:spring-boot-starter-aop")

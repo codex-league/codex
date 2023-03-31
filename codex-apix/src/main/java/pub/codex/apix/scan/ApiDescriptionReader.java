@@ -2,10 +2,10 @@ package pub.codex.apix.scan;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.mvc.condition.PathPatternsRequestCondition;
 import org.springframework.web.servlet.mvc.condition.PatternsRequestCondition;
 import pub.codex.apix.context.DescriptionContext;
 import pub.codex.apix.description.DescriptionBuilderPlugin;
-import pub.codex.apix.operation.OperationBuilderPlugin;
 import pub.codex.apix.schema.ApiDescription;
 import pub.codex.apix.schema.Operation;
 
@@ -35,11 +35,11 @@ public class ApiDescriptionReader {
      */
     public List<ApiDescription> read(DescriptionContext context) {
 
-        PatternsRequestCondition patternsCondition = context.getPatternsCondition();
+        PathPatternsRequestCondition patternsCondition = context.getPathPatternsCondition();
 
         List<ApiDescription> apiDescriptionList = newArrayList();
 
-        for (String mappingPath : patternsCondition.getPatterns()) {
+        for (String mappingPath : patternsCondition.getDirectPaths()) {
 
             List<Operation> operations = apiOperationReader.read(context, mappingPath);
 

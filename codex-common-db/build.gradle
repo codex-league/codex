@@ -1,5 +1,5 @@
 dependencies {
-    compile project(':codex-common')
+    api project(':codex-common')
 
     implementation("com.google.code.gson:gson:2.8.5")
     implementation("com.google.guava:guava:18.0")

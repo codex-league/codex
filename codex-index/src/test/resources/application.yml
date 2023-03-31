@@ -6,9 +6,9 @@ server:
 codex:
   jdbc:
     url: ${DB_MICRO_URL:jdbc:mysql://localhost:3306/codex?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false}
-    username: ${DB_MICRO_USERNAME}
-    password: ${DB_MICRO_PWD}
-    driverClassName: com.mysql.jdbc.Driver
+    username: ${DB_MICRO_USERNAME:root}
+    password: ${DB_MICRO_PWD:123456}
+    driverClassName: com.mysql.cj.jdbc.Driver
   package:
     entity-path: com.xiaodeai.entity.nurse.entity
     mapper-path: com.xiaodeai.db.nurse.mapper

@@ -1,6 +1,6 @@
 dependencies {
-    compile project(':codex-common')
-    compile project(':codex-apix-annotations')
+    api project(':codex-common')
+    api project(':codex-apix-annotations')
 
     implementation('org.springframework.boot:spring-boot-starter-web')
     implementation ("org.apache.commons:commons-lang3:3.5")

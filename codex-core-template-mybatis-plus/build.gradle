@@ -1,8 +1,8 @@
 
 
 dependencies {
-    compile project(':codex-common-db')
-    compile project(':codex-common')
+    implementation project(':codex-common-db')
+    implementation project(':codex-common')
 
     implementation project(':codex-core-template-stream')
     implementation('org.springframework:spring-context')

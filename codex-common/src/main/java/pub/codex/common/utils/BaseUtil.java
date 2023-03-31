@@ -42,7 +42,7 @@ public class BaseUtil {
         //获得Object对象中的所有方法
         for (Field field : fields) {
             try {
-                PropertyDescriptor pd = new PropertyDescriptor(field.getName(), clazz);
+                PropertyDescriptor pd = new PropertyDescriptor (( String ) field.getName(),clazz );
                 java.lang.reflect.Method method = pd.getReadMethod();//获得get方法
                 if (method.invoke(controllerlClass) != null) {
                     map.put(field.getName(), (ControllerMethod) method.invoke(controllerlClass));

@@ -3,7 +3,7 @@ package pub.codex.apix.context;
 import com.google.common.base.Optional;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.condition.PatternsRequestCondition;
+import org.springframework.web.servlet.mvc.condition.PathPatternsRequestCondition;
 import pub.codex.apix.build.ApiDescriptionBuilder;
 
 import java.lang.annotation.Annotation;
@@ -28,8 +28,8 @@ public class DescriptionContext {
         return handler.getName();
     }
 
-    public PatternsRequestCondition getPatternsCondition() {
-        return handler.getPatternsCondition();
+    public PathPatternsRequestCondition getPathPatternsCondition() {
+        return handler.getPathPatternsCondition();
     }
 
     public ApiDescriptionBuilder getApiDescriptionBuilder() {

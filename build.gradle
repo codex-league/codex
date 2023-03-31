@@ -1,34 +1,34 @@
-def codexVersion = '4.2.5'
-def codexGroup = 'pub.codex'
-def vJavaLang = '1.8'
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
 
-allprojects() {
-    group = codexGroup
-    version = codexVersion
+plugins {
+    id 'org.springframework.boot' version '3.0.5'
 }
 
-subprojects() {
-
-    apply plugin: 'java'
+subprojects(){
+    apply plugin: 'java-library'
     apply plugin: 'idea'
     apply plugin: "io.spring.dependency-management"
     apply plugin: "maven-publish"
-    apply plugin: 'maven'
     apply plugin: 'signing'
 
-
-
-    targetCompatibility = vJavaLang
-    sourceCompatibility = vJavaLang
-
-    repositories {
-        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
-    }
+    group = 'pub.codex'
+    version = '5.0.0-SNAPSHOT'
+    targetCompatibility = '17'
+    sourceCompatibility = '17'
 
     dependencyManagement {
         imports {
-            mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
+            mavenBom SpringBootPlugin.BOM_COORDINATES
         }
+    }
+
+    repositories {
+        maven { url "https://maven.aliyun.com/nexus/content/groups/public/" }
+        mavenCentral()
+    }
+
+    dependencies {
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
     }
 
     // 后面的都是打包的配置
@@ -103,22 +103,6 @@ subprojects() {
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
     }
-
-
 }
-
-
-buildscript {
-    ext {
-        springBootVersion = '2.0.4.RELEASE'
-    }
-    repositories {
-        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-    }
-}
-
 
 
