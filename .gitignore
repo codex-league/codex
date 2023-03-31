@@ -33,7 +33,7 @@ gradle.properties
 ### other ###
 *.out
 *.log
-
+*.txt
 classes
 
 **.DS_Store
