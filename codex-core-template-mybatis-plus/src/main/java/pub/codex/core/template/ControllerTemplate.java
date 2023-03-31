@@ -49,7 +49,7 @@ public class ControllerTemplate extends TableCodexTemplate {
         map.put("className", className);
         map.put("classname", classname);
         map.put("interfaceType", interfaceType);
-        buildTemplate(TEMPLATE_NAME, map, buildFilePath(TEMPLATE_NAME, className,
-                controllerPackagePath, false, true));
+        buildTemplate(TEMPLATE_NAME, map, buildControllerFilePath(TEMPLATE_NAME, className,
+                controllerPackagePath));
     }
 }

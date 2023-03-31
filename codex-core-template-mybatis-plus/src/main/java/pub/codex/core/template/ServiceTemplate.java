@@ -42,7 +42,7 @@ public class ServiceTemplate extends TableCodexTemplate {
         map.put("datetime", datetime);
         map.put("comments", comments);
         map.put("className", className);
-        buildTemplate(TEMPLATE_NAME, map, buildFilePath(TEMPLATE_NAME, className,
-                servicePackagePath, false, false));
+        buildTemplate(TEMPLATE_NAME, map, buildDBFilePath(TEMPLATE_NAME, className,
+                servicePackagePath));
     }
 }

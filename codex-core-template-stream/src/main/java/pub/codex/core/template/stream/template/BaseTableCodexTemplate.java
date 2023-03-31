@@ -32,24 +32,33 @@ public class BaseTableCodexTemplate {
         return template;
     }
 
+    protected String buildControllerFilePath(String templateName, String className, String packagePath){
+        return buildFilePath(templateName, className, packagePath, "controller");
+    }
+
+    protected String buildEntityFilePath(String templateName, String className, String packagePath){
+        return buildFilePath(templateName, className, packagePath, "entity");
+    }
+
+    protected String buildResourcesFilePath(String templateName, String className, String packagePath){
+        return buildFilePath(templateName, className, packagePath, "resources");
+    }
+
+    protected String buildDBFilePath(String templateName, String className, String packagePath){
+        return buildFilePath(templateName, className, packagePath, "db");
+    }
+
     /**
      * 编译文件名
      */
-    protected String buildFilePath(String templateName, String className, String packagePath, boolean isResources, boolean isController) {
+    protected String buildFilePath(String templateName, String className, String packagePath, String prePackagePath) {
 
         String headPackagePath;
 
         headPackagePath = className + "'code" + File.separator;
 
-        if (!isResources) {
-            if (!isController) {
-                headPackagePath += "db" + File.separator;
-            } else {
-                headPackagePath += "controller" + File.separator;
-            }
-        } else {
-            headPackagePath += "resources" + File.separator;
-        }
+        headPackagePath += prePackagePath + File.separator;
+
         return headPackagePath + packagePath.replace(".", File.separator) + File.separator + className + templateName;
     }
 

@@ -45,7 +45,7 @@ public class ServiceImplTemplate extends TableCodexTemplate {
         map.put("comments", comments);
         map.put("className", className);
         map.put("classname", classname);
-        buildTemplate(TEMPLATE_NAME, map, buildFilePath(TEMPLATE_NAME, className,
-                baseTemplateConfigProvider.getServiceImplPath(), false, false));
+        buildTemplate(TEMPLATE_NAME, map, buildDBFilePath(TEMPLATE_NAME, className,
+                baseTemplateConfigProvider.getServiceImplPath()));
     }
 }

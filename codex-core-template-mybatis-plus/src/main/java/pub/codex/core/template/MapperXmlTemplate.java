@@ -43,8 +43,8 @@ public class MapperXmlTemplate extends TableCodexTemplate {
         map.put("className", className);
         map.put("classname", classname);
         map.put("columns", columns);
-        buildTemplate(TEMPLATE_NAME, map, buildFilePath(TEMPLATE_NAME, className,
-                baseTemplateConfigProvider.getMapperXMLPath(), true, false));
+        buildTemplate(TEMPLATE_NAME, map, buildResourcesFilePath(TEMPLATE_NAME, className,
+                baseTemplateConfigProvider.getMapperXMLPath()));
     }
 
 
