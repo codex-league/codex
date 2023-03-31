@@ -15,23 +15,23 @@ http://www.codex.pub/codex.html
 > 使用了Code-X,你的项目将可以看到演示地址中的所有功能
 
 ## 2 环境要求
-> jdk 1.8 +  
+> jdk 17 +  
 > mybatis-plus 3.x+ (后续支持其他框架)  
 > MySql (后续支持其他关系型数据库或非关系型数据库)  
 > maven 、gradle  
-> spring boot 2.x+
+> spring boot 3.x+
 
 ## 3 快速开始
 ### 3.1 引入依赖
 
 > 已经发布至maven中央库，阿里云maven均可获取: https://search.maven.org/search?q=pub.codex
-当前版本最新 3.2.14
+当前版本最新 5.0.0-SNAPSHOT
 
 
 > gradle：
 ```Groovy
-    compile 'pub.codex:codex-index:3.x.x'
-    compile 'pub.codex:codex-core-template-mybatis-plus:3.x.x'
+    compile 'pub.codex:codex-index:5.x.x'
+    compile 'pub.codex:codex-core-template-mybatis-plus:5.x.x'
 ```
 > maven:
 ```xml
