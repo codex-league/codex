@@ -39,7 +39,7 @@ public class ApiDescriptionReader {
 
         List<ApiDescription> apiDescriptionList = newArrayList();
 
-        for (String mappingPath : patternsCondition.getDirectPaths()) {
+        for (String mappingPath : patternsCondition.getPatternValues()) {
 
             List<Operation> operations = apiOperationReader.read(context, mappingPath);
 

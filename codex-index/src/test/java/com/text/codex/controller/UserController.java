@@ -29,57 +29,57 @@ import java.util.Map;
 public class UserController {
 
 
-//    /**
-//     * 新增接口
-//     *
-//     * @param userEntity
-//     * @return
-//     */
-//    @ApiOperation("新增接口")
-//    @PostMapping("/user")
-//    public R add(@RequestBody @Validated(VG.Add.class) UserEntity userEntity) {
-//        return R.ok();
-//    }
-//
-//
-//    /**
-//     * 更新接口
-//     *
-//     * @param userEntity
-//     * @return
-//     */
-//    @ApiOperation("更新接口")
-//    @PutMapping("/user")
-//    public R update(@RequestBody @Validated(VG.Update.class) UserEntity userEntity) {
-//        return R.ok();
-//    }
-//
-//
-//    /**
-//     * 删除接口
-//     *
-//     * @param id 根据ID删除
-//     * @return
-//     */
-//    @ApiOperation("删除接口")
-//    @DeleteMapping("/user/{id}")
-//    public R delete(@ApiParam(Describe.ID) @PathVariable("id") String id) {
-//        return R.ok();
-//    }
-//
-//
-//    /**
-//     * 详情接口
-//     *
-//     * @param id 根据ID查询
-//     * @return
-//     */
-//    @ApiOperation("详情接口")
-//    @GetMapping("/user/{id}")
-//    public R detail(@ApiParam(Describe.ID) @PathVariable("id") String id) {
-//
-//        return R.ok();
-//    }
+    /**
+     * 新增接口
+     *
+     * @param userEntity
+     * @return
+     */
+    @ApiOperation("新增接口")
+    @PostMapping("/user")
+    public R add(@RequestBody @Validated(VG.Add.class) UserEntity userEntity) {
+        return R.ok();
+    }
+
+
+    /**
+     * 更新接口
+     *
+     * @param userEntity
+     * @return
+     */
+    @ApiOperation("更新接口")
+    @PutMapping("/user")
+    public R update(@RequestBody @Validated(VG.Update.class) UserEntity userEntity) {
+        return R.ok();
+    }
+
+
+    /**
+     * 删除接口
+     *
+     * @param id 根据ID删除
+     * @return
+     */
+    @ApiOperation("删除接口")
+    @DeleteMapping("/user/{id}")
+    public R delete(@ApiParam(Describe.ID) @PathVariable("id") String id) {
+        return R.ok();
+    }
+
+
+    /**
+     * 详情接口
+     *
+     * @param id 根据ID查询
+     * @return
+     */
+    @ApiOperation("详情接口")
+    @GetMapping("/user/{id}")
+    public R detail(@ApiParam(Describe.ID) @PathVariable("id") String id) {
+
+        return R.ok();
+    }
 
 
     /**
