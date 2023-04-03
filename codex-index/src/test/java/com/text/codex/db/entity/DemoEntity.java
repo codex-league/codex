@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import pub.codex.apix.annotations.*;
 import pub.codex.apix.annotations.group.VG;
-import javax.validation.constraints.*;
+import jakarta.validation.constraints.*;
 
 import java.io.Serializable;
 import java.util.List;

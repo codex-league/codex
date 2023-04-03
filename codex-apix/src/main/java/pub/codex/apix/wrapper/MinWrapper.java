@@ -1,6 +1,6 @@
 package pub.codex.apix.wrapper;
 
-import javax.validation.constraints.Min;
+import jakarta.validation.constraints.Min;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 

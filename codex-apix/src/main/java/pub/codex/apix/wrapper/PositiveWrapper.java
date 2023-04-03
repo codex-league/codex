@@ -2,7 +2,7 @@ package pub.codex.apix.wrapper;
 
 import org.springframework.stereotype.Component;
 
-import javax.validation.constraints.Positive;
+import jakarta.validation.constraints.Positive;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 

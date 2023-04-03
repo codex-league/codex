@@ -1,8 +1,8 @@
 package pub.codex.apix.wrapper;
 
+import jakarta.validation.constraints.Past;
 import org.springframework.stereotype.Component;
 
-import javax.validation.constraints.Past;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 

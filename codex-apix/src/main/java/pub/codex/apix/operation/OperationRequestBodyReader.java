@@ -1,5 +1,7 @@
 package pub.codex.apix.operation;
 
+import jakarta.validation.Valid;
+import jakarta.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -14,7 +16,6 @@ import pub.codex.apix.annotations.ApiModelProperty;
 import pub.codex.apix.context.OperationContext;
 import pub.codex.apix.wrapper.VaildComponent;
 
-import javax.validation.Valid;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.Arrays;

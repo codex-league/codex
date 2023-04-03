@@ -2,7 +2,7 @@ package pub.codex.apix.wrapper;
 
 import org.springframework.stereotype.Component;
 
-import javax.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMax;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 

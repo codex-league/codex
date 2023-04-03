@@ -1,8 +1,8 @@
 package pub.codex.apix.wrapper;
 
+import jakarta.validation.constraints.Max;
 import org.springframework.stereotype.Component;
 
-import javax.validation.constraints.Max;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 

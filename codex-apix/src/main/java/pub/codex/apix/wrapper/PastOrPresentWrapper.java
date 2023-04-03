@@ -3,7 +3,7 @@ package pub.codex.apix.wrapper;
 
 import org.springframework.stereotype.Component;
 
-import javax.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.PastOrPresent;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 

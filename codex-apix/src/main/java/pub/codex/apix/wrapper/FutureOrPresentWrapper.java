@@ -4,7 +4,7 @@ package pub.codex.apix.wrapper;
 import org.springframework.stereotype.Component;
 
 import java.lang.annotation.Annotation;
-import javax.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.FutureOrPresent;
 import java.lang.reflect.Field;
 
 @Component
