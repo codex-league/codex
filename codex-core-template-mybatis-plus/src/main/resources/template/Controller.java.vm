@@ -31,7 +31,7 @@ public class ${className}Controller {
 
 #if(${interfaceType})
     @Autowired
-    ${className}Service ${classname}Service;
+    private ${className}Service ${classname}Service;
 #end
 #foreach (${type} in ${interfaceType})
 
@@ -45,7 +45,7 @@ public class ${className}Controller {
     @PostMapping("/${classname}")
     public R add(@RequestBody @Validated(VG.Add.class)${className}Entity ${classname}Entity) {
         ${classname}Service.save(${classname}Entity);
-        return RBuilder.build();
+        return RBuilder.ok();
     }
 #end
 #if(${type}=="del")
@@ -59,7 +59,7 @@ public class ${className}Controller {
     @DeleteMapping("/${classname}/{id}")
     public R delete(@ApiParam(Describe.ID) @PathVariable("id") String id) {
         ${classname}Service.removeById(id);
-        return RBuilder.build();
+        return RBuilder.ok();
     }
 #end
 #if(${type}=="update")
@@ -73,7 +73,7 @@ public class ${className}Controller {
     @PutMapping("/${classname}")
     public R update(@RequestBody @Validated(VG.Update.class)${className}Entity ${classname}Entity) {
         ${classname}Service.updateById(${classname}Entity);
-        return RBuilder.build();
+        return RBuilder.ok();
     }
 #end
 #if(${type}=="detail")
@@ -86,7 +86,7 @@ public class ${className}Controller {
     @ApiOperation("详情接口")
     @GetMapping("/${classname}/{id}")
     public RData<${className}Entity> detail(@ApiParam(Describe.ID) @PathVariable("id") String id) {
-        return RBuilder.build(${className}Entity.class, ${classname}Service.getById(id));
+        return RBuilder.build(${classname}Service.getById(id));
     }
 #end
 #if(${type}=="list")
@@ -102,11 +102,11 @@ public class ${className}Controller {
     public RData<List<${className}Entity>> list(@ApiParam(Describe.WHERE) @RequestParam(required = false) String where,
                   @ApiParam(Describe.KEYWORD) @RequestParam(required = false) String keyword) {
 
-        QueryWrapper<${className}Entity> entity = new QueryWrapper<>();
+        QueryWrapper<${className}Entity> query = new QueryWrapper<>();
 
-        WhereUtils.setWhereAndKeyword(entity, where, keyword);
+        WhereUtils.setWhereAndKeyword(query, where, keyword);
 
-        return RBuilder.build(${className}Service.list());
+        return RBuilder.build(${classname}Service.list(query));
     }
 
     /**
@@ -124,11 +124,11 @@ public class ${className}Controller {
                                                 @ApiParam(Describe.PAGE_INDEX) @RequestParam(defaultValue = "0") Long pageIndex,
                                                 @ApiParam(Describe.PAGE_SIZE) @RequestParam(defaultValue = "10") Long pageSize) {
 
-        QueryWrapper<${className}Entity> entity = new QueryWrapper<>();
+        QueryWrapper<${className}Entity> query = new QueryWrapper<>();
 
-        WhereUtils.setWhereAndKeyword(entity, where, keyword);
+        WhereUtils.setWhereAndKeyword(query, where, keyword);
 
-        return RBuilder.build(${className}Service.page(new Page<>(pageIndex, pageSize), entity));
+        return RBuilder.build(${classname}Service.page(new Page<>(pageIndex, pageSize), query));
     }
 #end
 #end
