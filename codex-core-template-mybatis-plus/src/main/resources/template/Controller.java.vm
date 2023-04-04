@@ -18,6 +18,8 @@ import pub.codex.core.template.utils.WhereUtils;
 import ${entityPackagePath}.${className}Entity;
 import ${servicePackagePath}.${className}Service;
 
+import java.util.List;
+
 /**
  * ${comments}
  *
@@ -92,16 +94,35 @@ public class ${className}Controller {
     /**
      * 列表接口
      * @param  where JSON条件
+     *         keyword 关键字
+     * @return
+     */
+    @ApiOperation("列表接口")
+    @GetMapping("/${classname}")
+    public RData<List<${className}Entity>> list(@ApiParam(Describe.WHERE) @RequestParam(required = false) String where,
+                  @ApiParam(Describe.KEYWORD) @RequestParam(required = false) String keyword) {
+
+        QueryWrapper<${className}Entity> entity = new QueryWrapper<>();
+
+        WhereUtils.setWhereAndKeyword(entity, where, keyword);
+
+        return RBuilder.build(${className}Service.list());
+    }
+
+    /**
+     * 分页接口
+     * @param  where JSON条件
+     *         keyword 关键字
      *         pageIndex 当前页
      *         pageSize 页数
      * @return
      */
     @ApiOperation("列表接口")
-    @GetMapping("/${classname}")
-    public RData<Page<${className}Entity>> list(@ApiParam(Describe.WHERE) @RequestParam(required = false) String where,
-                  @ApiParam(Describe.KEYWORD) @RequestParam(required = false) String keyword,
-                  @ApiParam(Describe.PAGE_INDEX) @RequestParam(defaultValue = "0") Long pageIndex,
-                  @ApiParam(Describe.PAGE_SIZE) @RequestParam(defaultValue = "10") Long pageSize) {
+    @GetMapping("/${classname}/page")
+    public RData<Page<${className}Entity>> page(@ApiParam(Describe.WHERE) @RequestParam(required = false) String where,
+                                                @ApiParam(Describe.KEYWORD) @RequestParam(required = false) String keyword,
+                                                @ApiParam(Describe.PAGE_INDEX) @RequestParam(defaultValue = "0") Long pageIndex,
+                                                @ApiParam(Describe.PAGE_SIZE) @RequestParam(defaultValue = "10") Long pageSize) {
 
         QueryWrapper<${className}Entity> entity = new QueryWrapper<>();
 
