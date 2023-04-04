@@ -420,8 +420,9 @@ public class Person {
     ApiModelProperty(g2)，Notnull(g1) （必填）
 
 ```
-
-
+# todo 
+1、codex 对应springBoot 版本
+2、validate对应的javax、jakarta
 
 
 

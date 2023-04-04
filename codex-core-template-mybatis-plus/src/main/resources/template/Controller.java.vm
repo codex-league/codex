@@ -11,8 +11,9 @@ import pub.codex.apix.annotations.ApiOperation;
 import pub.codex.apix.annotations.ApiParam;
 import pub.codex.apix.annotations.constant.Describe;
 import pub.codex.apix.annotations.group.VG;
-import pub.codex.common.factory.RFactory;
-import pub.codex.common.models.R;
+import pub.codex.common.result.R;
+import pub.codex.common.result.RBuilder;
+import pub.codex.common.result.RData;
 import pub.codex.core.template.utils.WhereUtils;
 import ${entityPackagePath}.${className}Entity;
 import ${servicePackagePath}.${className}Service;
@@ -42,7 +43,7 @@ public class ${className}Controller {
     @PostMapping("/${classname}")
     public R add(@RequestBody @Validated(VG.Add.class)${className}Entity ${classname}Entity) {
         ${classname}Service.save(${classname}Entity);
-        return RFactory.build();
+        return RBuilder.build();
     }
 #end
 #if(${type}=="del")
@@ -56,7 +57,7 @@ public class ${className}Controller {
     @DeleteMapping("/${classname}/{id}")
     public R delete(@ApiParam(Describe.ID) @PathVariable("id") String id) {
         ${classname}Service.removeById(id);
-        return RFactory.build();
+        return RBuilder.build();
     }
 #end
 #if(${type}=="update")
@@ -70,7 +71,7 @@ public class ${className}Controller {
     @PutMapping("/${classname}")
     public R update(@RequestBody @Validated(VG.Update.class)${className}Entity ${classname}Entity) {
         ${classname}Service.updateById(${classname}Entity);
-        return RFactory.build();
+        return RBuilder.build();
     }
 #end
 #if(${type}=="detail")
@@ -82,8 +83,8 @@ public class ${className}Controller {
      */
     @ApiOperation("详情接口")
     @GetMapping("/${classname}/{id}")
-    public R<${className}Entity> detail(@ApiParam(Describe.ID) @PathVariable("id") String id) {
-        return RFactory.build(${className}Entity.class, ${classname}Service.getById(id));
+    public RData<${className}Entity> detail(@ApiParam(Describe.ID) @PathVariable("id") String id) {
+        return RBuilder.build(${className}Entity.class, ${classname}Service.getById(id));
     }
 #end
 #if(${type}=="list")
@@ -97,7 +98,7 @@ public class ${className}Controller {
      */
     @ApiOperation("列表接口")
     @GetMapping("/${classname}")
-    public R<Page<${className}Entity>> list(@ApiParam(Describe.WHERE) @RequestParam(required = false) String where,
+    public RData<Page<${className}Entity>> list(@ApiParam(Describe.WHERE) @RequestParam(required = false) String where,
                   @ApiParam(Describe.KEYWORD) @RequestParam(required = false) String keyword,
                   @ApiParam(Describe.PAGE_INDEX) @RequestParam(defaultValue = "0") Long pageIndex,
                   @ApiParam(Describe.PAGE_SIZE) @RequestParam(defaultValue = "10") Long pageSize) {
@@ -106,8 +107,7 @@ public class ${className}Controller {
 
         WhereUtils.setWhereAndKeyword(entity, where, keyword);
 
-        return RFactory.build(new TypeReference<Page<${className}Entity>>() {
-        }, ${classname}Service.page(new Page<>(pageIndex, pageSize), entity));
+        return RBuilder.build(${className}Service.page(new Page<>(pageIndex, pageSize), entity));
     }
 #end
 #end

@@ -1,4 +1,4 @@
-package pub.codex.common.models;
+package pub.codex.common.result;
 
 
 import java.util.HashMap;

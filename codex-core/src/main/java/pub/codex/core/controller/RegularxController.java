@@ -1,7 +1,7 @@
 package pub.codex.core.controller;
 
 import pub.codex.common.db.entity.RegularEntity;
-import pub.codex.common.models.CodexResult;
+import pub.codex.common.result.CodexResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;

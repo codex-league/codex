@@ -11,8 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import pub.codex.common.column.BaseColumn;
 import pub.codex.common.field.ControllerlClass;
 import pub.codex.common.db.jdbc.TableDao;
-import pub.codex.common.models.CodexResult;
-import pub.codex.common.models.R;
+import pub.codex.common.result.CodexResult;
 import pub.codex.common.utils.BaseUtil;
 import pub.codex.common.utils.TranslateUtil;
 import pub.codex.core.provider.ConfigProvider;
@@ -20,8 +19,6 @@ import pub.codex.core.template.stream.template.TableCodexTemplateStream;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -134,7 +131,7 @@ public class CodexcController {
      * @throws IOException
      */
     @PostMapping("/codex/generate/code/controller/{tableName}")
-    public R createController(@PathVariable String tableName,
+    public CodexResult createController(@PathVariable String tableName,
                               @RequestParam(required = false) String tablePrefix,
                               @RequestBody ControllerlClass controllerlClass) {
 
@@ -147,7 +144,7 @@ public class CodexcController {
         IOUtils.closeQuietly(zip);
         downloadByteBucket = outputStream.toByteArray();
 
-        return R.ok();
+        return CodexResult.ok();
     }
 
 
