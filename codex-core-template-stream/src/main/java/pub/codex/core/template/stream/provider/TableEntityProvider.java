@@ -1,8 +1,8 @@
 package pub.codex.core.template.stream.provider;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import pub.codex.common.Constant;
 import pub.codex.common.field.BaseField;
 import pub.codex.common.field.ControllerMethod;
@@ -171,20 +171,20 @@ public class TableEntityProvider {
         }
 
         String value = Constant.interfaceConstant.getGroupInfo(type);
-        if (StringUtils.isEmpty(value)) {
+        if (org.apache.commons.lang3.StringUtils.isEmpty(value)) {
             return;
         }
 
         Map<String, BaseField> interfaceColumn = TranslateUtil.transformUtils(controllerMethod.getFields());
         BaseField baseField = interfaceColumn.get(column);
 
+        StringBuffer stringBuffer;
         if (map.get(baseField.getAnnotation()) != null) {
-            StringBuffer stringBuffer = map.get(baseField.getAnnotation());
-            map.put(baseField.getAnnotation(), stringBuffer.append(value + ","));
+            stringBuffer = map.get(baseField.getAnnotation());
         } else {
-            StringBuffer stringBuffer = new StringBuffer();
-            map.put(baseField.getAnnotation(), stringBuffer.append(value + ","));
+            stringBuffer = new StringBuffer();
         }
+        map.put(baseField.getAnnotation(), stringBuffer.append(value + ", "));
 
     }
 

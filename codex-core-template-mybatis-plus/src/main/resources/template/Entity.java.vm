@@ -33,6 +33,7 @@ import java.math.BigDecimal;
  */
 @TableName("${tableName}")
 public class ${className}Entity implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 #foreach ($column in $columns)
@@ -43,7 +44,7 @@ public class ${className}Entity implements Serializable {
 	#end
 	#if($column.columnName == $pk.columnName)
 	@TableId
-	@JsonSerialize(using=ToStringSerializer.class)
+	@JsonSerialize(using = ToStringSerializer.class)
 	#end
 	#if(${column.annotationList})
 	#foreach ($annotation in $column.annotationList)
@@ -51,6 +52,7 @@ public class ${className}Entity implements Serializable {
 	#end
 	#end
 	private $column.attrType $column.attrname;
+
 #end
 #foreach ($column in $columns)
 

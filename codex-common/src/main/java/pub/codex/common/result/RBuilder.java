@@ -1,6 +1,8 @@
 package pub.codex.common.result;
 
 
+import java.util.List;
+
 /**
  * R 构造者
  *
@@ -8,19 +10,23 @@ package pub.codex.common.result;
  */
 public class RBuilder {
 
-    public static R build(String code, String msg) {
+    public static R build(Integer code, String msg) {
         return new R(code, msg);
+    }
+
+    public static <T> RPage<T> build(List<T> data, Long pageNum, Long pageSize, Long totalCount) {
+        return new RPage<>(data, pageNum, pageSize, totalCount);
     }
 
     public static <T> RData<T> build(T data) {
         return new RData<>(data);
     }
 
-    public static <T> RData<T> build(T data, String code, String msg) {
+    public static <T> RData<T> build(T data, Integer code, String msg) {
         return new RData<>(code, msg, data);
     }
 
-    public static <T> RData<T> build(T data, String code, String msg, Object tips) {
+    public static <T> RData<T> build(T data, Integer code, String msg, Object tips) {
         return new RData<>(code, msg, tips, data);
     }
 
@@ -37,13 +43,13 @@ public class RBuilder {
         return new R(R.ERROR_CODE_VALUE, msg);
     }
 
-    public static R error(String code, String msg) {
+    public static R error(Integer code, String msg) {
         return new R(code, msg);
     }
 
-
-    public static R tips(String code, String msg, Object tips) {
+    public static R tips(Integer code, String msg, Object tips) {
         return new R(code, msg, tips);
     }
+
 
 }

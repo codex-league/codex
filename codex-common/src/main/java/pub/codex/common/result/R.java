@@ -1,6 +1,9 @@
 package pub.codex.common.result;
 
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+
 import java.io.Serializable;
 
 /**
@@ -10,11 +13,11 @@ public class R implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public static final String CODE_VALUE = "0000";
+    public static final Integer CODE_VALUE = 200;
 
     public static final String MSG_VALUE = "successful";
 
-    public static final String ERROR_CODE_VALUE = "9999";
+    public static final Integer ERROR_CODE_VALUE = 9999;
 
     public static final String ERROR_MSG_VALUE = "unsuccessful";
 
@@ -22,7 +25,7 @@ public class R implements Serializable {
     /**
      * message code
      */
-    private String code = "0000";
+    private Integer code = CODE_VALUE;
 
     /**
      * message
@@ -38,22 +41,22 @@ public class R implements Serializable {
     public R() {
     }
 
-    public R(String code, String msg) {
+    public R(Integer code, String msg) {
         this.code = code;
         this.msg = msg;
     }
 
-    public R(String code, String msg, Object tips) {
+    public R(Integer code, String msg, Object tips) {
         this.code = code;
         this.msg = msg;
         this.tips = tips;
     }
 
-    public String getCode() {
+    public Integer getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(Integer code) {
         this.code = code;
     }
 

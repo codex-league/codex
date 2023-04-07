@@ -39,11 +39,11 @@ public class ValidateAnnotationBuild {
         String annotationKey = Constant.annotationConatant.APIMODELPROPERTY.getValue();
 
         if (StringUtils.isNotBlank(comments) && StringUtils.isNotBlank(groups)) {
-            annotation.add(annotationKey + "(describe = \"" + comments + "\",groups = {" + groups.deleteCharAt(groups.length() - 1) + "})");
+            annotation.add(annotationKey + "(describe = \"" + comments + "\", groups = {" + groups.deleteCharAt(groups.length() - 2) + "})");
         } else if (StringUtils.isNotBlank(comments)) {
             annotation.add(annotationKey + "(\"" + comments + "\")");
         } else if (StringUtils.isNotBlank(groups)) {
-            annotation.add(annotationKey + "(groups = {" + groups.deleteCharAt(groups.length() - 1) + "})");
+            annotation.add(annotationKey + "(groups = {" + groups.deleteCharAt(groups.length() - 2) + "})");
         }
     }
 
@@ -60,7 +60,7 @@ public class ValidateAnnotationBuild {
         StringBuffer groups = groupMap.get(annoEnum.getValue());
 
         if (StringUtils.isNotBlank(groups)) {
-            annotation.add(annoEnum.getValue() + "(groups = {" + groups.deleteCharAt(groups.length() - 1) + "})");
+            annotation.add(annoEnum.getValue() + "(groups = {" + groups.deleteCharAt(groups.length() - 2) + "})");
         }
     }
 

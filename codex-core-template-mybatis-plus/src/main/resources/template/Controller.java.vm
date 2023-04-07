@@ -111,15 +111,15 @@ public class ${className}Controller {
 
     /**
      * 分页接口
-     * @param  where JSON条件
-     *         keyword 关键字
+     * @param  where 条件JSON对象：字段并集查询
+     *         keyword 关键字JSON对象： 字段或集查询
      *         pageIndex 当前页
      *         pageSize 页数
      * @return
      */
-    @ApiOperation("列表接口")
+    @ApiOperation("分页接口")
     @GetMapping("/${classname}/page")
-    public RData<Page<${className}Entity>> page(@ApiParam(Describe.WHERE) @RequestParam(required = false) String where,
+    public RPage<${className}Entity> page(@ApiParam(Describe.WHERE) @RequestParam(required = false) String where,
                                                 @ApiParam(Describe.KEYWORD) @RequestParam(required = false) String keyword,
                                                 @ApiParam(Describe.PAGE_INDEX) @RequestParam(defaultValue = "0") Long pageIndex,
                                                 @ApiParam(Describe.PAGE_SIZE) @RequestParam(defaultValue = "10") Long pageSize) {
@@ -128,7 +128,9 @@ public class ${className}Controller {
 
         WhereUtils.setWhereAndKeyword(query, where, keyword);
 
-        return RBuilder.build(${classname}Service.page(new Page<>(pageIndex, pageSize), query));
+        Page<${className}> page = ${classname}Service.page(new Page<>(pageIndex, pageSize), query);
+
+        return RBuilder.build(page.getRecords(), page.getCurrent(), page.getSize(), page.getTotal());
     }
 #end
 #end

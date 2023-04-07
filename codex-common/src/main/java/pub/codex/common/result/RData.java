@@ -15,12 +15,12 @@ public class RData<T> extends R {
         this.data = value;
     }
 
-    public RData(String code, String msg,T value) {
+    public RData(Integer code, String msg,T value) {
         super(code, msg);
         this.data = value;
     }
 
-    public RData(String code, String msg, Object tips,T value) {
+    public RData(Integer code, String msg, Object tips,T value) {
         super(code, msg, tips);
         this.data = value;
     }
