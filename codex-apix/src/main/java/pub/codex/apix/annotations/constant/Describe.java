@@ -14,7 +14,7 @@ public class Describe {
 
     public final static String PAGE_SIZE = "当前页总条数";
     
-    public final static String PAGE_INDEX = "当前页";
+    public final static String PAGE_NUM = "当前页";
     
 
 }

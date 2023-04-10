@@ -121,14 +121,14 @@ public class ${className}Controller {
     @GetMapping("/${classname}/page")
     public RPage<${className}Entity> page(@ApiParam(Describe.WHERE) @RequestParam(required = false) String where,
                                                 @ApiParam(Describe.KEYWORD) @RequestParam(required = false) String keyword,
-                                                @ApiParam(Describe.PAGE_INDEX) @RequestParam(defaultValue = "0") Long pageIndex,
+                                                @ApiParam(Describe.PAGE_NUM) @RequestParam(defaultValue = "0") Long pageNum,
                                                 @ApiParam(Describe.PAGE_SIZE) @RequestParam(defaultValue = "10") Long pageSize) {
 
         QueryWrapper<${className}Entity> query = new QueryWrapper<>();
 
         WhereUtils.setWhereAndKeyword(query, where, keyword);
 
-        Page<${className}> page = ${classname}Service.page(new Page<>(pageIndex, pageSize), query);
+        Page<${className}> page = ${classname}Service.page(new Page<>(pageNum, pageSize), query);
 
         return RBuilder.build(page.getRecords(), page.getCurrent(), page.getSize(), page.getTotal());
     }
