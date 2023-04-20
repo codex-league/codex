@@ -1,8 +1,7 @@
 package ${controllerPackagePath};
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.fasterxml.jackson.core.type.TypeReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +13,8 @@ import pub.codex.apix.annotations.group.VG;
 import pub.codex.common.result.R;
 import pub.codex.common.result.RBuilder;
 import pub.codex.common.result.RData;
-import pub.codex.core.template.utils.WhereUtils;
+import pub.codex.common.result.RPage;
+import pub.codex.core.template.utils.QueryWrapperUtils;
 import ${entityPackagePath}.${className}Entity;
 import ${servicePackagePath}.${className}Service;
 
@@ -102,9 +102,8 @@ public class ${className}Controller {
     public RData<List<${className}Entity>> list(@ApiParam(Describe.WHERE) @RequestParam(required = false) String where,
                   @ApiParam(Describe.KEYWORD) @RequestParam(required = false) String keyword) {
 
-        QueryWrapper<${className}Entity> query = new QueryWrapper<>();
 
-        WhereUtils.setWhereAndKeyword(query, where, keyword);
+        LambdaQueryWrapper<${className}Entity> query = QueryWrapperUtils.setWhereAndKeyword(where, keyword);
 
         return RBuilder.build(${classname}Service.list(query));
     }
@@ -120,15 +119,15 @@ public class ${className}Controller {
     @ApiOperation("分页接口")
     @GetMapping("/${classname}/page")
     public RPage<${className}Entity> page(@ApiParam(Describe.WHERE) @RequestParam(required = false) String where,
-                                                @ApiParam(Describe.KEYWORD) @RequestParam(required = false) String keyword,
-                                                @ApiParam(Describe.PAGE_NUM) @RequestParam(defaultValue = "0") Long pageNum,
-                                                @ApiParam(Describe.PAGE_SIZE) @RequestParam(defaultValue = "10") Long pageSize) {
+                                          @ApiParam(Describe.KEYWORD) @RequestParam(required = false) String keyword,
+                                          @ApiParam(Describe.PAGE_NUM) @RequestParam(defaultValue = "0") Long pageNum,
+                                          @ApiParam(Describe.PAGE_SIZE) @RequestParam(defaultValue = "10") Long pageSize) {
 
-        QueryWrapper<${className}Entity> query = new QueryWrapper<>();
 
-        WhereUtils.setWhereAndKeyword(query, where, keyword);
+        LambdaQueryWrapper<${className}Entity> query = QueryWrapperUtils.setWhereAndKeyword(where, keyword);
 
-        Page<${className}> page = ${classname}Service.page(new Page<>(pageNum, pageSize), query);
+        Page<${className}Entity> page = ${classname}Service.page(new Page<>(pageNum, pageSize), query);
+
 
         return RBuilder.build(page.getRecords(), page.getCurrent(), page.getSize(), page.getTotal());
     }

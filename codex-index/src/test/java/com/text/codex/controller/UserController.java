@@ -80,7 +80,7 @@ public class UserController {
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value={"/456", "789"})
     public void list(@ApiParam(Describe.WHERE) @RequestParam(required = false) String where,
                               @ApiParam(Describe.KEYWORD) @RequestParam(required = false) String keyword,
-                              @ApiParam(Describe.PAGE_INDEX) @RequestParam(defaultValue = "0") Long pageIndex,
+                              @ApiParam(Describe.PAGE_NUM) @RequestParam(defaultValue = "0") Long pageIndex,
                               @ApiParam(Describe.PAGE_SIZE) @RequestParam(defaultValue = "10") Long pageSize) {
 
     }

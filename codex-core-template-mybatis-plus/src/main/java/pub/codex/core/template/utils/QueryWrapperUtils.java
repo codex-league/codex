@@ -2,6 +2,7 @@ package pub.codex.core.template.utils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.common.base.CaseFormat;
 import org.apache.commons.lang3.StringUtils;
@@ -9,18 +10,18 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.Set;
 
-public class WhereUtils {
-
+public class QueryWrapperUtils {
 
     /**
-     * @param query      条件构造器
      * @param jsonWhere   Where条件JSON字符串的形式
      * @param jsonKeyword Keyword条件JSON字符串的形式
      * @return
      */
-    public static<T> QueryWrapper<T> setWhereAndKeyword(QueryWrapper<T> query,
-                                                        String jsonWhere,
+    public static<T> LambdaQueryWrapper<T> setWhereAndKeyword(String jsonWhere,
                                                         String jsonKeyword) {
+
+        QueryWrapper<T> query = new QueryWrapper<>();
+
         if(StringUtils.isNotBlank(jsonWhere)){
             setWhere(query, jsonWhere);
         }
@@ -29,12 +30,12 @@ public class WhereUtils {
             setKeyword(query, jsonKeyword);
         }
 
-        return query;
+        return query.lambda();
     }
 
 
     /**
-     * 条件构造器
+     * 精确条件构造器
      *
      * @param query
      * @param jsonWhere
@@ -42,6 +43,7 @@ public class WhereUtils {
      * @param <T>
      */
     public static<T> QueryWrapper<T> setWhere(QueryWrapper<T> query, String jsonWhere) {
+
 
         JSONObject jsonObj = JSON.parseObject(jsonWhere);
         Set<Map.Entry<String, Object>> params = jsonObj.entrySet();
@@ -60,7 +62,7 @@ public class WhereUtils {
 
 
     /**
-     * 关键字构造器
+     * 模糊条件造器
      *
      * @param query
      * @param jsonKeyword
