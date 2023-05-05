@@ -2,9 +2,12 @@ package pub.codex.core.template.stream.template;
 
 import org.apache.velocity.Template;
 import org.apache.velocity.app.Velocity;
+import pub.codex.common.db.entity.TableEntity;
+import pub.codex.core.template.stream.BaseTemplateConfigProvider;
 
 import java.io.File;
 import java.util.Properties;
+import java.util.zip.ZipOutputStream;
 
 /**
  * TABLE相关的 实现
@@ -12,6 +15,22 @@ import java.util.Properties;
  * @author xuxi
  */
 public class BaseTableCodexTemplate {
+
+    /**
+     * 模板配置信息
+     */
+    protected BaseTemplateConfigProvider baseTemplateConfigProvider;
+
+    /**
+     * 表信息
+     */
+    protected TableEntity tableEntity;
+
+    /**
+     * 压缩包信息
+     */
+    protected ZipOutputStream zip;
+
 
     /**
      * 根据名称获取模板
@@ -32,26 +51,34 @@ public class BaseTableCodexTemplate {
         return template;
     }
 
-    protected String buildControllerFilePath(String templateName, String className, String packagePath){
-        return buildFilePath(templateName, className, packagePath, "controller");
+    protected String buildControllerFilePath(String templateName){
+        return buildFilePath(templateName, baseTemplateConfigProvider.getControllerPath(), "controller");
     }
 
-    protected String buildEntityFilePath(String templateName, String className, String packagePath){
-        return buildFilePath(templateName, className, packagePath, "entity");
+    protected String buildEntityFilePath(String templateName){
+        return buildFilePath(templateName, baseTemplateConfigProvider.getEntityPath(), "entity");
     }
 
-    protected String buildResourcesFilePath(String templateName, String className, String packagePath){
-        return buildFilePath(templateName, className, packagePath, "resources");
+    protected String buildMapperXMLFilePath(String templateName){
+        return buildFilePath(templateName, baseTemplateConfigProvider.getMapperXMLPath(), "resources");
     }
 
-    protected String buildDBFilePath(String templateName, String className, String packagePath){
-        return buildFilePath(templateName, className, packagePath, "db");
+    protected String buildMapperFilePath(String templateName){
+        return buildFilePath(templateName, baseTemplateConfigProvider.getMapperPath(), "db");
+    }
+    protected String buildServiceFilePath(String templateName){
+        return buildFilePath(templateName, baseTemplateConfigProvider.getServicePath(), "db");
+    }
+    protected String buildServiceImplFilePath(String templateName){
+        return buildFilePath(templateName, baseTemplateConfigProvider.getServiceImplPath(), "db");
     }
 
     /**
      * 编译文件名
      */
-    protected String buildFilePath(String templateName, String className, String packagePath, String prePackagePath) {
+    protected String buildFilePath(String templateName, String packagePath, String prePackagePath) {
+
+        String className = tableEntity.getClassName();
 
         String headPackagePath;
 

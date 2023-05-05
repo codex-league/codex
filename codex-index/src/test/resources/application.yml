@@ -5,7 +5,7 @@ server:
 # 开发工具，禁止复制到别处环境
 codex:
   jdbc:
-    url: ${DB_MICRO_URL:jdbc:mysql://localhost:3306/codex?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false}
+    url: ${DB_MICRO_URL:jdbc:mysql://localhost:3306/codex?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true}
     username: ${DB_MICRO_USERNAME:root}
     password: ${DB_MICRO_PWD:123456}
     driverClassName: com.mysql.cj.jdbc.Driver

@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class TableEntityProvider {
+public class TableEntityHandle {
 
     @Autowired
     private ValidateAnnotationBuild validateAnnotationBuild;

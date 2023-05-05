@@ -4,10 +4,16 @@ import org.apache.commons.io.IOUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import pub.codex.common.CodexException;
+import pub.codex.common.db.entity.ColumnEntity;
 import pub.codex.common.db.entity.TableEntity;
+import pub.codex.common.utils.DateUtil;
+import pub.codex.core.template.stream.BaseTemplateConfigProvider;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -23,47 +29,80 @@ import java.util.zip.ZipOutputStream;
 public abstract class TableCodexTemplate extends BaseTableCodexTemplate {
 
     /**
-     * 表信息
+     * 对应的velocity在resources中的模板名称
+     *
+     * @return
      */
-    protected TableEntity tableEntity;
+    public abstract String templateName();
 
     /**
-     * 压缩包信息
+     * 对应使用者自定义环境变量字段
+     *
+     * @return
      */
-    protected ZipOutputStream zip;
+    public abstract Map<String, Object> environmentMap();
 
     /**
-     * coding 的主要逻辑在这里实现
+     * 对应生成代码后的存储路径
+     *
+     * @return
      */
-    public abstract void coding();
+    public abstract String storagePath();
+
 
     /**
      * build 信息
      */
-    public void build(TableEntity tableEntity, ZipOutputStream zip){
+    public void build(BaseTemplateConfigProvider baseTemplateConfigProvider, TableEntity tableEntity, ZipOutputStream zip) {
+        this.baseTemplateConfigProvider = baseTemplateConfigProvider;
         this.tableEntity = tableEntity;
         this.zip = zip;
         coding();
+    }
+
+
+    /**
+     * coding 的主要逻辑在这里实现
+     */
+    public void coding() {
+
+        String TEMPLATE_NAME = templateName();
+        Map<String, Object> environmentMap = environmentMap();
+
+        buildTemplate(TEMPLATE_NAME, environmentMap, storagePath());
     }
 
     /**
      * 渲染模板
      *
      * @param templateName
-     * @param map
+     * @param environmentMap
      * @param filepath
      */
-    protected void buildTemplate(String templateName, Map<String, Object> map, String filepath) {
-        //渲染模板
+    protected void buildTemplate(String templateName, Map<String, Object> environmentMap, String filepath) {
+
+        // 判断是否生成controller
+        if (!tableEntity.isController() && templateName.contains("Controller")) {
+            return;
+        }
+
+        // 合并默认的环境变量
+        if (!environmentMap.isEmpty()) {
+            environmentMap.putAll(getDefaultEnvironmentMap());
+        } else {
+            environmentMap = getDefaultEnvironmentMap();
+        }
+
+        // 渲染模板
         Template template = getTemplate(templateName);
-        VelocityContext context = new VelocityContext(map);
+        VelocityContext context = new VelocityContext(environmentMap);
         StringWriter sw = new StringWriter();
         template.merge(context, sw);
 
-        //添加到zip
+        // 添加到zip
         try {
             zip.putNextEntry(new ZipEntry(filepath));
-            IOUtils.write(sw.toString(), zip, "UTF-8" );
+            IOUtils.write(sw.toString(), zip, "UTF-8");
             IOUtils.closeQuietly(sw);
             zip.closeEntry();
         } catch (IOException e) {
@@ -71,4 +110,40 @@ public abstract class TableCodexTemplate extends BaseTableCodexTemplate {
         }
     }
 
+    private Map<String, Object> getDefaultEnvironmentMap() {
+        // 表名转换成Java类名
+
+        String controllerPackagePath = baseTemplateConfigProvider.getControllerPath();
+        String servicePackagePath = baseTemplateConfigProvider.getServicePath();
+        String entityPackagePath = baseTemplateConfigProvider.getEntityPath();
+        String mapperPackagePath = baseTemplateConfigProvider.getMapperPath();
+
+        String datetime = DateUtil.getDateTime("yyyy-MM-dd HH:mm:ss");
+        String comments = tableEntity.getComments();
+        String tableName = tableEntity.getTableName();
+        String className = tableEntity.getClassName();
+        String classname = tableEntity.getClassname();
+
+        ColumnEntity pk = tableEntity.getPk();
+
+        List<String> interfaceType = tableEntity.getInterfaceType();
+        List<ColumnEntity> columns = tableEntity.getColumns();
+
+        // 封装模板数据
+        Map<String, Object> defaultEnvironmentMap = new HashMap<>();
+        defaultEnvironmentMap.put("controllerPackagePath", controllerPackagePath);
+        defaultEnvironmentMap.put("servicePackagePath", servicePackagePath);
+        defaultEnvironmentMap.put("entityPackagePath", entityPackagePath);
+        defaultEnvironmentMap.put("mapperPackagePath", mapperPackagePath);
+        defaultEnvironmentMap.put("datetime", datetime);
+        defaultEnvironmentMap.put("comments", comments);
+        defaultEnvironmentMap.put("tableName", tableName);
+        defaultEnvironmentMap.put("className", className);
+        defaultEnvironmentMap.put("classname", classname);
+        defaultEnvironmentMap.put("interfaceType", interfaceType);
+        defaultEnvironmentMap.put("columns", columns);
+        defaultEnvironmentMap.put("pk", pk);
+
+        return defaultEnvironmentMap;
+    }
 }

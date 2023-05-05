@@ -5,7 +5,8 @@ import org.springframework.stereotype.Component;
 import pub.codex.common.db.entity.TableEntity;
 import pub.codex.common.db.jdbc.TableDao;
 import pub.codex.common.field.ControllerlClass;
-import pub.codex.core.template.stream.provider.TableEntityProvider;
+import pub.codex.core.template.stream.BaseTemplateConfigProvider;
+import pub.codex.core.template.stream.provider.TableEntityHandle;
 
 import java.util.List;
 import java.util.Map;
@@ -21,10 +22,13 @@ public class TableCodexTemplateStream {
     private List<TableCodexTemplate> tableCodexTemplateList;
 
     @Autowired
+    private BaseTemplateConfigProvider baseTemplateConfigProvider;
+
+    @Autowired
     private TableDao tableDao;
 
     @Autowired
-    TableEntityProvider tableEntityProvider;
+    TableEntityHandle tableEntityHandle;
 
     /**
      * foreach template
@@ -38,10 +42,10 @@ public class TableCodexTemplateStream {
         Map<String, String> table = getTable(tableName);
         List<Map<String, String>> columns = getColumns(tableName);
 
-        TableEntity tableEntity = tableEntityProvider.buildTemplateEntity(table, columns, controllerlClass, tablePrefix);
+        TableEntity tableEntity = tableEntityHandle.buildTemplateEntity(table, columns, controllerlClass, tablePrefix);
         //遍历
         tableCodexTemplateList.stream().forEach(tableCodexTemplate -> {
-            tableCodexTemplate.build(tableEntity, zip);
+            tableCodexTemplate.build(baseTemplateConfigProvider, tableEntity, zip);
         });
     }
 

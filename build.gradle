@@ -42,11 +42,10 @@ subprojects(){
         from javadoc.destinationDir
     }
 
+    def repoUrl = version.endsWith('SNAPSHOT') ? 'https://oss.sonatype.org/content/repositories/snapshots/' : 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
 
     publishing {
-
         publications {
-
             mavenJava(MavenPublication) {
                 groupId project.group
                 artifactId project.name
@@ -77,22 +76,18 @@ subprojects(){
                         developerConnection = "scm:git:https://github.com/codex-league/codex.git"
                         url = "https://github.com/codex-league/codex"
                     }
-
-
                 }
             }
         }
         repositories {
             maven {
                 name 'sonatypeRepository'
-                url 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
-
+                url repoUrl
                 credentials {
                     username = System.getenv("NEXUS_USERNAME") // 获取环境变量
                     password = System.getenv("NEXUS_PASSWORD") // 获取环境变量
                 }
             }
-
         }
     }
 
@@ -104,5 +99,3 @@ subprojects(){
         options.encoding = "UTF-8"
     }
 }
-
-
