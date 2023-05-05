@@ -69,14 +69,14 @@ public class BaseTableCodexTemplate {
     protected String buildServiceFilePath(String templateName){
         return buildFilePath(templateName, baseTemplateConfigProvider.getServicePath(), "db");
     }
-    protected String buildServiceImplFilePath(String templateName){
-        return buildFilePath(templateName, baseTemplateConfigProvider.getServiceImplPath(), "db");
+    protected String buildServiceImplFilePath(String fileName){
+        return buildFilePath(fileName, baseTemplateConfigProvider.getServiceImplPath(), "db");
     }
 
     /**
      * 编译文件名
      */
-    protected String buildFilePath(String templateName, String packagePath, String prePackagePath) {
+    protected String buildFilePath(String fileName, String packagePath, String prePackagePath) {
 
         String className = tableEntity.getClassName();
 
@@ -86,7 +86,7 @@ public class BaseTableCodexTemplate {
 
         headPackagePath += prePackagePath + File.separator;
 
-        return headPackagePath + packagePath.replace(".", File.separator) + File.separator + className + templateName;
+        return headPackagePath + packagePath.replace(".", File.separator) + File.separator + className + fileName;
     }
 
 }

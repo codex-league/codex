@@ -26,7 +26,7 @@ public class TableEntityHandle {
 
 
     /**
-     * 设置 组建信息
+     * 设置组件信息
      *
      * @param table
      * @param columns
@@ -73,11 +73,14 @@ public class TableEntityHandle {
             String attrType = BaseUtil.getConfig().getString(columnEntity.getDataType(), "unknowType");
             columnEntity.setAttrType(attrType);
 
-            //字段的注解拼装
-            columnEntity.setAnnotationList(combAnnotation(interfaceMap, columnEntity.getAttrname(), columnEntity.getComments()));
+            //字段的分组的注解拼装
+            columnEntity.setAnnotationList(combAnnotationByGroup(interfaceMap, columnEntity.getAttrname(), columnEntity.getComments()));
 
-            //字段精确或者模糊查询
-            columnEntity.setQueryList(combQueryStr(interfaceMap, columnEntity.getAttrname(), columnEntity.getAttrName(), column.get("columnName"), tableEntity));
+            //字段的添加的注解拼装
+            columnEntity.setAnnotationListByAdd(combAnnotationByType(interfaceMap, columnEntity.getAttrname(), columnEntity.getComments(), Constant.InterfaceConstant.ADD));
+
+            //字段的修改的注解拼装
+            columnEntity.setAnnotationListByUpdate(combAnnotationByType(interfaceMap, columnEntity.getAttrname(), columnEntity.getComments(), Constant.InterfaceConstant.UPDATE));
 
             //是否主键
             if ("PRI".equalsIgnoreCase(column.get("columnKey")) && tableEntity.getPk() == null) {
@@ -94,34 +97,6 @@ public class TableEntityHandle {
 
     }
 
-    /**
-     * 组装字段精确或者模糊查询
-     *
-     * @param interfaceMap
-     * @param column
-     * @param attrName
-     * @param columnName
-     * @param tableEntity
-     * @return
-     */
-    private List<String> combQueryStr(Map<String, ControllerMethod> interfaceMap, String column, String attrName, String columnName, TableEntity tableEntity) {
-        if (interfaceMap == null || interfaceMap.get(Constant.interfaceConstant.LIST.getType()) == null) {
-            return null;
-        }
-        List<String> queryList = new ArrayList<>();
-        ControllerMethod controllerMethod = interfaceMap.get(Constant.interfaceConstant.LIST.getType());
-        Map<String, BaseField> interfaceColumn = TranslateUtil.transformUtils(controllerMethod.getFields());
-        BaseField baseField = interfaceColumn.get(column);
-        if (baseField.getAnnotation() != null) {
-            if (baseField.getAnnotation().equals(Constant.query.LIKE.getValue())) {
-                queryList.add(".like(!StringUtils.isEmpty(" + tableEntity.getClassname() + "Entity.get" + attrName + "()),\"" + columnName + "\", " + tableEntity.getClassname() + "Entity.get" + attrName + "())");
-            }
-            if (baseField.getAnnotation().equals(Constant.query.EQUAL.getValue())) {
-                queryList.add(".eq(!StringUtils.isEmpty(" + tableEntity.getClassname() + "Entity.get" + attrName + "()),\"" + columnName + "\", " + tableEntity.getClassname() + "Entity.get" + attrName + "())");
-            }
-        }
-        return queryList;
-    }
 
     /**
      * 组装最终tableEntity的注解
@@ -131,29 +106,62 @@ public class TableEntityHandle {
      * @param comments
      * @return
      */
-    private List<String> combAnnotation(Map<String, ControllerMethod> interfaceMap, String column, String comments) {
+    private List<String> combAnnotationByGroup(Map<String, ControllerMethod> interfaceMap, String column, String comments) {
         if (interfaceMap == null) {
             return null;
         }
-        List<String> annotation = new ArrayList<>();
+        List<String> annotations = new ArrayList<>();
         Map<String, StringBuffer> groupMap = new HashMap<>();
         for (String type : interfaceMap.keySet()) {
-            if (!type.equals(Constant.interfaceConstant.LIST.getValue())) {
-                findAnnotation(interfaceMap.get(type), type, column, groupMap);
+            if (!type.equals(Constant.InterfaceConstant.LIST.getValue())) {
+                findAnnotation(type, interfaceMap.get(type), column, groupMap);
             }
         }
 
         //todo 目前只处理@NotNull,@NotBlank,@NotEmpty,@Null,@Pattern和@ApiModelProperty
-        validateAnnotationBuild.baseAnnotationFactory(annotation, groupMap, Constant.annotationConatant.NOTNULL);
-        validateAnnotationBuild.baseAnnotationFactory(annotation, groupMap, Constant.annotationConatant.NOTEMPTY);
-        validateAnnotationBuild.baseAnnotationFactory(annotation, groupMap, Constant.annotationConatant.NULL);
-        validateAnnotationBuild.baseAnnotationFactory(annotation, groupMap, Constant.annotationConatant.PATTERN);
 
-        validateAnnotationBuild.NotBlankAnnotationFactory(annotation, groupMap);
+        validateAnnotationBuild.baseAnnotationFactory(annotations, groupMap, Constant.annotationConatant.NOTNULL);
+        validateAnnotationBuild.baseAnnotationFactory(annotations, groupMap, Constant.annotationConatant.NOTBLANK);
+        validateAnnotationBuild.baseAnnotationFactory(annotations, groupMap, Constant.annotationConatant.NOTEMPTY);
+        validateAnnotationBuild.baseAnnotationFactory(annotations, groupMap, Constant.annotationConatant.NULL);
+        validateAnnotationBuild.baseAnnotationFactory(annotations, groupMap, Constant.annotationConatant.PATTERN);
 
-        validateAnnotationBuild.apiModelPropertyAnnotationFactory(annotation, groupMap, comments);
+        validateAnnotationBuild.apiModelPropertyAnnotationFactory(annotations, groupMap, comments);
 
-        return annotation;
+        return annotations;
+    }
+
+
+    /**
+     * 组装最终tableEntity的注解
+     *
+     * @param interfaceMap
+     * @param column
+     * @param comments
+     * @return
+     */
+    private List<String> combAnnotationByType(Map<String, ControllerMethod> interfaceMap, String column, String comments, Constant.InterfaceConstant type) {
+
+        ControllerMethod controllerMethod = interfaceMap.get(type.getType());
+
+        if (controllerMethod == null) {
+            return null;
+        }
+
+        Map<String, BaseField> interfaceColumn = TranslateUtil.transformUtils(controllerMethod.getFields());
+
+        BaseField baseField = interfaceColumn.get(column);
+
+        List<String> annotations = new ArrayList<>();
+        if (StringUtils.isNotBlank(baseField.getAnnotation())) {
+            if (!baseField.getAnnotation().contains(Constant.annotationConatant.APIMODELPROPERTY.getValue())) {
+                annotations.add(baseField.getAnnotation());
+            }
+
+            annotations.add(Constant.annotationConatant.APIMODELPROPERTY.getValue() + "(\"" + comments + "\")");
+
+        }
+        return annotations;
     }
 
 
@@ -165,12 +173,12 @@ public class TableEntityHandle {
      * @param column
      * @param map
      */
-    private void findAnnotation(ControllerMethod controllerMethod, String type, String column, Map<String, StringBuffer> map) {
+    private void findAnnotation(String type, ControllerMethod controllerMethod, String column, Map<String, StringBuffer> map) {
         if (controllerMethod == null || controllerMethod.getFields() == null) {
             return;
         }
 
-        String value = Constant.interfaceConstant.getGroupInfo(type);
+        String value = Constant.InterfaceConstant.getGroupInfo(type);
         if (org.apache.commons.lang3.StringUtils.isEmpty(value)) {
             return;
         }

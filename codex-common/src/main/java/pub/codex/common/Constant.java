@@ -10,7 +10,7 @@ public class Constant {
     /**
      * 接口常量
      */
-    public enum interfaceConstant {
+    public enum InterfaceConstant {
         ADD("VG.Add.class", "add", "新增"),
         DELETE("VG.Delete.class", "del", "删除"),
         GET("VG.Get.class", "detail", "查询"),
@@ -21,7 +21,7 @@ public class Constant {
         private String type;
         private String describe;
 
-        interfaceConstant(String value, String type, String describe) {
+        InterfaceConstant(String value, String type, String describe) {
             this.value = value;
             this.describe = describe;
             this.type = type;
@@ -41,7 +41,7 @@ public class Constant {
 
         public static String getGroupInfo(String type) {
             if (StringUtils.isNotBlank(type)) {
-                for (interfaceConstant obj : interfaceConstant.values()) {
+                for (InterfaceConstant obj : InterfaceConstant.values()) {
                     if (obj.getType().equals(type)) {
                         return obj.getValue();
                     }

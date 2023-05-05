@@ -7,6 +7,7 @@ import java.util.List;
  * 列的属性
  */
 public class ColumnEntity {
+
     //列名
     private String columnName;
 
@@ -31,8 +32,12 @@ public class ColumnEntity {
     //注解信息
     private List<String> annotationList;
 
-    //精确或者模糊查询字段
-    private List<String> queryList;
+    // 新增专用注解
+    private List<String> annotationListByAdd;
+
+    // 修改专用注解
+    private List<String> annotationListByUpdate;
+
 
     public String getColumnName() {
         return columnName;
@@ -98,11 +103,19 @@ public class ColumnEntity {
         this.annotationList = annotationList;
     }
 
-    public List<String> getQueryList() {
-        return queryList;
+    public List<String> getAnnotationListByAdd() {
+        return annotationListByAdd;
     }
 
-    public void setQueryList(List<String> queryList) {
-        this.queryList = queryList;
+    public void setAnnotationListByAdd(List<String> annotationListByAdd) {
+        this.annotationListByAdd = annotationListByAdd;
+    }
+
+    public List<String> getAnnotationListByUpdate() {
+        return annotationListByUpdate;
+    }
+
+    public void setAnnotationListByUpdate(List<String> annotationListByUpdate) {
+        this.annotationListByUpdate = annotationListByUpdate;
     }
 }

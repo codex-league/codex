@@ -16,16 +16,6 @@ import java.util.Map;
 public class ValidateAnnotationBuild {
 
 
-    /**
-     * {@NotBlank} 注解工厂方法
-     *
-     * @param annotation
-     * @param groupMap
-     * @return
-     */
-    public void NotBlankAnnotationFactory(List<String> annotation, Map<String, StringBuffer> groupMap) {
-        this.baseAnnotationFactory(annotation, groupMap, Constant.annotationConatant.NOTBLANK);
-    }
 
     /**
      * {@ApiModelProperty} 注解工厂方法
@@ -47,6 +37,8 @@ public class ValidateAnnotationBuild {
         }
     }
 
+
+
     /**
      * 基础 vaildate 注解拼装工厂方法
      *
@@ -63,5 +55,6 @@ public class ValidateAnnotationBuild {
             annotation.add(annoEnum.getValue() + "(groups = {" + groups.deleteCharAt(groups.length() - 2) + "})");
         }
     }
+
 
 }
