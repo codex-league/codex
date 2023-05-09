@@ -12,6 +12,8 @@ public interface Ordered {
 
     int OperationRequestParamsReader = 20;
 
+    int OperationResponseParamsReader = 20;
+
 
 
 

@@ -40,8 +40,7 @@ public class ApiDocumentationScanner {
 
 
         DocumentationBuilder builder = DocumentationBuilder.getBuild();
-        builder
-                .setApiListings(apiListings);
+        builder.setApiListings(apiListings);
 
         return builder.build();
 

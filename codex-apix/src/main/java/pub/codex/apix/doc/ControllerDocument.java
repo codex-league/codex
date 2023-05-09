@@ -5,6 +5,7 @@ import pub.codex.apix.schema.ApiDescription;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ControllerDocument {
@@ -15,7 +16,7 @@ public class ControllerDocument {
     private List<ApiDocument> apis;
 
 
-    public ControllerDocument(String name, List<ApiDescription> apis) {
+    public ControllerDocument(String name, Set<ApiDescription> apis) {
 
         this.name = name;
 

@@ -1,19 +1,20 @@
 package pub.codex.apix.schema;
 
 import java.util.List;
+import java.util.Set;
 
 public class ApiListing {
 
-    private final List<ApiDescription> apis;
+    private final Set<ApiDescription> apis;
 
 
-    public ApiListing(List<ApiDescription> apis) {
+    public ApiListing(Set<ApiDescription> apis) {
         this.apis = apis;
 
     }
 
 
-    public List<ApiDescription> getApis() {
+    public Set<ApiDescription> getApis() {
         return apis;
     }
 

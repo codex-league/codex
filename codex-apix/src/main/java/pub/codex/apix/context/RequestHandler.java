@@ -168,5 +168,9 @@ public class RequestHandler {
         );
     }
 
+    public MethodParameter getReturnType(){
+        return handlerMethod.getReturnType();
+    }
+
 
 }

@@ -16,7 +16,7 @@ public class OperationBuilder {
     private HttpMethod method = HttpMethod.GET;
     private List<Map<String, Object>> params;
     private Map<String, Object> paramsBody;
-
+    private List<Map<String, Object>>  responseBody;
 
     public OperationBuilder setSummary(String summary) {
         this.summary = summary;
@@ -42,7 +42,12 @@ public class OperationBuilder {
         return this;
     }
 
+    public OperationBuilder setResponseBody(List<Map<String, Object>> responseBody) {
+        this.responseBody = responseBody;
+        return this;
+    }
+
     public Operation build() {
-        return new Operation(summary, path, method, params, paramsBody);
+        return new Operation(summary, path, method, params, paramsBody, responseBody);
     }
 }

@@ -34,6 +34,7 @@ public class ApiDocument implements Comparable<ApiDocument> {
                 map.put("method", operation.getMethod().toString());
                 map.put("params", operation.getParams());
                 map.put("paramsBody", operation.getParamsBody());
+                map.put("responseBody", operation.getResponseBody());
                 return map;
             }).collect(Collectors.toList());
         }

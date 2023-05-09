@@ -41,10 +41,9 @@ public class ApiListingScanner {
 
                 apiDescriptions.addAll(apiDescriptionReader.read(each));
             }
-            List<ApiDescription> sortedApis = newArrayList(apiDescriptions);
 
             ApiListingBuilder apiListingBuilder = ApiListingBuilder.getBuild()
-                    .apis(sortedApis);
+                    .apis(apiDescriptions);
 
             apiListingMap.put(resourceGroup.getGroupName(), apiListingBuilder.build());
 

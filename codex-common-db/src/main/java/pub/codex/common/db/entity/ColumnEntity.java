@@ -38,7 +38,6 @@ public class ColumnEntity {
     // 修改专用注解
     private List<String> annotationListByUpdate;
 
-
     public String getColumnName() {
         return columnName;
     }

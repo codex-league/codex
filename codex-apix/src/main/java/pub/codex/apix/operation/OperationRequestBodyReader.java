@@ -1,7 +1,6 @@
 package pub.codex.apix.operation;
 
 import jakarta.validation.Valid;
-import jakarta.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -18,6 +17,8 @@ import pub.codex.apix.wrapper.VaildComponent;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -84,7 +85,6 @@ public class OperationRequestBodyReader implements OperationBuilderPlugin {
 
     @Override
     public void apply(OperationContext context) {
-
         // 处理requestBody 请求参数
         requestBodyHandel(context);
     }
@@ -102,9 +102,7 @@ public class OperationRequestBodyReader implements OperationBuilderPlugin {
 
         // 处理POST请求
         if (HttpMethod.POST.equals(context.httpMethod()) || HttpMethod.PUT.equals(context.httpMethod())) {
-
             requestBodyParamsHandle(context);
-
         }
 
 
@@ -146,14 +144,45 @@ public class OperationRequestBodyReader implements OperationBuilderPlugin {
         Annotation apiGroupAnnotation = methodParameter.getParameterAnnotation(ApiGroup.class);
 
         Class<?> classType = methodParameter.getParameterType(); // 参数类型
-        Field[] fields = classType.getDeclaredFields();
+
+        return parseFields(validAnnotation, validatedAnnotation, apiGroupAnnotation, classType);
+    }
+
+    private List<Map<String, Object>> parseFields(Annotation validAnnotation, Annotation validatedAnnotation, Annotation apiGroupAnnotation, Class<?> classType) {
 
         List<Map<String, Object>> fieldsMapList = newArrayList();
-        for (Field field : fields) {
-            // 如果返回结果不为空，则保存进fieldsMapList
-            Map<String, Object> fieldMap = getFieldInfo(validAnnotation, validatedAnnotation, apiGroupAnnotation, field);
-            if (fieldMap != null) {
-                fieldsMapList.add(fieldMap);
+
+        if (classType.equals(String.class)) {
+            // TODO: 2023/5/8 这里需要处理非entity的情况
+        } else {
+            Field[] fields = classType.getDeclaredFields();
+
+            for (Field field : fields) {
+                // 如果返回结果不为空，则保存进fieldsMapList
+                Map<String, Object> fieldMap = parseField(validAnnotation, validatedAnnotation, apiGroupAnnotation, field);
+                if (fieldMap != null) {
+                    Annotation fieldValidAnnotation = field.getAnnotation(Valid.class);
+                    Annotation fieldValidatedAnnotation = field.getAnnotation(Validated.class);
+                    Annotation fieldApiGroupAnnotation = field.getAnnotation(ApiGroup.class);
+
+                    if (!field.getType().getCanonicalName().startsWith("java.") && !field.getType().getCanonicalName().startsWith("javax.")) {
+                        fieldMap.put("child", parseFields(fieldValidAnnotation, fieldValidatedAnnotation, fieldApiGroupAnnotation, field.getType()));
+                    }
+
+                    if (field.getType().equals(List.class)) {
+                        Type genericType = field.getGenericType();
+                        if (genericType instanceof ParameterizedType) {
+                            ParameterizedType pt = (ParameterizedType) genericType;
+                            Class<?> actualType = (Class<?>) pt.getActualTypeArguments()[0];
+                            fieldMap.put("child", parseFields(fieldValidAnnotation, fieldValidatedAnnotation, fieldApiGroupAnnotation, actualType));
+                        }
+                    }
+                    // TODO: 2023/5/9 缺少map
+
+
+                    fieldsMapList.add(fieldMap);
+                }
+
             }
         }
 
@@ -168,20 +197,17 @@ public class OperationRequestBodyReader implements OperationBuilderPlugin {
      * @param apiGroupAnnotation
      * @param field
      */
-    private Map<String, Object> getFieldInfo(Annotation validAnnotation,
-                                             Annotation validatedAnnotation,
-                                             Annotation apiGroupAnnotation,
-                                             Field field) {
-
+    private Map<String, Object> parseField(Annotation validAnnotation, Annotation validatedAnnotation, Annotation apiGroupAnnotation, Field field) {
+        Map<String, Object> result = null;
         if (validAnnotation != null) {
-            return setFieldInfo(handleField(field), field);
+            result = setFieldInfo(handleField(field), field);
         }
 
         if (validatedAnnotation != null || apiGroupAnnotation != null) {
-            return setFieldInfo(handleField(validatedAnnotation, apiGroupAnnotation, field), field);
+            result = setFieldInfo(handleField(validatedAnnotation, apiGroupAnnotation, field), field);
         }
 
-        return null;
+        return result;
     }
 
 
@@ -200,8 +226,8 @@ public class OperationRequestBodyReader implements OperationBuilderPlugin {
         map.put("describe", field.getName());
         map.put("required", required);
 
-        ApiModelProperty apiModelProperty =  AnnotationUtils.findAnnotation(field, ApiModelProperty.class);
-        if(apiModelProperty != null && !StringUtils.isEmpty(apiModelProperty.describe())){
+        ApiModelProperty apiModelProperty = AnnotationUtils.findAnnotation(field, ApiModelProperty.class);
+        if (apiModelProperty != null && !StringUtils.isEmpty(apiModelProperty.describe())) {
             map.put("describe", apiModelProperty.describe());
         }
         return map;
@@ -273,21 +299,21 @@ public class OperationRequestBodyReader implements OperationBuilderPlugin {
                 return true;
             }
 
-            // 如果@Notnull等，没有匹配上，那尝试匹配 ApiModelProperty， 并在相同的组中，则选填
-            if (ApiModelProperty != null && marchClassArray(ApiModelProperty.groups(), validatedGroup)) {
-                return false;
+            // 如果@Notnull等，没有匹配上，那尝试匹配 ApiModelProperty
+            if (ApiModelProperty != null) {
+                // 如果在相同的组中，则选填->方式一
+                if (marchClassArray(ApiModelProperty.groups(), validatedGroup)) {
+                    return false;
+                }
+                // 如果在相同的组中，则选填->方式二
+                if (apiGroupAnnotation != null) {
+                    Class<?>[] apiGroupGroup = ((ApiGroup) apiGroupAnnotation).value();
+                    if (marchClassArray(ApiModelProperty.groups(), apiGroupGroup)) {
+                        return false;
+                    }
+                }
             }
         }
-
-        // 2、Validate完全匹配失败，尝试匹配，如果成功：选填
-        if (ApiModelProperty != null && apiGroupAnnotation != null) {
-
-            Class<?>[] apiGroupGroup = ((ApiGroup) apiGroupAnnotation).value();
-            if (marchClassArray(ApiModelProperty.groups(), apiGroupGroup)) {
-                return false;
-            }
-        }
-
         return null;
     }
 

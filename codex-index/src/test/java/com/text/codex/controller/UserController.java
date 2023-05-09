@@ -1,6 +1,8 @@
 package com.text.codex.controller;
 
+import com.baomidou.mybatisplus.extension.api.R;
 import com.text.codex.db.entity.UserEntity;
+import org.apache.catalina.User;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pub.codex.apix.annotations.Api;
@@ -8,6 +10,8 @@ import pub.codex.apix.annotations.ApiOperation;
 import pub.codex.apix.annotations.ApiParam;
 import pub.codex.apix.annotations.constant.Describe;
 import pub.codex.apix.annotations.group.VG;
+import pub.codex.common.result.RData;
+import pub.codex.common.result.RPage;
 
 /**
  * 用户表
@@ -40,7 +44,8 @@ public class UserController {
      */
     @ApiOperation("更新接口")
     @PutMapping("/user")
-    public void update(@RequestBody @Validated(VG.Update.class) UserEntity userEntity) {
+    public R update(@RequestBody @Validated(VG.Update.class) UserEntity userEntity) {
+        return null;
     }
 
 
@@ -52,7 +57,8 @@ public class UserController {
      */
     @ApiOperation("删除接口")
     @DeleteMapping("/user/{id}")
-    public void delete(@ApiParam(Describe.ID) @PathVariable("id") String id) {
+    public R delete(@ApiParam(Describe.ID) @PathVariable("id") String id) {
+        return null;
     }
 
 
@@ -64,26 +70,27 @@ public class UserController {
      */
     @ApiOperation("详情接口")
     @GetMapping("/user/{id}")
-    public void detail(@ApiParam(Describe.ID) @PathVariable("id") String id) {
+    public RData<UserEntity> detail(@ApiParam(Describe.ID) @PathVariable("id") String id) {
+        return null;
     }
 
-
-    /**
-     * 列表接口
-     *
-     * @param where JSON条件
-     *              pageIndex 当前页
-     *              pageSize 页数
-     * @return
-     */
-    @ApiOperation("列表接口")
-    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value={"/456", "789"})
-    public void list(@ApiParam(Describe.WHERE) @RequestParam(required = false) String where,
-                              @ApiParam(Describe.KEYWORD) @RequestParam(required = false) String keyword,
-                              @ApiParam(Describe.PAGE_NUM) @RequestParam(defaultValue = "0") Long pageIndex,
-                              @ApiParam(Describe.PAGE_SIZE) @RequestParam(defaultValue = "10") Long pageSize) {
-
-    }
+//
+//    /**
+//     * 列表接口
+//     *
+//     * @param where JSON条件
+//     *              pageIndex 当前页
+//     *              pageSize 页数
+//     * @return
+//     */
+//    @ApiOperation("列表接口")
+//    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value={"/456", "789"})
+//    public UserEntity list(@ApiParam(Describe.WHERE) @RequestParam(required = false) String where,
+//                            @ApiParam(Describe.KEYWORD) @RequestParam(required = false) String keyword,
+//                            @ApiParam(Describe.PAGE_NUM) @RequestParam(defaultValue = "0") Long pageIndex,
+//                            @ApiParam(Describe.PAGE_SIZE) @RequestParam(defaultValue = "10") Long pageSize) {
+//        return null;
+//    }
 
 }
 

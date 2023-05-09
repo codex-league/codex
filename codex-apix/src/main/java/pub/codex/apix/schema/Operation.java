@@ -15,13 +15,15 @@ public class Operation {
     private final HttpMethod method;
     private List<Map<String, Object>> params;
     private Map<String, Object> paramsBody;
+    private List<Map<String, Object>>  responseBody;
 
-    public Operation(String summary, String path, HttpMethod method, List<Map<String, Object>> params, Map<String, Object> paramsBody) {
+    public Operation(String summary, String path, HttpMethod method, List<Map<String, Object>> params, Map<String, Object> paramsBody, List<Map<String, Object>>  responseBody) {
         this.summary = summary;
         this.path = path;
         this.method = method;
         this.params = params;
         this.paramsBody = paramsBody;
+        this.responseBody = responseBody;
     }
 
 
@@ -45,5 +47,7 @@ public class Operation {
         return paramsBody;
     }
 
-
+    public List<Map<String, Object>>  getResponseBody() {
+        return responseBody;
+    }
 }

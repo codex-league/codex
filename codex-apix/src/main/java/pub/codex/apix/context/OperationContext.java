@@ -56,4 +56,10 @@ public class OperationContext {
     public String getMappingPath() {
         return mappingPath;
     }
+
+    public MethodParameter getReturnType() {
+        return descriptionContext.getReturnType();
+    }
+
+
 }

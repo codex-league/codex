@@ -55,5 +55,9 @@ public class DescriptionContext {
         return apiDescriptionBuilder;
     }
 
+    public MethodParameter getReturnType(){
+        return handler.getReturnType();
+    }
+
 
 }

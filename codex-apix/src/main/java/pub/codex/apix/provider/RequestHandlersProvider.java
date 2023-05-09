@@ -11,6 +11,7 @@ import pub.codex.apix.context.RequestHandler;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.google.common.collect.FluentIterable.from;
 
@@ -19,12 +20,8 @@ public class RequestHandlersProvider {
 
 
     @Autowired
-    private final List<RequestMappingInfoHandlerMapping> handlerMappings;
+    private List<RequestMappingInfoHandlerMapping> handlerMappings;
 
-    @Autowired
-    public RequestHandlersProvider(List<RequestMappingInfoHandlerMapping> handlerMappings) {
-        this.handlerMappings = handlerMappings;
-    }
 
     /**
      * 获取restful api映射对象
@@ -32,29 +29,13 @@ public class RequestHandlersProvider {
      * @return
      */
     public List<RequestHandler> getRequestHandlers() {
-        return from(handlerMappings).transformAndConcat(toMappingEntries()).transform(toRequestHandler()).toList();
+        return handlerMappings.stream()
+                .flatMap(mapping -> mapping.getHandlerMethods().entrySet().stream())
+                .map(entry -> new RequestHandler(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toList());
     }
 
 
-    private Function<RequestMappingInfoHandlerMapping,
-            Iterable<Map.Entry<RequestMappingInfo, HandlerMethod>>> toMappingEntries() {
-        return new Function<RequestMappingInfoHandlerMapping, Iterable<Map.Entry<RequestMappingInfo, HandlerMethod>>>() {
-            @Override
-            public Iterable<Map.Entry<RequestMappingInfo, HandlerMethod>> apply(RequestMappingInfoHandlerMapping input) {
-                return input.getHandlerMethods().entrySet(); // 获取mapping方法
-            }
-        };
-    }
-
-
-    private Function<Map.Entry<RequestMappingInfo, HandlerMethod>, RequestHandler> toRequestHandler() {
-        return new Function<Map.Entry<RequestMappingInfo, HandlerMethod>, RequestHandler>() {
-            @Override
-            public RequestHandler apply(Map.Entry<RequestMappingInfo, HandlerMethod> input) {
-                return new RequestHandler(input.getKey(), input.getValue());
-            }
-        };
-    }
 
 
 }

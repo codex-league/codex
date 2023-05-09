@@ -18,12 +18,9 @@ import static com.google.common.collect.Lists.newArrayList;
 public class ApiOperationReader {
 
 
-    private OperationBuilderPlugin[] operationBuilderPlugins;
-
     @Autowired
-    public ApiOperationReader(OperationBuilderPlugin[] operationBuilderPlugins) {
-        this.operationBuilderPlugins = operationBuilderPlugins;
-    }
+    private List<OperationBuilderPlugin> operationBuilderPlugins;
+
 
     /**
      * 读取 API 选项的描述信息
@@ -42,7 +39,7 @@ public class ApiOperationReader {
             OperationContext operationContext = new OperationContext(httpRequestMethod, context, mappingPath);
 
             // 遍历应用方法
-            Arrays.stream(operationBuilderPlugins).forEach(plugin -> {
+            operationBuilderPlugins.stream().forEach(plugin -> {
                 plugin.apply(operationContext);
             });
 
