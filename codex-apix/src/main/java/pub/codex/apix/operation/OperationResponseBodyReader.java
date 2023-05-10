@@ -1,6 +1,5 @@
 package pub.codex.apix.operation;
 
-import com.alibaba.fastjson.util.ParameterizedTypeImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.core.annotation.Order;
@@ -8,12 +7,11 @@ import org.springframework.stereotype.Component;
 import pub.codex.apix.annotations.ApiModelProperty;
 import pub.codex.apix.context.OperationContext;
 import pub.codex.common.result.R;
-import pub.codex.common.result.RData;
-import pub.codex.common.result.RPage;
 
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * 处理 responseMapping 的 responseBody
@@ -39,36 +37,47 @@ public class OperationResponseBodyReader implements OperationBuilderPlugin {
     private List<Map<String, Object>> responseBodyHandel(OperationContext context) {
 
         try {
-
-
             Type type = context.getReturnType().getGenericParameterType();
 
-            if(type.equals(R.class)){
-                return Collections.emptyList();
+            if (type instanceof ParameterizedType) {
+                return buildFields(getAuthenticType(type).getDeclaredFields());
             }
 
-            if (type instanceof ParameterizedType parameterizedType) {
-
-
-                if (type.getTypeName().contains("RData") || type.getTypeName().contains("RPage")) {
-                    Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
-                    for (Type actualTypeArgument : actualTypeArguments) {
-                        return buildFields(List.of(((Class<?>) actualTypeArgument).getDeclaredFields()));
-                    }
-                }
-
-                return Collections.emptyList();
+            if (type instanceof Class<?> && !type.equals(R.class)) {
+                return buildFields(((Class<?>) type).getDeclaredFields());
             }
 
-            return buildFields(List.of(((Class<?>) type).getDeclaredFields()));
+            return Collections.emptyList();
+
         } catch (Exception e) {
             return Collections.emptyList();
         }
     }
 
+    public Class<?> getAuthenticType(Type type) {
+        ParameterizedType parameterizedType = (ParameterizedType) type;
 
-    public List<Map<String, Object>> buildFields(List<Field> fields) {
-        return fields.stream().map(field -> setFieldBasicInfo(field)).collect(Collectors.toList());
+        Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
+        for (Type actualTypeArgument : actualTypeArguments) {
+
+            if (actualTypeArgument instanceof Class<?>) {
+                return (Class<?>) actualTypeArgument;
+            }
+
+            if (actualTypeArgument instanceof ParameterizedType) {
+                return getAuthenticType(actualTypeArgument);
+            }
+        }
+
+        return null;
+    }
+
+
+    public List<Map<String, Object>> buildFields(Field... fields) {
+        if (fields == null) {
+            return Collections.emptyList();
+        }
+        return Stream.of(fields).map(this::setFieldBasicInfo).collect(Collectors.toList());
 
     }
 

@@ -54,7 +54,10 @@ public class UserEntity implements Serializable {
 
     @Valid
     @ApiModelProperty(describe = "子实体", groups = {VG.Add.class})
-    private List<DemoEntity> demo;
+    private List<DemoEntity> demo1;
+
+    @Valid
+    private DemoEntity demo2;
 
     public void setId(Long id) {
         this.id = id;
@@ -88,11 +91,19 @@ public class UserEntity implements Serializable {
         return createTime;
     }
 
-    public List<DemoEntity> getDemo() {
-        return demo;
+    public List<DemoEntity> getDemo1() {
+        return demo1;
     }
 
-    public void setDemo(List<DemoEntity> demo) {
-        this.demo = demo;
+    public void setDemo1(List<DemoEntity> demo1) {
+        this.demo1 = demo1;
+    }
+
+    public DemoEntity getDemo2() {
+        return demo2;
+    }
+
+    public void setDemo2(DemoEntity demo2) {
+        this.demo2 = demo2;
     }
 }
