@@ -23,7 +23,8 @@ import java.util.List;
  * @date 2021-03-18 14:10:10
  */
 @TableName("t_user")
-public class UserEntity implements Serializable {
+public class UserEntity extends SupEntity {
+
     private static final long serialVersionUID = 1L;
 
     /**
@@ -58,6 +59,7 @@ public class UserEntity implements Serializable {
 
     @Valid
     private DemoEntity demo2;
+
 
     public void setId(Long id) {
         this.id = id;

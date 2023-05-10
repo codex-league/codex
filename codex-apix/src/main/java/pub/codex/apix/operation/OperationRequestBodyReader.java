@@ -14,6 +14,7 @@ import pub.codex.apix.annotations.ApiGroup;
 import pub.codex.apix.annotations.ApiModelProperty;
 import pub.codex.apix.context.OperationContext;
 import pub.codex.apix.wrapper.VaildComponent;
+import pub.codex.common.utils.ReflectionUtils;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -155,7 +156,7 @@ public class OperationRequestBodyReader implements OperationBuilderPlugin {
         if (classType.equals(String.class)) {
             // TODO: 2023/5/8 这里需要处理非entity的情况
         } else {
-            Field[] fields = classType.getDeclaredFields();
+            Field[] fields = ReflectionUtils.getAllFields(classType);
 
             for (Field field : fields) {
                 // 如果返回结果不为空，则保存进fieldsMapList
@@ -177,8 +178,6 @@ public class OperationRequestBodyReader implements OperationBuilderPlugin {
                             fieldMap.put("child", parseFields(fieldValidAnnotation, fieldValidatedAnnotation, fieldApiGroupAnnotation, actualType));
                         }
                     }
-                    // TODO: 2023/5/9 缺少map
-
 
                     fieldsMapList.add(fieldMap);
                 }

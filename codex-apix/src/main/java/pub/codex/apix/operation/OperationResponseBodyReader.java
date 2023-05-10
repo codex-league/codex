@@ -40,11 +40,11 @@ public class OperationResponseBodyReader implements OperationBuilderPlugin {
             Type type = context.getReturnType().getGenericParameterType();
 
             if (type instanceof ParameterizedType) {
-                return buildFields(getAuthenticType(type).getDeclaredFields());
+                return parseFields(getAuthenticType(type).getDeclaredFields());
             }
 
             if (type instanceof Class<?> && !type.equals(R.class)) {
-                return buildFields(((Class<?>) type).getDeclaredFields());
+                return parseFields(((Class<?>) type).getDeclaredFields());
             }
 
             return Collections.emptyList();
@@ -73,11 +73,36 @@ public class OperationResponseBodyReader implements OperationBuilderPlugin {
     }
 
 
-    public List<Map<String, Object>> buildFields(Field... fields) {
+    public List<Map<String, Object>> parseFields(Field... fields) {
+
         if (fields == null) {
             return Collections.emptyList();
         }
-        return Stream.of(fields).map(this::setFieldBasicInfo).collect(Collectors.toList());
+        return Stream.of(fields).filter(field -> !field.getName().equals("serialVersionUID")).map(field -> {
+
+
+            Map<String, Object> fieldMap = setFieldBasicInfo(field);
+
+            Type type = field.getGenericType();
+            if (type instanceof ParameterizedType parameterizedType) {
+                for (Type abstractType : parameterizedType.getActualTypeArguments()) {
+                    if (abstractType instanceof Class<?> actualType) {
+                        if (!actualType.getCanonicalName().startsWith("java.") && !actualType.getCanonicalName().startsWith("javax.")) {
+                            fieldMap.put("child", parseFields(((Class<?>) abstractType).getDeclaredFields()));
+                        }
+                    }
+                }
+            }
+
+            if (type instanceof Class<?> actualType) {
+                if (!actualType.getCanonicalName().startsWith("java.") && !actualType.getCanonicalName().startsWith("javax.")) {
+                    fieldMap.put("child", parseFields(actualType.getDeclaredFields()));
+                }
+            }
+            return fieldMap;
+
+
+        }).collect(Collectors.toList());
 
     }
 
