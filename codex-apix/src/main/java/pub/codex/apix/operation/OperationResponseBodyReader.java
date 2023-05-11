@@ -7,8 +7,11 @@ import org.springframework.stereotype.Component;
 import pub.codex.apix.annotations.ApiModelProperty;
 import pub.codex.apix.context.OperationContext;
 import pub.codex.common.result.R;
+import pub.codex.common.utils.SnowFlakeUtil;
 
-import java.lang.reflect.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -40,11 +43,11 @@ public class OperationResponseBodyReader implements OperationBuilderPlugin {
             Type type = context.getReturnType().getGenericParameterType();
 
             if (type instanceof ParameterizedType) {
-                return parseFields(getAuthenticType(type).getDeclaredFields());
+                return parseFields(new HashSet<>(), getAuthenticType(type).getDeclaredFields());
             }
 
             if (type instanceof Class<?> && !type.equals(R.class)) {
-                return parseFields(((Class<?>) type).getDeclaredFields());
+                return parseFields(new HashSet<>(), ((Class<?>) type).getDeclaredFields());
             }
 
             return Collections.emptyList();
@@ -73,37 +76,41 @@ public class OperationResponseBodyReader implements OperationBuilderPlugin {
     }
 
 
-    public List<Map<String, Object>> parseFields(Field... fields) {
+    public List<Map<String, Object>> parseFields(HashSet<Class<?>> visitedClasses, Field[] fields) {
+
+        HashSet<Class<?>> realityVisitedClasses = new HashSet<>();
+        realityVisitedClasses.addAll(visitedClasses);
 
         if (fields == null) {
             return Collections.emptyList();
         }
         return Stream.of(fields).filter(field -> !field.getName().equals("serialVersionUID")).map(field -> {
-
-
             Map<String, Object> fieldMap = setFieldBasicInfo(field);
-
             Type type = field.getGenericType();
             if (type instanceof ParameterizedType parameterizedType) {
                 for (Type abstractType : parameterizedType.getActualTypeArguments()) {
                     if (abstractType instanceof Class<?> actualType) {
                         if (!actualType.getCanonicalName().startsWith("java.") && !actualType.getCanonicalName().startsWith("javax.")) {
-                            fieldMap.put("child", parseFields(((Class<?>) abstractType).getDeclaredFields()));
+                            if (!visitedClasses.contains(actualType)) {
+                                // 用一个 HashSet 记录已经解析过的类类型
+                                realityVisitedClasses.add(actualType);
+                                fieldMap.put("child", parseFields(realityVisitedClasses, actualType.getDeclaredFields()));
+                            }
                         }
                     }
                 }
             }
-
             if (type instanceof Class<?> actualType) {
                 if (!actualType.getCanonicalName().startsWith("java.") && !actualType.getCanonicalName().startsWith("javax.")) {
-                    fieldMap.put("child", parseFields(actualType.getDeclaredFields()));
+                    if (!visitedClasses.contains(actualType)) {
+                        // 用一个 HashSet 记录已经解析过的类类型
+                        realityVisitedClasses.add(actualType);
+                        fieldMap.put("child", parseFields(realityVisitedClasses, actualType.getDeclaredFields()));
+                    }
                 }
             }
             return fieldMap;
-
-
         }).collect(Collectors.toList());
-
     }
 
 
@@ -116,6 +123,7 @@ public class OperationResponseBodyReader implements OperationBuilderPlugin {
     private Map<String, Object> setFieldBasicInfo(Field field) {
 
         Map<String, Object> map = new HashMap<>();
+        map.put("uuid", SnowFlakeUtil.defaultSnowFlakeId());
         map.put("field", field.getName());
         map.put("type", field.getType().getName());
         map.put("describe", field.getName());

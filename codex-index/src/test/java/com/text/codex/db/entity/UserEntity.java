@@ -54,11 +54,26 @@ public class UserEntity extends SupEntity {
     private Date createTime;
 
     @Valid
-    @ApiModelProperty(describe = "子实体", groups = {VG.Add.class})
+    @ApiModelProperty(describe = "子实体1", groups = {VG.Add.class})
     private List<DemoEntity> demo1;
 
     @Valid
+    @ApiModelProperty(describe = "子实体2", groups = {VG.Add.class})
     private DemoEntity demo2;
+
+    @Valid
+    @ApiModelProperty(describe = "子实体3", groups = {VG.Add.class})
+    private DemoEntity demo3;
+
+    @Valid
+    @ApiModelProperty(describe = "子实体4", groups = {VG.Add.class})
+    private UserEntity user1;
+
+    @Valid
+    @ApiModelProperty(describe = "子实体5", groups = {VG.Add.class})
+    private UserEntity user2;
+
+
 
 
     public void setId(Long id) {
@@ -107,5 +122,29 @@ public class UserEntity extends SupEntity {
 
     public void setDemo2(DemoEntity demo2) {
         this.demo2 = demo2;
+    }
+
+    public DemoEntity getDemo3() {
+        return demo3;
+    }
+
+    public void setDemo3(DemoEntity demo3) {
+        this.demo3 = demo3;
+    }
+
+    public UserEntity getUser1() {
+        return user1;
+    }
+
+    public void setUser1(UserEntity user1) {
+        this.user1 = user1;
+    }
+
+    public UserEntity getUser2() {
+        return user2;
+    }
+
+    public void setUser2(UserEntity user2) {
+        this.user2 = user2;
     }
 }

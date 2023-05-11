@@ -15,14 +15,13 @@ import pub.codex.apix.annotations.ApiModelProperty;
 import pub.codex.apix.context.OperationContext;
 import pub.codex.apix.wrapper.VaildComponent;
 import pub.codex.common.utils.ReflectionUtils;
+import pub.codex.common.utils.SnowFlakeUtil;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newHashMap;
@@ -146,12 +145,14 @@ public class OperationRequestBodyReader implements OperationBuilderPlugin {
 
         Class<?> classType = methodParameter.getParameterType(); // 参数类型
 
-        return parseFields(validAnnotation, validatedAnnotation, apiGroupAnnotation, classType);
+        return parseFields(validAnnotation, validatedAnnotation, apiGroupAnnotation, classType, new HashSet<>());
     }
 
-    private List<Map<String, Object>> parseFields(Annotation validAnnotation, Annotation validatedAnnotation, Annotation apiGroupAnnotation, Class<?> classType) {
+    private List<Map<String, Object>> parseFields(Annotation validAnnotation, Annotation validatedAnnotation, Annotation apiGroupAnnotation, Class<?> classType, HashSet<Class<?>> visitedClasses) {
+        HashSet<Class<?>> realityVisitedClasses = new HashSet<>();
+        realityVisitedClasses.addAll(visitedClasses);
 
-        List<Map<String, Object>> fieldsMapList = newArrayList();
+        List<Map<String, Object>> fieldsMapList = new ArrayList<>();
 
         if (classType.equals(String.class)) {
             // TODO: 2023/5/8 这里需要处理非entity的情况
@@ -166,8 +167,12 @@ public class OperationRequestBodyReader implements OperationBuilderPlugin {
                     Annotation fieldValidatedAnnotation = field.getAnnotation(Validated.class);
                     Annotation fieldApiGroupAnnotation = field.getAnnotation(ApiGroup.class);
 
-                    if (!field.getType().getCanonicalName().startsWith("java.") && !field.getType().getCanonicalName().startsWith("javax.")) {
-                        fieldMap.put("child", parseFields(fieldValidAnnotation, fieldValidatedAnnotation, fieldApiGroupAnnotation, field.getType()));
+                    if (!field.getType().getCanonicalName().startsWith("java.") && !field.getType().getCanonicalName().startsWith("javax.")
+                            && !visitedClasses.contains(field.getType())) { // 避免递归调用导致的循环依赖
+
+                        // 用一个 HashSet 记录已经解析过的类类型
+                        realityVisitedClasses.add(classType);
+                        fieldMap.put("child", parseFields(fieldValidAnnotation, fieldValidatedAnnotation, fieldApiGroupAnnotation, field.getType(), realityVisitedClasses));
                     }
 
                     if (field.getType().equals(List.class)) {
@@ -175,7 +180,13 @@ public class OperationRequestBodyReader implements OperationBuilderPlugin {
                         if (genericType instanceof ParameterizedType) {
                             ParameterizedType pt = (ParameterizedType) genericType;
                             Class<?> actualType = (Class<?>) pt.getActualTypeArguments()[0];
-                            fieldMap.put("child", parseFields(fieldValidAnnotation, fieldValidatedAnnotation, fieldApiGroupAnnotation, actualType));
+                            if (!actualType.getCanonicalName().startsWith("java.") && !actualType.getCanonicalName().startsWith("javax.")
+                                    && !visitedClasses.contains(actualType)) { // 避免递归调用导致的循环依赖
+
+                                // 用一个 HashSet 记录已经解析过的类类型
+                                realityVisitedClasses.add(classType);
+                                fieldMap.put("child", parseFields(fieldValidAnnotation, fieldValidatedAnnotation, fieldApiGroupAnnotation, actualType, realityVisitedClasses));
+                            }
                         }
                     }
 
@@ -184,7 +195,6 @@ public class OperationRequestBodyReader implements OperationBuilderPlugin {
 
             }
         }
-
         return fieldsMapList;
     }
 
@@ -220,6 +230,7 @@ public class OperationRequestBodyReader implements OperationBuilderPlugin {
     private Map<String, Object> setFieldBasicInfo(Field field, boolean required) {
 
         Map<String, Object> map = newHashMap();
+        map.put("uuid", SnowFlakeUtil.defaultSnowFlakeId());
         map.put("field", field.getName());
         map.put("type", field.getType().getName());
         map.put("describe", field.getName());

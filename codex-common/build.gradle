@@ -6,4 +6,5 @@ dependencies {
     api("commons-configuration:commons-configuration:1.10")
     api("com.fasterxml.jackson.core:jackson-databind:2.12.2")
     api("commons-beanutils:commons-beanutils:1.8.3")
+    api('cn.hutool:hutool-all:5.8.15')
 }
