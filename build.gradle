@@ -12,7 +12,7 @@ subprojects(){
     apply plugin: 'signing'
 
     group = 'pub.codex'
-    version = '5.0.1-SNAPSHOT'
+    version = '5.0.1'
     targetCompatibility = '17'
     sourceCompatibility = '17'
 
